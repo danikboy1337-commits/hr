@@ -92,6 +92,9 @@ class LDAPLoginRequest(BaseModel):
 class TestStart(BaseModel):
     pass  # specialization_id comes from user record
 
+class SpecializationSelect(BaseModel):
+    specialization_id: int
+
 class AnswerSubmit(BaseModel):
     test_session_id: int
     question_id: int
@@ -350,6 +353,59 @@ async def ldap_login(login_data: LDAPLoginRequest):
     except Exception as e:
         print(f"Login error: {e}")
         raise HTTPException(status_code=500, detail=f"Login failed: {str(e)}")
+
+# =====================================================
+# API - PROFILES & SPECIALIZATIONS
+# =====================================================
+@app.get("/api/profiles")
+async def get_profiles():
+    """Get all profiles with specializations"""
+    try:
+        async with get_db_connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute("SELECT id, name, has_specializations FROM profiles ORDER BY id")
+                rows = await cur.fetchall()
+
+        profiles = [{"id": row[0], "name": row[1], "has_specializations": row[2]} for row in rows]
+        return {"status": "success", "profiles": profiles}
+    except Exception as e:
+        print(f"Error fetching profiles: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/profiles/{profile_id}/specializations")
+async def get_specializations(profile_id: int):
+    """Get specializations for a specific profile"""
+    try:
+        async with get_db_connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    "SELECT id, name FROM specializations WHERE profile_id = %s ORDER BY id",
+                    (profile_id,)
+                )
+                rows = await cur.fetchall()
+
+        specializations = [{"id": row[0], "name": row[1]} for row in rows]
+        return {"status": "success", "specializations": specializations}
+    except Exception as e:
+        print(f"Error fetching specializations: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/select-specialization")
+async def select_specialization(data: SpecializationSelect, current_user: dict = Depends(get_current_user)):
+    """Update user's specialization"""
+    user_id = current_user["user_id"]
+    try:
+        async with get_db_connection() as conn:
+            async with conn.cursor() as cur:
+                # Update user's specialization_id
+                await cur.execute(
+                    "UPDATE users SET specialization_id = %s WHERE id = %s",
+                    (data.specialization_id, user_id)
+                )
+        return {"status": "success"}
+    except Exception as e:
+        print(f"Error selecting specialization: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 # =====================================================
 # API - TEST FLOW
