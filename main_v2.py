@@ -101,8 +101,8 @@ class AnswerSubmit(BaseModel):
     user_answer: int  # 1-4
 
 class SelfAssessmentSubmit(BaseModel):
-    test_session_id: int
     assessments: List[Dict[str, Any]]  # [{"competency_id": 1, "self_rating": 8}, ...]
+    # Note: test_session_id comes from URL path, not request body
 
 class SQLQuery(BaseModel):
     query: str
