@@ -259,7 +259,7 @@ async def main():
     # Load each file
     for json_file in json_files:
         try:
-            await load_questions_from_json(json_file, decrypt_key)
+            await load_questions_from_json(json_file, None)  # No decryption needed
         except Exception as e:
             print(f"❌ Error loading {json_file.name}: {e}")
             import traceback
