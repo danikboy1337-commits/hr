@@ -650,7 +650,7 @@ async def get_test_questions(test_session_id: int, user_data: dict = Depends(get
                 if row[0] != user_id:
                     raise HTTPException(status_code=403, detail="Access denied")
 
-                # Get questions
+                # Get questions with answer status
                 await cur.execute("""
                     SELECT
                         uq.question_id,
@@ -662,11 +662,14 @@ async def get_test_questions(test_session_id: int, user_data: dict = Depends(get
                         q.var_3,
                         q.var_4,
                         c.name as competency_name,
-                        t.name as topic_name
+                        t.name as topic_name,
+                        ur.user_answer,
+                        ur.is_correct
                     FROM user_questions uq
                     JOIN questions q ON q.id = uq.question_id
                     JOIN competencies c ON c.id = uq.competency_id
                     JOIN topics t ON t.id = uq.topic_id
+                    LEFT JOIN user_results ur ON ur.question_id = uq.question_id AND ur.test_session_id = uq.test_session_id
                     WHERE uq.test_session_id = %s
                     ORDER BY uq.question_order
                 """, (test_session_id,))
@@ -680,20 +683,29 @@ async def get_test_questions(test_session_id: int, user_data: dict = Depends(get
                         "question_order": row[1],
                         "level": row[2],
                         "question_text": row[3],  # Encrypted
-                        "var_1": row[4],  # Encrypted
-                        "var_2": row[5],  # Encrypted
-                        "var_3": row[6],  # Encrypted
-                        "var_4": row[7],  # Encrypted
+                        "options": [row[4], row[5], row[6], row[7]],  # Frontend expects options array
                         "competency_name": row[8],
-                        "topic_name": row[9]
+                        "topic_name": row[9],
+                        "is_answered": row[10] is not None,
+                        "user_answer": row[10],
+                        "is_correct": row[11]
                     })
+
+                # Calculate progress
+                answered = sum(1 for q in questions if q["is_answered"])
+                correct = sum(1 for q in questions if q["is_correct"])
 
                 return {
                     "status": "success",
                     "test_session_id": test_session_id,
                     "questions": questions,
                     "total": len(questions),
-                    "note": "Questions are encrypted - decrypt on frontend"
+                    "progress": {
+                        "answered": answered,
+                        "total": len(questions),
+                        "correct": correct,
+                        "percentage": int((answered / len(questions)) * 100) if questions else 0
+                    }
                 }
 
     except HTTPException:
