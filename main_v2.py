@@ -86,7 +86,7 @@ monitoring_data = {
 # PYDANTIC MODELS
 # =====================================================
 class LDAPLoginRequest(BaseModel):
-    tab_number: str  # Employee tab number (e.g., "00061221")
+    employee_id: str  # Employee tab number (e.g., "00061221") - keeping field name for frontend compatibility
     password: str
 
 class TestStart(BaseModel):
@@ -258,11 +258,11 @@ async def get_departments():
 async def ldap_login(login_data: LDAPLoginRequest):
     """
     LDAP authentication endpoint (V2)
-    Uses tab_number instead of phone
+    Uses employee_id (tab_number) instead of phone
 
     Request:
         {
-            "tab_number": "00061221",
+            "employee_id": "00061221",
             "password": "user_password"
         }
 
@@ -286,7 +286,7 @@ async def ldap_login(login_data: LDAPLoginRequest):
 
     try:
         # Authenticate with LDAP
-        ldap_user = ldap_authenticate_user(login_data.tab_number, login_data.password)
+        ldap_user = ldap_authenticate_user(login_data.employee_id, login_data.password)
 
         # Get or create user in database
         async with get_db_connection() as conn:
@@ -294,7 +294,7 @@ async def ldap_login(login_data: LDAPLoginRequest):
                 # Check if user exists
                 await cur.execute(
                     "SELECT id, name, tab_number, role, department_id, specialization_id FROM users WHERE tab_number = %s",
-                    (login_data.tab_number,)
+                    (login_data.employee_id,)
                 )
                 user_row = await cur.fetchone()
 
@@ -307,7 +307,7 @@ async def ldap_login(login_data: LDAPLoginRequest):
                         INSERT INTO users (name, tab_number, company, role)
                         VALUES (%s, %s, 'Halyk Bank', 'employee')
                         RETURNING id, name, tab_number, role, department_id, specialization_id
-                    """, (ldap_user['name'], login_data.tab_number))
+                    """, (ldap_user['name'], login_data.employee_id))
 
                     user_row = await cur.fetchone()
                     user_id, name, tab_number, role, department_id, specialization_id = user_row
