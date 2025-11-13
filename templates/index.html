@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halyk HR - Redirecting...</title>
+    <meta http-equiv="refresh" content="0; url=/login">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1DB584 0%, #0a7d5a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        .logo img {
+            max-width: 250px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #1DB584;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #1DB584;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .message {
+            color: #666;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: #1DB584;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #16a073;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="/static/images/Halyk_LogoName.png" alt="Халык банк">
+        </div>
+        <h1>Перенаправление...</h1>
+        <div class="spinner"></div>
+        <p class="message">Переход на страницу входа</p>
+        <p class="message" style="font-size: 14px; margin-top: 10px;">
+            Если перенаправление не происходит автоматически:
+        </p>
+        <a href="/login" class="btn">Нажмите здесь</a>
+    </div>
+
+    <script>
+        // Immediate redirect - no React, no API calls
+        window.location.replace('/login');
+    </script>
+</body>
+</html>

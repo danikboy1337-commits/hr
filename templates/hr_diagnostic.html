@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR API Diagnostic Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #4ec9b0;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .section {
+            background: #252526;
+            border: 1px solid #3e3e42;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: #569cd6;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        button {
+            background: #0e639c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background: #1177bb;
+        }
+
+        .success {
+            color: #4ec9b0;
+        }
+
+        .error {
+            color: #f48771;
+        }
+
+        .warning {
+            color: #dcdcaa;
+        }
+
+        pre {
+            background: #1e1e1e;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            padding: 15px;
+            overflow-x: auto;
+            margin-top: 10px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .status-200 {
+            background: #4ec9b0;
+            color: #1e1e1e;
+        }
+
+        .status-error {
+            background: #f48771;
+            color: #1e1e1e;
+        }
+
+        .result-item {
+            border-left: 3px solid #4ec9b0;
+            padding-left: 15px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 HR API Diagnostic Tool</h1>
+
+        <div class="section">
+            <div class="section-title">1. Test API Endpoints</div>
+            <button onclick="testResultsAPI()">Test /api/hr/results</button>
+            <button onclick="testStatsAPI()">Test /api/hr/results/stats</button>
+            <button onclick="testDepartmentsAPI()">Test /api/departments</button>
+            <div id="apiTestResult"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">2. Check Database Data</div>
+            <button onclick="checkUsers()">Check Users Table</button>
+            <button onclick="checkTests()">Check Completed Tests</button>
+            <button onclick="checkSpecializations()">Check Specializations</button>
+            <div id="dbTestResult"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">3. Test Frontend Rendering</div>
+            <button onclick="testFullFlow()">Test Complete Flow</button>
+            <div id="flowTestResult"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">4. Raw API Responses</div>
+            <button onclick="showRawResults()">Show Raw Results JSON</button>
+            <button onclick="showRawStats()">Show Raw Stats JSON</button>
+            <div id="rawDataResult"></div>
+        </div>
+    </div>
+
+    <script>
+        async function testResultsAPI() {
+            const resultDiv = document.getElementById('apiTestResult');
+            resultDiv.innerHTML = '<div class="warning">Testing /api/hr/results...</div>';
+
+            try {
+                const response = await fetch('/api/hr/results');
+                const status = response.status;
+                const data = await response.json();
+
+                let html = `<div class="success">✓ API Response <span class="status-badge status-200">HTTP ${status}</span></div>`;
+                html += `<div>Results count: <strong>${data.results?.length || 0}</strong></div>`;
+                html += `<div>Status: <strong>${data.status}</strong></div>`;
+
+                if (data.results && data.results.length > 0) {
+                    html += `<div class="result-item">First result: ${data.results[0].name} ${data.results[0].surname} - ${data.results[0].specialization} (${data.results[0].score}/${data.results[0].max_score})</div>`;
+                } else {
+                    html += `<div class="error">⚠ No results returned!</div>`;
+                }
+
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">✗ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function testStatsAPI() {
+            const resultDiv = document.getElementById('apiTestResult');
+            resultDiv.innerHTML = '<div class="warning">Testing /api/hr/results/stats...</div>';
+
+            try {
+                const response = await fetch('/api/hr/results/stats');
+                const status = response.status;
+                const data = await response.json();
+
+                let html = `<div class="success">✓ Stats API Response <span class="status-badge status-200">HTTP ${status}</span></div>`;
+                html += `<div>Total tests: <strong>${data.overall?.total_tests || 0}</strong></div>`;
+                html += `<div>Average: <strong>${data.overall?.avg_percentage || 0}%</strong></div>`;
+                html += `<div>Senior: <strong>${data.by_level?.Senior || 0}</strong></div>`;
+                html += `<div>Middle: <strong>${data.by_level?.Middle || 0}</strong></div>`;
+                html += `<div>Junior: <strong>${data.by_level?.Junior || 0}</strong></div>`;
+
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">✗ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function testDepartmentsAPI() {
+            const resultDiv = document.getElementById('apiTestResult');
+            resultDiv.innerHTML = '<div class="warning">Testing /api/departments...</div>';
+
+            try {
+                const response = await fetch('/api/departments');
+                const status = response.status;
+                const data = await response.json();
+
+                let html = `<div class="success">✓ Departments API Response <span class="status-badge status-200">HTTP ${status}</span></div>`;
+                html += `<div>Departments count: <strong>${data.departments?.length || 0}</strong></div>`;
+
+                if (data.departments) {
+                    data.departments.forEach(dept => {
+                        html += `<div class="result-item">${dept.name}</div>`;
+                    });
+                }
+
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">✗ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function checkUsers() {
+            const resultDiv = document.getElementById('dbTestResult');
+            resultDiv.innerHTML = '<div class="warning">Checking users via /api/admin/users...</div>';
+
+            try {
+                const response = await fetch('/api/admin/users');
+                const data = await response.json();
+
+                let html = `<div class="success">✓ Users Check</div>`;
+                html += `<div>Total users: <strong>${data.stats?.total || 0}</strong></div>`;
+                html += `<div>Employees: <strong>${data.stats?.employees || 0}</strong></div>`;
+                html += `<div>HR: <strong>${data.stats?.hr || 0}</strong></div>`;
+                html += `<div>Managers: <strong>${data.stats?.managers || 0}</strong></div>`;
+
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">✗ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function checkTests() {
+            const resultDiv = document.getElementById('dbTestResult');
+            resultDiv.innerHTML = '<div class="warning">Checking completed tests...</div>';
+
+            try {
+                const response = await fetch('/api/hr/results');
+                const data = await response.json();
+
+                let html = `<div class="success">✓ Completed Tests Check</div>`;
+                html += `<div>Total completed tests: <strong>${data.results?.length || 0}</strong></div>`;
+
+                if (data.results && data.results.length > 0) {
+                    html += `<div style="margin-top: 10px;"><strong>Sample tests:</strong></div>`;
+                    data.results.slice(0, 5).forEach(test => {
+                        html += `<div class="result-item">${test.name} ${test.surname} - ${test.specialization} - ${test.score}/${test.max_score} (${test.percentage}%)</div>`;
+                    });
+                } else {
+                    html += `<div class="error">⚠ NO COMPLETED TESTS FOUND IN DATABASE!</div>`;
+                    html += `<div>This is why HR panel shows no results.</div>`;
+                    html += `<div>Run: <code>python db/setup_test_data.py</code></div>`;
+                }
+
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">✗ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function checkSpecializations() {
+            const resultDiv = document.getElementById('dbTestResult');
+            resultDiv.innerHTML = '<div class="warning">Checking specializations...</div>';
+
+            try {
+                const response = await fetch('/api/hr/results/stats');
+                const data = await response.json();
+
+                let html = `<div class="success">✓ Specializations Check</div>`;
+                html += `<div>Specializations with tests: <strong>${data.by_specialization?.length || 0}</strong></div>`;
+
+                if (data.by_specialization && data.by_specialization.length > 0) {
+                    data.by_specialization.forEach(spec => {
+                        html += `<div class="result-item">${spec.name}: ${spec.count} tests (avg ${spec.avg_percentage.toFixed(2)}%)</div>`;
+                    });
+                } else {
+                    html += `<div class="error">⚠ No specializations with completed tests!</div>`;
+                }
+
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">✗ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function testFullFlow() {
+            const resultDiv = document.getElementById('flowTestResult');
+            resultDiv.innerHTML = '<div class="warning">Testing complete flow...</div>';
+
+            try {
+                // Step 1: Load stats
+                const statsResponse = await fetch('/api/hr/results/stats');
+                const statsData = await statsResponse.json();
+
+                // Step 2: Load results
+                const resultsResponse = await fetch('/api/hr/results');
+                const resultsData = await resultsResponse.json();
+
+                let html = '<div class="success">✓ Complete Flow Test</div>';
+                html += '<div style="margin-top: 15px;"><strong>Step 1: Load Statistics</strong></div>';
+                html += `<div>HTTP ${statsResponse.status} - Total tests: ${statsData.overall?.total_tests || 0}</div>`;
+
+                html += '<div style="margin-top: 15px;"><strong>Step 2: Load Results</strong></div>';
+                html += `<div>HTTP ${resultsResponse.status} - Results: ${resultsData.results?.length || 0}</div>`;
+
+                if (resultsData.results && resultsData.results.length > 0) {
+                    html += '<div class="success" style="margin-top: 10px;">✓ Data is available! HR panel should work.</div>';
+                } else {
+                    html += '<div class="error" style="margin-top: 10px;">✗ No data available! This is why nothing displays.</div>';
+                    html += '<div>Solution: Run <code>python db/setup_test_data.py</code></div>';
+                }
+
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">✗ Error: ${error.message}</div><pre>${error.stack}</pre>`;
+            }
+        }
+
+        async function showRawResults() {
+            const resultDiv = document.getElementById('rawDataResult');
+            resultDiv.innerHTML = '<div class="warning">Fetching raw results...</div>';
+
+            try {
+                const response = await fetch('/api/hr/results');
+                const data = await response.json();
+
+                let html = `<div class="success">✓ Raw Results Data (${data.results?.length || 0} items)</div>`;
+                html += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">✗ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function showRawStats() {
+            const resultDiv = document.getElementById('rawDataResult');
+            resultDiv.innerHTML = '<div class="warning">Fetching raw stats...</div>';
+
+            try {
+                const response = await fetch('/api/hr/results/stats');
+                const data = await response.json();
+
+                let html = '<div class="success">✓ Raw Stats Data</div>';
+                html += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">✗ Error: ${error.message}</div>`;
+            }
+        }
+
+        // Auto-run basic tests on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                checkTests();
+            }, 500);
+        });
+    </script>
+</body>
+</html>

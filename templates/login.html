@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход для сотрудников - Halyk HR Testing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1DB584 0%, #0a7d5a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            max-width: 450px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-container img {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: #1DB584;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f0f9f6 0%, #e6f7f1 100%);
+            border-left: 4px solid #1DB584;
+            padding: 15px 18px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #1DB584;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #1DB584;
+            box-shadow: 0 0 0 3px rgba(29, 181, 132, 0.1);
+        }
+
+        .input-group input::placeholder {
+            color: #999;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #999;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #1DB584 0%, #17a372 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(29, 181, 132, 0.3);
+        }
+
+        .login-button:hover:not(:disabled) {
+            background: linear-gradient(135deg, #17a372 0%, #128a5f 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(29, 181, 132, 0.4);
+        }
+
+        .login-button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .login-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            border-left: 4px solid #c33;
+            animation: shake 0.3s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+            color: #1DB584;
+            font-weight: 600;
+        }
+
+        .loading-spinner.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #1DB584;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .footer-info a {
+            color: #1DB584;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-info a:hover {
+            text-decoration: underline;
+        }
+
+        .ldap-status {
+            display: inline-block;
+            padding: 8px 12px;
+            background: #fff3cd;
+            border-left: 3px solid #ffc107;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-top: 15px;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo-container">
+            <img src="/static/images/halyk_logo.png" alt="Halyk Bank" onerror="this.style.display='none'">
+        </div>
+
+        <h1>🔐 Вход для сотрудников</h1>
+        <p class="subtitle">Используйте корпоративные учетные данные Active Directory</p>
+
+        <div class="info-box">
+            <strong>💡 Как войти:</strong>
+            Введите ваш табельный номер (Employee ID) и корпоративный пароль от Active Directory
+        </div>
+
+        <div id="error" class="error-message"></div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="input-group">
+                <label for="employee_id">📋 Табельный номер</label>
+                <div class="input-wrapper">
+                    <input
+                        id="employee_id"
+                        type="text"
+                        placeholder="Например: 00058215"
+                        required
+                        autocomplete="username"
+                        autofocus
+                    />
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="password">🔒 Пароль Active Directory</label>
+                <div class="input-wrapper">
+                    <input
+                        id="password"
+                        type="password"
+                        placeholder="Введите ваш корпоративный пароль"
+                        required
+                        autocomplete="current-password"
+                    />
+                </div>
+            </div>
+
+            <button type="submit" id="loginButton" class="login-button">
+                Войти в систему
+            </button>
+
+            <div id="loading" class="loading-spinner">
+                <div class="spinner"></div>
+                <p>Проверка учетных данных...</p>
+            </div>
+        </form>
+
+        <div class="footer-info">
+            <p>
+                <strong>Возникли проблемы?</strong><br>
+                Обратитесь в IT-поддержку или HR-отдел
+            </p>
+            <div class="ldap-status" id="ldapStatus">
+                ⚠️ LDAP не активирован (использ. placeholder-данные)
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if LDAP is configured
+        fetch('/api/config')
+            .then(res => res.json())
+            .then(data => {
+                const statusEl = document.getElementById('ldapStatus');
+                if (data.ldap_enabled) {
+                    statusEl.innerHTML = '✅ LDAP активирован';
+                    statusEl.style.background = '#d4edda';
+                    statusEl.style.borderColor = '#28a745';
+                    statusEl.style.color = '#155724';
+                }
+            })
+            .catch(() => {
+                // Ignore config fetch errors
+            });
+
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const employeeId = document.getElementById('employee_id').value.trim();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error');
+            const loadingDiv = document.getElementById('loading');
+            const submitButton = document.getElementById('loginButton');
+
+            // Clear previous errors
+            errorDiv.classList.remove('show');
+            errorDiv.textContent = '';
+
+            // Show loading
+            loadingDiv.classList.add('show');
+            submitButton.disabled = true;
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        employee_id: employeeId,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.status === 'success') {
+                    // Save token and user data
+                    sessionStorage.setItem('halyk_token', data.token);
+                    sessionStorage.setItem('halyk_user_id', data.user_id);
+                    sessionStorage.setItem('halyk_user_name', data.name);
+                    sessionStorage.setItem('halyk_employee_id', data.employee_id);
+                    sessionStorage.setItem('halyk_user_role', data.role);
+
+                    if (data.department_id){
+                        sessionStorage.setItem('halyk_user_department', data.department_id);
+                    }
+
+
+                    // Show success message
+                    errorDiv.style.background = '#d4edda';
+                    errorDiv.style.color = '#155724';
+                    errorDiv.style.borderColor = '#28a745';
+                    errorDiv.textContent = '✅ Вход выполнен успешно! Перенаправление...';
+                    errorDiv.classList.add('show');
+
+                    // Redirect based on role
+                    setTimeout(() => {
+                        // if (data.role === 'hr' || data.role === 'admin') {
+                        //     window.location.href = '/hr/menu';
+                        // } else if (data.role === 'manager') {
+                        //     window.location.href = '/manager/menu';
+                        // } else {
+                        //     window.location.href = '/specializations';
+                        // }
+                        window.location.href = '/panels'
+                    }, 1000);
+                } else {
+                    // Show error
+                    errorDiv.textContent = data.detail || 'Ошибка входа. Проверьте учетные данные.';
+                    errorDiv.classList.add('show');
+                    loadingDiv.classList.remove('show');
+                    submitButton.disabled = false;
+                }
+            } catch (error) {
+                errorDiv.textContent = '❌ Ошибка соединения с сервером. Попробуйте позже.';
+                errorDiv.classList.add('show');
+                loadingDiv.classList.remove('show');
+                submitButton.disabled = false;
+            }
+        }
+
+        // Auto-focus on first input
+        document.getElementById('employee_id').focus();
+
+        // Enter key support for password field
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleLogin(e);
+            }
+        });
+    </script>
+</body>
+</html>

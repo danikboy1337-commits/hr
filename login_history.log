@@ -1,0 +1,2342 @@
+2025-11-11 15:42:01,087:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 15:49:36,764:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 15:54:26,629:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 15:57:25,514:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 15:57:25,583:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 15:57:25,615:INFO:Database pool closed
+2025-11-11 16:02:10,596:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:02:10,697:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:02:10,722:INFO:Database pool closed
+2025-11-11 16:02:21,738:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:02:21,835:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:02:21,858:INFO:Database pool closed
+2025-11-11 16:02:40,159:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:02:40,248:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:02:40,272:INFO:Database pool closed
+2025-11-11 16:02:59,673:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:02:59,763:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:02:59,787:INFO:Database pool closed
+2025-11-11 16:04:10,321:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:04:10,410:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:04:10,434:INFO:Database pool closed
+2025-11-11 16:06:56,579:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:06:56,673:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:06:56,696:INFO:Database pool closed
+2025-11-11 16:08:39,406:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:08:39,509:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:09:25,840:INFO:Database pool closed
+2025-11-11 16:09:28,466:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:09:28,569:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:09:33,093:INFO:Database pool closed
+2025-11-11 16:09:44,577:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:09:44,677:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:11:44,902:INFO:Database pool closed
+2025-11-11 16:11:46,932:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:11:47,032:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:17:33,453:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:17:33,462:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:17:33,462:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:17:33.453518
+2025-11-11 16:17:43,143:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:17:43,150:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:17:43,150:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:17:43.143222
+2025-11-11 16:17:46,025:INFO:Not approved user 61221 at 2025-11-11 16:17:46.025086
+2025-11-11 16:17:49,603:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:17:49,610:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:17:49,610:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:17:49.603355
+2025-11-11 16:18:00,285:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:18:00,291:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:18:00,291:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:18:00.285920
+2025-11-11 16:18:06,065:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:18:06,073:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:18:06,073:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:18:06.065169
+2025-11-11 16:18:09,839:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:18:09,846:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:18:09,846:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:18:09.838918
+2025-11-11 16:18:25,167:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:18:25,176:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:18:25,176:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:18:25.167798
+2025-11-11 16:18:29,034:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:18:29,039:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:18:29,039:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:18:29.033604
+2025-11-11 16:18:48,862:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:18:48,869:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:18:48,869:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:18:48.862686
+2025-11-11 16:18:52,668:INFO:Not approved user 61221 at 2025-11-11 16:18:52.668001
+2025-11-11 16:20:17,820:INFO:Database pool closed
+2025-11-11 16:20:21,718:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:20:21,814:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:20:35,978:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:20:35,987:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:20:35,988:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:20:35.978215
+2025-11-11 16:21:07,767:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:21:07,774:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:21:07,775:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:21:07.767758
+2025-11-11 16:21:15,940:INFO:Database pool closed
+2025-11-11 16:25:04,498:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:25:04,586:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:25:16,950:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:25:16,958:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:25:16,959:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:25:16.949991
+2025-11-11 16:26:02,954:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:26:02,964:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:26:02,965:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:26:02.954698
+2025-11-11 16:31:27,958:INFO:Database pool closed
+2025-11-11 16:31:34,699:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:31:34,789:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:31:43,288:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:31:43,294:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:31:43,295:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:31:43.287918
+2025-11-11 16:31:46,560:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:31:46,566:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:31:46,567:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:31:46.559941
+2025-11-11 16:31:47,849:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:31:47,855:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:31:47,856:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:31:47.849803
+2025-11-11 16:31:48,053:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:31:48,059:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:31:48,060:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:31:48.053231
+2025-11-11 16:31:48,257:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:31:48,263:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:31:48,263:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:31:48.257509
+2025-11-11 16:31:48,461:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:31:48,467:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:31:48,467:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:31:48.461784
+2025-11-11 16:36:40,082:INFO:Database pool closed
+2025-11-11 16:37:09,333:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:37:30,221:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:37:30,230:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:37:44,300:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:37:55,259:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:37:55,269:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:40:59,204:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:40:59,293:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:41:12,346:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:41:12,357:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:41:12,357:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:41:12.346340
+2025-11-11 16:41:49,512:INFO:Database pool closed
+2025-11-11 16:41:51,734:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:41:51,821:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:42:10,691:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:42:10,699:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:42:10,699:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:42:10.691024
+2025-11-11 16:43:18,330:INFO:Database pool closed
+2025-11-11 16:43:20,671:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:43:27,228:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:43:27,243:ERROR:LDAP authentication error: unsupported hash type MD4
+2025-11-11 16:53:05,477:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:53:05,572:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:53:14,238:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 16:53:14,248:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 16:53:14,248:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 16:53:14,248:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 16:53:14.238670
+2025-11-11 16:54:41,694:INFO:Attempting to bind with user DN: UNIVERSAL\00061386
+2025-11-11 16:54:41,700:ERROR:LDAP authentication error for user 00061386: unsupported hash type MD4
+2025-11-11 16:54:41,701:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 16:54:41,701:INFO:Incorrect login attempt for user 00061386 at 2025-11-11 16:54:41.694197
+2025-11-11 16:54:46,593:INFO:Not approved user 61386 at 2025-11-11 16:54:46.593510
+2025-11-11 16:56:22,690:INFO:Database pool closed
+2025-11-11 16:59:18,778:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 16:59:18,868:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 16:59:26,798:INFO:Database pool closed
+2025-11-11 17:04:01,685:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 17:04:01,774:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 17:04:09,353:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:04:09,361:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:04:09,361:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:04:09,361:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:04:09.353715
+2025-11-11 17:04:12,209:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:04:12,214:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:04:12,215:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:04:12,215:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:04:12.209420
+2025-11-11 17:04:15,105:INFO:Not approved user 61221 at 2025-11-11 17:04:15.105493
+2025-11-11 17:04:18,954:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:04:18,960:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:04:18,961:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:04:18,961:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:04:18.954397
+2025-11-11 17:04:35,180:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:04:35,186:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:04:35,186:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:04:35,186:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:04:35.180691
+2025-11-11 17:05:35,907:INFO:Database pool closed
+2025-11-11 17:05:39,673:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 17:05:39,764:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 17:05:48,598:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:05:48,604:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:05:48,604:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:05:48,604:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:05:48.598431
+2025-11-11 17:05:55,806:INFO:Database pool closed
+2025-11-11 17:06:07,302:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 17:06:07,391:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 17:06:08,999:INFO:Database pool closed
+2025-11-11 17:27:40,880:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 17:27:40,970:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 17:27:49,318:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:27:49,325:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:27:49,325:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:27:49,325:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:27:49.317929
+2025-11-11 17:28:00,909:INFO:Not approved user 00061221@DOMAIN at 2025-11-11 17:28:00.909541
+2025-11-11 17:28:07,260:INFO:Not approved user 00061221@DOMAIN at 2025-11-11 17:28:07.260496
+2025-11-11 17:28:11,195:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:28:11,200:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:28:11,201:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:28:11,201:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:28:11.195433
+2025-11-11 17:28:11,876:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:28:11,881:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:28:11,882:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:28:11,882:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:28:11.876059
+2025-11-11 17:28:12,036:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:28:12,041:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:28:12,041:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:28:12,042:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:28:12.036832
+2025-11-11 17:28:12,197:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:28:12,203:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:28:12,204:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:28:12,204:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:28:12.197830
+2025-11-11 17:28:12,357:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:28:12,363:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:28:12,363:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:28:12,363:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:28:12.357817
+2025-11-11 17:28:12,518:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:28:12,523:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:28:12,523:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:28:12,523:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:28:12.518192
+2025-11-11 17:28:12,657:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:28:12,662:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:28:12,663:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:28:12,663:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:28:12.657149
+2025-11-11 17:28:12,802:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:28:12,807:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:28:12,807:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:28:12,808:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:28:12.802129
+2025-11-11 17:28:34,306:INFO:Database pool closed
+2025-11-11 17:29:37,749:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 17:29:37,847:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 17:29:52,534:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:29:52,541:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:29:52,541:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:29:52,541:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:29:52.534093
+2025-11-11 17:32:25,368:INFO:Database pool closed
+2025-11-11 17:32:30,722:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 17:32:38,676:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:32:38,685:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:32:38,686:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:43:19,056:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 17:43:19,145:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 17:43:29,930:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:43:29,937:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:43:29,937:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:43:29,937:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:43:29.930856
+2025-11-11 17:43:32,742:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:43:32,749:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:43:32,749:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:43:32,749:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:43:32.742655
+2025-11-11 17:45:06,006:INFO:Database pool closed
+2025-11-11 17:45:07,795:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 17:45:07,895:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 17:45:22,305:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:45:22,314:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:45:22,314:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:45:22,314:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:45:22.305497
+2025-11-11 17:50:30,491:INFO:Database pool closed
+2025-11-11 17:50:32,943:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 17:50:33,035:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 17:51:12,434:INFO:Database pool closed
+2025-11-11 17:51:23,161:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 17:51:23,253:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 17:59:18,011:INFO:Database pool closed
+2025-11-11 17:59:28,444:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 17:59:28,541:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 17:59:39,456:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 17:59:39,465:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 17:59:39,465:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 17:59:39,465:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 17:59:39.456474
+2025-11-11 18:00:00,331:INFO:Database pool closed
+2025-11-11 18:00:03,577:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 18:00:03,667:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 18:00:27,317:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 18:00:27,326:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 18:00:27,327:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 18:00:27,327:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 18:00:27.317511
+2025-11-11 18:01:38,366:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 18:01:38,372:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 18:01:38,372:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 18:01:38,372:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 18:01:38.366420
+2025-11-11 18:10:01,890:INFO:Database pool closed
+2025-11-11 18:10:15,649:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 18:10:15,739:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 18:10:26,340:INFO:Attempting to bind with user DN: UNIVERSAL\00061221
+2025-11-11 18:10:26,347:ERROR:LDAP authentication error for user 00061221: unsupported hash type MD4
+2025-11-11 18:10:26,347:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-11 18:10:26,347:INFO:Incorrect login attempt for user 00061221 at 2025-11-11 18:10:26.339937
+2025-11-11 18:12:20,546:INFO:Database pool closed
+2025-11-11 18:12:22,921:INFO:Loaded 4 permitted users from environment variable
+2025-11-11 18:12:23,011:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-11 18:12:37,406:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-11 18:12:37,406:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-11 18:12:37,784:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-11 18:12:37,784:INFO:Successful login for user 00061221 (Aibassov Danial) at 2025-11-11 18:12:37.405960
+2025-11-11 18:12:37,786:ERROR:LDAP login error: column "role" does not exist
+LINE 1: SELECT id, name, surname, role, department_id FROM users WHE...
+                                  ^
+2025-11-12 10:42:30,242:INFO:Database pool closed
+2025-11-12 10:47:09,476:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 10:47:09,566:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 10:47:21,658:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 10:47:21,658:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 10:47:22,266:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 10:47:22,267:INFO:Successful login for user 00061221 (Aibassov Danial) at 2025-11-12 10:47:21.658405
+2025-11-12 10:48:02,589:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 10:48:02,589:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 10:48:02,603:WARNING:SIMPLE authentication (UPN) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 10:48:02,604:INFO:Trying DOMAIN\username format: UNIVERSAL\00061221
+2025-11-12 10:48:02,612:WARNING:SIMPLE authentication (DOMAIN\username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 10:48:02,612:INFO:Trying plain username: 00061221
+2025-11-12 10:48:02,614:WARNING:SIMPLE authentication (plain username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 10:48:02,614:ERROR:❌ All authentication methods failed for user: 00061221
+2025-11-12 10:48:02,614:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-12 10:48:02,614:INFO:Incorrect login attempt for user 00061221 at 2025-11-12 10:48:02.588946
+2025-11-12 10:48:05,003:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 10:48:05,004:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 10:48:05,364:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 10:48:05,365:INFO:Successful login for user 00061221 (Aibassov Danial) at 2025-11-12 10:48:05.003698
+2025-11-12 11:15:50,482:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 11:15:50,483:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 11:15:51,200:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 11:15:51,201:INFO:Successful login for user 00061221 (Aibassov Danial) at 2025-11-12 11:15:50.481957
+2025-11-12 11:29:30,955:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 11:29:30,955:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 11:29:31,175:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 11:29:31,176:INFO:Successful login for user 00061221 (Aibassov Danial) at 2025-11-12 11:29:30.955150
+2025-11-12 11:36:09,527:INFO:Attempting SIMPLE authentication for user: 00058543
+2025-11-12 11:36:09,527:INFO:Trying UPN format: 00058543@UNIVERSAL
+2025-11-12 11:36:09,782:INFO:✅ Successfully authenticated user 00058543 using SIMPLE authentication (UPN format)
+2025-11-12 11:36:09,782:INFO:Successful login for user 00058543 (Daniyar Musa) at 2025-11-12 11:36:09.526816
+2025-11-12 11:40:00,775:INFO:Database pool closed
+2025-11-12 11:48:01,438:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 11:48:01,542:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 13:33:46,627:INFO:Database pool closed
+2025-11-12 13:33:50,785:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 13:33:50,911:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 13:34:06,076:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 13:34:06,078:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 13:34:06,699:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 13:34:06,700:INFO:Successful login for user 00061221 (Aibassov Danial) at 2025-11-12 13:34:06.076734
+2025-11-12 13:35:01,347:INFO:Database pool closed
+2025-11-12 13:35:04,550:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 13:35:04,810:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 13:35:15,630:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 13:35:15,631:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 13:35:16,027:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 13:35:16,028:INFO:Successful login for user 00061221 (Aibassov Danial) at 2025-11-12 13:35:15.630779
+2025-11-12 13:35:31,372:INFO:Database pool closed
+2025-11-12 13:54:03,187:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 13:54:03,275:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 13:54:16,171:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 13:54:16,171:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 13:54:16,830:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 13:54:16,831:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 13:54:16.171513
+2025-11-12 14:08:22,703:INFO:Attempting SIMPLE authentication for user: 00058543
+2025-11-12 14:08:22,704:INFO:Trying UPN format: 00058543@UNIVERSAL
+2025-11-12 14:08:22,935:INFO:✅ Successfully authenticated user 00058543 using SIMPLE authentication (UPN format)
+2025-11-12 14:08:22,935:INFO:Successful login for user 00058543 (Мұса Данияр Биназарұлы) at 2025-11-12 14:08:22.703518
+2025-11-12 14:09:52,386:INFO:Database pool closed
+2025-11-12 14:13:23,262:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 14:13:23,359:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 14:13:35,745:INFO:Not approved user 00061221@DOMAIN at 2025-11-12 14:13:35.745683
+2025-11-12 14:13:39,161:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 14:13:39,161:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 14:13:39,807:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 14:13:39,808:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 14:13:39.161134
+2025-11-12 14:49:13,133:INFO:Database pool closed
+2025-11-12 14:49:15,614:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 14:49:15,714:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 14:49:27,520:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 14:49:27,520:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 14:49:27,936:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 14:49:27,936:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 14:49:27.520108
+2025-11-12 15:11:01,707:INFO:Attempting SIMPLE authentication for user: 00061386
+2025-11-12 15:11:01,708:INFO:Trying UPN format: 00061386@UNIVERSAL
+2025-11-12 15:11:01,925:INFO:✅ Successfully authenticated user 00061386 using SIMPLE authentication (UPN format)
+2025-11-12 15:11:01,925:INFO:Successful login for user 00061386 (Кеттебеков Жанайдар Канатович) at 2025-11-12 15:11:01.707454
+2025-11-12 15:17:08,159:INFO:Database pool closed
+2025-11-12 15:17:11,599:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 15:17:11,738:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 15:18:00,082:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 15:18:00,083:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 15:18:00,751:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 15:18:00,752:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 15:18:00.082691
+2025-11-12 15:26:12,946:INFO:Database pool closed
+2025-11-12 15:26:47,683:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 15:26:47,774:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 15:27:00,149:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 15:27:00,149:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 15:27:00,888:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 15:27:00,889:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 15:27:00.149120
+2025-11-12 15:52:57,645:INFO:Database pool closed
+2025-11-12 16:08:53,748:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 16:08:53,868:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 16:09:04,706:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 16:09:04,706:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 16:09:05,238:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 16:09:05,238:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 16:09:04.706368
+2025-11-12 16:15:21,790:INFO:Database pool closed
+2025-11-12 16:15:24,432:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 16:15:24,570:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 16:15:37,004:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 16:15:37,004:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 16:15:37,533:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 16:15:37,534:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 16:15:37.004188
+2025-11-12 16:31:15,182:INFO:Database pool closed
+2025-11-12 16:31:28,737:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 16:31:28,814:INFO:HTTP Request: GET http://testserver/api/hr/results "HTTP/1.1 500 Internal Server Error"
+2025-11-12 16:38:35,272:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 16:38:35,374:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 16:38:35,374:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,374:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,374:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,374:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,374:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,374:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,374:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,374:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,374:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,374:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:35,375:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,288:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,289:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,297:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,310:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,324:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,326:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,326:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,340:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,363:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,374:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,378:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,380:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,381:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,381:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,382:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,389:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,403:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,405:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,409:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,410:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,415:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,416:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,419:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,434:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,435:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,440:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,455:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,460:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,473:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:36,475:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,114:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,118:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,139:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,181:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,220:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,228:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,229:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,268:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,340:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,371:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,386:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,390:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,393:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,393:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,397:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,417:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,460:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,465:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,477:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,484:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,496:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,497:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,508:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,552:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,552:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,570:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,617:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,631:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,671:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:38,675:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:41,766:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:41,775:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:41,825:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:41,922:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,012:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,031:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,034:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,123:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,294:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,363:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,399:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,410:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,416:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,418:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,425:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,473:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,571:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,584:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,613:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,630:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,656:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,659:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,684:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,786:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,787:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,828:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,937:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:42,972:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:43,064:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:43,073:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:45,944:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 16:38:45,944:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 16:38:46,492:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 16:38:46,492:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 16:38:45.944389
+2025-11-12 16:38:46,493:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:47,525:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:49,070:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:49,088:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:49,194:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:49,404:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:49,587:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:49,595:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:49,635:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:49,643:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:49,835:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:50,201:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:50,346:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:50,423:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:50,449:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:50,462:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:50,468:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:50,480:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:50,584:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:50,792:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:50,821:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:50,885:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:50,921:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:50,976:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:50,981:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:51,036:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:51,252:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:51,257:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:51,346:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:51,576:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:51,653:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:51,850:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:51,869:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:38:53,710:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:01,953:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:03,677:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:03,713:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:03,930:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:04,366:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:04,761:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:04,845:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:04,859:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:05,257:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:06,015:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:06,312:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:06,471:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:06,528:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:06,553:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:06,568:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:06,588:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:06,805:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:07,235:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:07,296:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:07,426:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:07,500:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:07,616:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:07,624:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:07,740:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:08,185:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:08,195:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:08,379:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:08,855:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:09,014:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:09,422:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:09,459:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:16,493:ERROR:LDAP login error: couldn't get a connection after 30.00 sec
+2025-11-12 16:39:18,440:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:32,889:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:32,963:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:33,403:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:34,291:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:35,091:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:35,262:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:35,292:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:36,100:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:37,640:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:38,244:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:38,567:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:38,683:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:38,735:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:38,768:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:38,805:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:39,247:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:40,120:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:40,246:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:40,509:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:40,658:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:40,893:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:40,909:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:41,148:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:42,050:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:42,070:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:42,444:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:43,410:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:43,737:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:44,567:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:44,639:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:44,763:INFO:Database pool closed
+2025-11-12 16:39:46,952:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 16:39:47,050:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 16:39:47,050:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,052:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,052:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,052:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,052:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,052:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,954:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,954:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,961:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,978:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,979:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,979:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:47,994:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,006:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,006:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,008:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,015:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,018:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,025:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,025:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,039:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,040:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,046:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,049:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,056:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,065:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,065:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,070:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,071:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,086:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,087:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,114:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,114:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,126:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,127:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:48,147:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:49,758:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:49,761:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:49,780:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:49,832:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:49,833:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:49,833:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:49,878:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:49,914:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:49,917:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:49,921:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:49,942:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:49,950:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:49,972:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:49,972:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,013:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,019:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,035:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,044:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,067:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,090:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,092:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,107:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,112:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,154:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,160:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,238:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,275:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,278:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:50,337:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,366:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,374:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,416:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,538:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,541:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,541:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,645:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,729:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,738:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,745:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,795:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,814:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,865:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,866:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,959:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:53,975:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:54,013:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:54,032:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:54,088:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:54,139:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:54,145:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:54,180:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:54,194:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:54,291:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:54,306:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:54,487:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:54,488:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:54,572:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:54,579:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:54,716:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:57,998:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 16:39:57,998:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 16:39:58,530:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 16:39:58,530:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 16:39:57.997912
+2025-11-12 16:39:58,531:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:39:59,452:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:00,581:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:00,600:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:00,688:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:00,950:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:00,955:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:00,957:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:01,177:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:01,293:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:01,359:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:01,379:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:01,395:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:01,500:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:01,539:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:01,651:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:01,653:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:01,850:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:01,886:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:01,969:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:02,009:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:02,129:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:02,236:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:02,251:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:02,325:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:02,357:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:02,562:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:02,597:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:02,983:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:02,986:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:03,167:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:03,181:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:03,474:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:04,972:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:12,331:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:15,011:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:15,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:15,232:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:15,772:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:15,785:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:15,787:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:16,240:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:16,618:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:16,659:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:16,692:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:16,909:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:16,990:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:17,223:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:17,227:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:17,633:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:17,708:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:17,878:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:17,963:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:18,211:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:18,431:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:18,460:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:18,616:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:18,685:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:19,104:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:19,176:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:19,975:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:19,980:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:20,355:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:20,384:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:20,988:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:27,048:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:40:28,531:ERROR:LDAP login error: couldn't get a connection after 30.00 sec
+2025-11-12 16:40:43,072:INFO:Database pool closed
+2025-11-12 16:40:44,953:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 16:40:45,072:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 16:40:53,488:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 16:40:53,488:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 16:40:53,882:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 16:40:53,883:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 16:40:53.488422
+2025-11-12 16:43:42,359:INFO:Database pool closed
+2025-11-12 16:43:47,150:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 16:43:47,238:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 16:43:47,238:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,238:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,240:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:47,240:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,144:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,146:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,147:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,151:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,152:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,159:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,161:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,162:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,164:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,177:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,178:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,198:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,208:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,224:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,237:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,237:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,239:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,252:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,254:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,273:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,286:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,291:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,299:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,309:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,312:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,313:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,315:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,316:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,318:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:48,323:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:49,954:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:49,957:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:49,962:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:49,976:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:49,977:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,000:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,004:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,007:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,017:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,053:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,057:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,114:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,145:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,193:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,233:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,233:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,238:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,278:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,284:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,340:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,378:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,396:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,417:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,447:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,459:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,460:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,467:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,471:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,474:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:50,491:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:53,575:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:53,578:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:53,592:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:53,625:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:53,629:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:53,681:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:53,690:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:53,697:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:53,720:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:53,805:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:53,814:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:53,944:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,018:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,131:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,221:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,222:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,236:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,330:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,343:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,474:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,564:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,605:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,652:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,723:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,751:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,754:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,771:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,780:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,785:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:54,826:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:56,526:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 16:43:56,526:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 16:43:56,913:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 16:43:56,914:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 16:43:56.525952
+2025-11-12 16:43:56,917:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:57,853:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:43:59,725:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:00,815:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:00,820:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:00,852:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:00,921:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:00,931:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:01,043:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:01,061:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:01,078:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:01,127:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:01,309:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:01,328:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:01,605:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:01,764:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:02,007:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:02,198:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:02,202:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:02,229:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:02,433:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:02,460:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:02,742:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:02,933:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:03,022:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:03,119:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:03,272:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:03,333:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:03,341:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:03,377:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:03,397:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:03,407:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:03,469:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:03,495:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:10,955:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:15,297:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:15,302:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:15,369:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:15,513:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:15,535:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:15,767:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:15,802:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:15,837:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:15,938:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:16,316:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:16,353:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:16,927:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:17,254:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:17,758:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:18,152:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:18,159:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:18,216:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:18,638:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:18,692:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:19,277:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:19,670:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:19,854:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:20,054:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:20,370:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:20,495:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:20,512:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:20,589:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:20,629:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:20,650:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:20,833:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:25,927:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:26,916:ERROR:LDAP login error: couldn't get a connection after 30.00 sec
+2025-11-12 16:44:36,634:INFO:Database pool closed
+2025-11-12 16:44:39,036:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 16:44:39,139:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 16:44:39,139:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,139:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,139:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,140:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,141:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:39,141:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,051:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,058:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,070:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,070:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,078:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,080:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,081:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,083:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,087:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,091:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,096:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,108:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,114:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,128:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,152:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,155:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,161:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,162:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,165:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,166:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,169:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,180:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,180:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,201:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,204:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,218:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,220:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,226:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,227:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:40,236:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:41,872:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:41,896:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:41,928:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:41,931:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:41,955:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:41,960:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:41,966:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:41,967:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:41,983:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:41,994:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,010:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,045:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,061:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,104:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,173:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,186:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,205:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,205:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,215:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,219:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,227:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,261:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,262:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,322:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,333:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,373:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,378:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,399:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,400:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:42,427:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:45,513:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:45,569:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:45,645:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:45,652:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:45,707:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:45,719:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:45,733:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:45,734:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:45,774:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:45,799:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:45,843:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:45,917:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:45,954:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,054:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,213:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,247:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,290:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,291:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,313:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,325:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,343:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,423:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,425:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,564:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,588:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,681:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,695:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,744:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,747:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:46,807:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:48,907:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 16:44:48,907:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 16:44:49,302:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 16:44:49,302:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 16:44:48.906640
+2025-11-12 16:44:49,303:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:50,257:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:52,161:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:52,796:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:52,916:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:53,079:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:53,093:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:53,209:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:53,234:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:53,267:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:53,267:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:53,352:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:53,405:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:53,492:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:53,657:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:53,740:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:53,952:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:54,295:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:54,368:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:54,461:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:54,463:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:54,509:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:54,534:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:54,573:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:54,744:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:54,751:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:55,047:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:55,099:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:55,297:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:55,326:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:55,431:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:55,440:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:55,567:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:44:55,969:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:03,584:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:07,360:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:07,607:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:07,944:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:07,976:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:08,214:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:08,265:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:08,334:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:08,335:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:08,509:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:08,610:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:08,791:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:09,137:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:09,307:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:09,747:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:10,456:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:10,608:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:10,800:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:10,805:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:10,898:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:10,952:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:11,031:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:11,386:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:11,401:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:12,013:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:12,121:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:12,529:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:12,589:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:12,805:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:12,826:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:13,085:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:18,813:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:19,302:ERROR:LDAP login error: couldn't get a connection after 30.00 sec
+2025-11-12 16:45:36,487:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:36,990:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:37,674:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:37,739:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:38,220:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:38,326:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:38,467:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:38,471:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:38,821:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:39,019:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:39,388:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:40,096:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:40,443:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:41,338:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:42,778:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:43,087:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:43,477:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:43,489:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:43,676:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:43,785:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:43,948:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:44,669:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:44,699:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:45,943:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:46,161:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:46,992:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:47,114:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:47,552:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:47,597:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:48,122:WARNING:error connecting in 'pool-1': extra key/value separator "=" in URI query parameter: "options"
+
+2025-11-12 16:45:48,695:INFO:Database pool closed
+2025-11-12 16:45:50,319:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 16:45:50,410:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 16:45:59,200:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 16:45:59,200:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 16:45:59,211:WARNING:SIMPLE authentication (UPN) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 16:45:59,211:INFO:Trying DOMAIN\username format: UNIVERSAL\00061221
+2025-11-12 16:45:59,219:WARNING:SIMPLE authentication (DOMAIN\username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 16:45:59,219:INFO:Trying plain username: 00061221
+2025-11-12 16:45:59,221:WARNING:SIMPLE authentication (plain username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 16:45:59,221:ERROR:❌ All authentication methods failed for user: 00061221
+2025-11-12 16:45:59,221:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-12 16:45:59,221:INFO:Incorrect login attempt for user 00061221 at 2025-11-12 16:45:59.200491
+2025-11-12 16:46:02,235:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 16:46:02,235:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 16:46:02,647:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 16:46:02,648:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 16:46:02.235640
+2025-11-12 16:59:16,162:INFO:Database pool closed
+2025-11-12 16:59:20,876:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 16:59:20,986:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 16:59:33,414:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 16:59:33,414:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 16:59:34,745:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 16:59:34,747:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 16:59:33.414499
+2025-11-12 17:01:40,218:INFO:Database pool closed
+2025-11-12 17:01:43,934:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 17:01:44,233:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 17:01:55,407:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 17:01:55,408:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 17:01:56,076:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 17:01:56,076:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 17:01:55.407864
+2025-11-12 17:05:57,268:INFO:Database pool closed
+2025-11-12 17:06:00,001:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 17:06:00,099:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 17:06:10,948:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 17:06:10,948:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 17:06:11,492:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 17:06:11,493:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 17:06:10.948173
+2025-11-12 17:12:01,095:INFO:Database pool closed
+2025-11-12 17:12:03,259:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 17:12:03,374:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 17:12:23,845:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 17:12:23,845:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 17:12:24,226:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 17:12:24,226:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 17:12:23.845013
+2025-11-12 17:32:20,225:INFO:Database pool closed
+2025-11-12 17:32:22,851:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 17:32:22,941:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 17:32:35,539:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 17:32:35,540:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 17:32:35,899:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 17:32:35,899:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 17:32:35.539748
+2025-11-12 17:46:37,550:INFO:Database pool closed
+2025-11-12 18:19:54,028:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 18:19:54,127:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 18:20:03,485:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 18:20:03,485:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 18:20:03,884:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 18:20:03,884:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 18:20:03.485252
+2025-11-12 18:22:18,355:INFO:Database pool closed
+2025-11-12 18:44:22,526:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 18:44:22,636:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 18:44:31,580:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 18:44:31,580:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 18:44:32,022:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 18:44:32,023:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 18:44:31.579948
+2025-11-12 18:47:00,844:INFO:Database pool closed
+2025-11-12 18:47:43,980:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 18:47:44,069:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 18:47:52,015:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 18:47:52,015:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 18:47:52,389:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 18:47:52,389:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 18:47:52.015194
+2025-11-12 18:48:36,093:INFO:Database pool closed
+2025-11-12 20:26:28,882:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 21:02:34,013:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 21:02:34,304:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 21:02:42,042:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:02:42,042:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:02:42,055:WARNING:SIMPLE authentication (UPN) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:42,056:INFO:Trying DOMAIN\username format: UNIVERSAL\00061221
+2025-11-12 21:02:42,062:WARNING:SIMPLE authentication (DOMAIN\username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:42,063:INFO:Trying plain username: 00061221
+2025-11-12 21:02:42,064:WARNING:SIMPLE authentication (plain username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:42,064:ERROR:❌ All authentication methods failed for user: 00061221
+2025-11-12 21:02:42,064:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-12 21:02:42,064:INFO:Incorrect login attempt for user 00061221 at 2025-11-12 21:02:42.042577
+2025-11-12 21:02:43,414:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:02:43,414:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:02:43,424:WARNING:SIMPLE authentication (UPN) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:43,424:INFO:Trying DOMAIN\username format: UNIVERSAL\00061221
+2025-11-12 21:02:43,432:WARNING:SIMPLE authentication (DOMAIN\username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:43,433:INFO:Trying plain username: 00061221
+2025-11-12 21:02:43,435:WARNING:SIMPLE authentication (plain username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:43,435:ERROR:❌ All authentication methods failed for user: 00061221
+2025-11-12 21:02:43,436:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-12 21:02:43,436:INFO:Incorrect login attempt for user 00061221 at 2025-11-12 21:02:43.414177
+2025-11-12 21:02:50,903:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:02:50,903:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:02:50,916:WARNING:SIMPLE authentication (UPN) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:50,916:INFO:Trying DOMAIN\username format: UNIVERSAL\00061221
+2025-11-12 21:02:50,922:WARNING:SIMPLE authentication (DOMAIN\username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:50,922:INFO:Trying plain username: 00061221
+2025-11-12 21:02:50,924:WARNING:SIMPLE authentication (plain username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:50,924:ERROR:❌ All authentication methods failed for user: 00061221
+2025-11-12 21:02:50,924:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-12 21:02:50,924:INFO:Incorrect login attempt for user 00061221 at 2025-11-12 21:02:50.903022
+2025-11-12 21:02:54,134:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:02:54,134:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:02:54,141:WARNING:SIMPLE authentication (UPN) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:54,141:INFO:Trying DOMAIN\username format: UNIVERSAL\00061221
+2025-11-12 21:02:54,145:WARNING:SIMPLE authentication (DOMAIN\username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:54,145:INFO:Trying plain username: 00061221
+2025-11-12 21:02:54,147:WARNING:SIMPLE authentication (plain username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:54,147:ERROR:❌ All authentication methods failed for user: 00061221
+2025-11-12 21:02:54,147:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-12 21:02:54,147:INFO:Incorrect login attempt for user 00061221 at 2025-11-12 21:02:54.134234
+2025-11-12 21:02:58,062:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:02:58,062:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:02:58,069:WARNING:SIMPLE authentication (UPN) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:58,070:INFO:Trying DOMAIN\username format: UNIVERSAL\00061221
+2025-11-12 21:02:58,075:WARNING:SIMPLE authentication (DOMAIN\username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:58,075:INFO:Trying plain username: 00061221
+2025-11-12 21:02:58,077:WARNING:SIMPLE authentication (plain username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:02:58,077:ERROR:❌ All authentication methods failed for user: 00061221
+2025-11-12 21:02:58,077:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-12 21:02:58,077:INFO:Incorrect login attempt for user 00061221 at 2025-11-12 21:02:58.062561
+2025-11-12 21:03:00,203:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:03:00,203:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:03:00,210:WARNING:SIMPLE authentication (UPN) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:03:00,210:INFO:Trying DOMAIN\username format: UNIVERSAL\00061221
+2025-11-12 21:03:00,215:WARNING:SIMPLE authentication (DOMAIN\username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:03:00,215:INFO:Trying plain username: 00061221
+2025-11-12 21:03:00,216:WARNING:SIMPLE authentication (plain username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:03:00,216:ERROR:❌ All authentication methods failed for user: 00061221
+2025-11-12 21:03:00,216:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-12 21:03:00,217:INFO:Incorrect login attempt for user 00061221 at 2025-11-12 21:03:00.203175
+2025-11-12 21:03:00,929:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:03:00,929:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:03:00,936:WARNING:SIMPLE authentication (UPN) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:03:00,936:INFO:Trying DOMAIN\username format: UNIVERSAL\00061221
+2025-11-12 21:03:00,942:WARNING:SIMPLE authentication (DOMAIN\username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:03:00,942:INFO:Trying plain username: 00061221
+2025-11-12 21:03:00,944:WARNING:SIMPLE authentication (plain username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:03:00,944:ERROR:❌ All authentication methods failed for user: 00061221
+2025-11-12 21:03:00,944:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-12 21:03:00,944:INFO:Incorrect login attempt for user 00061221 at 2025-11-12 21:03:00.929037
+2025-11-12 21:03:01,111:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:03:01,111:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:03:01,117:WARNING:SIMPLE authentication (UPN) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:03:01,118:INFO:Trying DOMAIN\username format: UNIVERSAL\00061221
+2025-11-12 21:03:01,123:WARNING:SIMPLE authentication (DOMAIN\username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:03:01,123:INFO:Trying plain username: 00061221
+2025-11-12 21:03:01,125:WARNING:SIMPLE authentication (plain username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:03:01,125:ERROR:❌ All authentication methods failed for user: 00061221
+2025-11-12 21:03:01,125:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-12 21:03:01,125:INFO:Incorrect login attempt for user 00061221 at 2025-11-12 21:03:01.111126
+2025-11-12 21:03:01,292:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:03:01,292:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:03:01,299:WARNING:SIMPLE authentication (UPN) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:03:01,300:INFO:Trying DOMAIN\username format: UNIVERSAL\00061221
+2025-11-12 21:03:01,302:WARNING:SIMPLE authentication (DOMAIN\username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:03:01,302:INFO:Trying plain username: 00061221
+2025-11-12 21:03:01,304:WARNING:SIMPLE authentication (plain username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:03:01,304:ERROR:❌ All authentication methods failed for user: 00061221
+2025-11-12 21:03:01,304:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-12 21:03:01,304:INFO:Incorrect login attempt for user 00061221 at 2025-11-12 21:03:01.292740
+2025-11-12 21:05:11,439:INFO:Database pool closed
+2025-11-12 21:05:13,969:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 21:05:14,088:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 21:05:22,698:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:05:22,698:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:05:22,707:WARNING:SIMPLE authentication (UPN) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:05:22,708:INFO:Trying DOMAIN\username format: UNIVERSAL\00061221
+2025-11-12 21:05:22,711:WARNING:SIMPLE authentication (DOMAIN\username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:05:22,711:INFO:Trying plain username: 00061221
+2025-11-12 21:05:22,713:WARNING:SIMPLE authentication (plain username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:05:22,713:ERROR:❌ All authentication methods failed for user: 00061221
+2025-11-12 21:05:22,713:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-12 21:05:22,713:INFO:Incorrect login attempt for user 00061221 at 2025-11-12 21:05:22.698254
+2025-11-12 21:05:58,023:INFO:Database pool closed
+2025-11-12 21:06:01,962:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 21:06:02,089:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 21:06:10,852:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:06:10,852:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:06:10,864:WARNING:SIMPLE authentication (UPN) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:06:10,864:INFO:Trying DOMAIN\username format: UNIVERSAL\00061221
+2025-11-12 21:06:10,867:WARNING:SIMPLE authentication (DOMAIN\username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 775, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:06:10,867:INFO:Trying plain username: 00061221
+2025-11-12 21:06:10,868:WARNING:SIMPLE authentication (plain username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:06:10,868:ERROR:❌ All authentication methods failed for user: 00061221
+2025-11-12 21:06:10,869:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-12 21:06:10,869:INFO:Incorrect login attempt for user 00061221 at 2025-11-12 21:06:10.852529
+2025-11-12 21:08:21,895:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:08:21,896:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:08:22,425:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 21:08:22,425:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 21:08:21.895849
+2025-11-12 21:08:51,326:INFO:Database pool closed
+2025-11-12 21:08:53,957:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 21:08:54,087:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 21:09:02,623:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:09:02,623:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:09:03,649:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 21:09:03,651:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 21:09:02.623000
+2025-11-12 21:17:09,975:INFO:Database pool closed
+2025-11-12 21:52:01,404:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 21:52:01,496:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 21:52:49,922:INFO:Database pool closed
+2025-11-12 21:52:52,469:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 21:52:52,568:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 21:53:11,828:INFO:Database pool closed
+2025-11-12 21:53:14,646:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 21:53:14,797:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 21:53:22,737:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:53:22,737:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:53:23,129:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 21:53:23,130:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 21:53:22.737067
+2025-11-12 21:53:46,897:INFO:Database pool closed
+2025-11-12 21:53:50,415:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 21:53:50,622:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 21:53:58,545:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:53:58,545:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:53:58,555:WARNING:SIMPLE authentication (UPN) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:53:58,555:INFO:Trying DOMAIN\username format: UNIVERSAL\00061221
+2025-11-12 21:53:58,562:WARNING:SIMPLE authentication (DOMAIN\username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:53:58,562:INFO:Trying plain username: 00061221
+2025-11-12 21:53:58,565:WARNING:SIMPLE authentication (plain username) failed for 00061221: {'result': 49, 'description': 'invalidCredentials', 'dn': '', 'message': '80090308: LdapErr: DSID-0C090447, comment: AcceptSecurityContext error, data 52e, v3839\x00', 'referrals': None, 'saslCreds': None, 'type': 'bindResponse'}
+2025-11-12 21:53:58,565:ERROR:❌ All authentication methods failed for user: 00061221
+2025-11-12 21:53:58,565:ERROR:LDAP Config: host=ala200i26.halykbank.nb, port=389, domain=UNIVERSAL
+2025-11-12 21:53:58,565:INFO:Incorrect login attempt for user 00061221 at 2025-11-12 21:53:58.545454
+2025-11-12 21:54:01,689:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 21:54:01,689:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 21:54:02,082:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 21:54:02,083:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 21:54:01.689365
+2025-11-12 22:00:47,500:INFO:Database pool closed
+2025-11-12 22:00:49,772:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 22:00:49,880:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 22:01:01,220:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 22:01:01,220:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 22:01:01,647:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 22:01:01,647:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 22:01:01.220022
+2025-11-12 22:01:27,420:INFO:Database pool closed
+2025-11-12 22:01:29,161:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 22:01:29,261:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 22:01:38,147:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 22:01:38,147:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 22:01:38,547:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 22:01:38,547:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 22:01:38.147402
+2025-11-12 22:03:19,225:INFO:Database pool closed
+2025-11-12 22:03:20,788:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 22:03:20,887:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 22:03:31,530:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 22:03:31,531:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 22:03:31,939:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 22:03:31,939:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 22:03:31.530750
+2025-11-12 22:11:43,040:INFO:Database pool closed
+2025-11-12 22:11:45,634:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 22:11:45,725:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 22:12:02,161:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 22:12:02,161:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 22:12:02,716:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 22:12:02,716:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 22:12:02.161472
+2025-11-12 22:16:56,765:INFO:Database pool closed
+2025-11-12 22:21:01,888:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 22:21:01,999:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 22:21:21,124:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 22:21:21,124:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 22:21:21,752:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 22:21:21,753:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 22:21:21.124306
+2025-11-12 22:24:51,195:INFO:Database pool closed
+2025-11-12 22:24:53,983:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 22:24:54,216:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 22:31:36,310:INFO:Database pool closed
+2025-11-12 22:31:38,305:INFO:Loaded 4 permitted users from environment variable
+2025-11-12 22:31:38,400:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-12 22:31:46,272:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-12 22:31:46,272:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-12 22:31:47,326:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-12 22:31:47,327:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-12 22:31:46.271952
+2025-11-12 22:52:38,460:INFO:Database pool closed
+2025-11-13 09:54:25,181:INFO:Loaded 4 permitted users from environment variable
+2025-11-13 09:54:25,315:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-13 09:54:37,697:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-13 09:54:37,697:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-13 09:54:38,323:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-13 09:54:38,324:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-13 09:54:37.696869
+2025-11-13 10:28:03,120:INFO:Database pool closed
+2025-11-13 10:28:05,870:INFO:Loaded 4 permitted users from environment variable
+2025-11-13 10:28:05,969:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-13 10:28:15,693:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-13 10:28:15,693:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-13 10:28:16,057:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-13 10:28:16,057:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-13 10:28:15.693055
+2025-11-13 10:36:47,795:INFO:Database pool closed
+2025-11-13 10:36:51,496:INFO:Loaded 4 permitted users from environment variable
+2025-11-13 10:36:51,588:INFO:✅ Database pool initialized (scheme: hr)
+2025-11-13 10:37:13,874:INFO:Not approved user 00048484 at 2025-11-13 10:37:13.874599
+2025-11-13 10:37:30,484:INFO:Not approved user 00048484 at 2025-11-13 10:37:30.484851
+2025-11-13 10:37:45,102:INFO:Attempting SIMPLE authentication for user: 00061221
+2025-11-13 10:37:45,102:INFO:Trying UPN format: 00061221@UNIVERSAL
+2025-11-13 10:37:45,460:INFO:✅ Successfully authenticated user 00061221 using SIMPLE authentication (UPN format)
+2025-11-13 10:37:45,461:INFO:Successful login for user 00061221 (Айбасов Даниал Елнарович) at 2025-11-13 10:37:45.102198
+2025-11-13 11:49:54,847:INFO:Database pool closed
+2025-11-13 11:49:57,800:INFO:Loaded 4 permitted users from environment variable
+2025-11-13 11:49:57,926:INFO:✅ Database pool initialized (scheme: hr)

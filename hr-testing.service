@@ -1,0 +1,60 @@
+# systemd Service Configuration for HR Testing Platform
+#
+# Installation:
+#   sudo cp hr-testing.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable hr-testing.service
+#   sudo systemctl start hr-testing.service
+#
+# Management:
+#   sudo systemctl status hr-testing.service
+#   sudo systemctl restart hr-testing.service
+#   sudo systemctl stop hr-testing.service
+#   sudo journalctl -u hr-testing.service -f
+
+[Unit]
+Description=HR Testing Platform - Halyk Bank
+Documentation=https://github.com/YOUR_ORG/hr_testing
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=notify
+User=ocds_mukhtar
+Group=ocds_mukhtar
+WorkingDirectory=/home/ocds_mukhtar/00061221/hr_testing
+Environment="PATH=/home/ocds_mukhtar/00061221/hr_testing/venv/bin:/usr/local/bin:/usr/bin:/bin"
+
+# Load environment variables from .env file
+EnvironmentFile=/home/ocds_mukhtar/00061221/hr_testing/.env
+
+# Start application with Gunicorn + Uvicorn workers
+# Workers: 4 (adjust based on CPU cores and expected load)
+# Worker class: UvicornWorker (ASGI for FastAPI)
+# Bind: 0.0.0.0:8000 (accessible from all interfaces)
+# Timeout: 120 seconds (handles long-running requests)
+ExecStart=/home/ocds_mukhtar/00061221/hr_testing/venv/bin/gunicorn main:app \
+    --workers 4 \
+    --worker-class uvicorn.workers.UvicornWorker \
+    --bind 0.0.0.0:8000 \
+    --timeout 120 \
+    --access-logfile /var/log/hr_testing/access.log \
+    --error-logfile /var/log/hr_testing/error.log \
+    --log-level info
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Security hardening (optional but recommended)
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/home/ocds_mukhtar/00061221/hr_testing /var/log/hr_testing
+
+# Resource limits
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

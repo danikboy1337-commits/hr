@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halyk HR System - Выбор панели</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1DB584 0%, #0a7d5a 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .logo img {
+            max-width: 250px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #1DB584;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .user-details {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+        }
+
+        .panels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .panel-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 3px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 40px 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(29, 181, 132, 0.3);
+        }
+
+        .panel-card.test {
+            border-color: #1DB584;
+        }
+
+        .panel-card.test:hover {
+            background: linear-gradient(135deg, #1DB584 0%, #16a073 100%);
+            color: white;
+        }
+
+        .panel-card.hr {
+            border-color: #667eea;
+        }
+
+        .panel-card.hr:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .panel-card.manager {
+            border-color: #f093fb;
+        }
+
+        .panel-card.manager:hover {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .panel-card.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .panel-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .panel-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .panel-description {
+            font-size: 16px;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .access-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(29, 181, 132, 0.9);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .access-badge.locked {
+            background: rgba(220, 53, 69, 0.9);
+        }
+
+        @media (max-width: 768px) {
+            .panels-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="/static/images/Halyk_LogoName.png" alt="Халык банк">
+            </div>
+            <h1>Добро пожаловать!</h1>
+            <p class="subtitle">Выберите панель для работы</p>
+        </div>
+
+        <div class="user-info" id="userInfo">
+            <div>
+                <div class="user-name" id="userName">Загрузка...</div>
+                <div class="user-details" id="userDetails"></div>
+            </div>
+            <button class="logout-btn" onclick="logout()">Выйти</button>
+        </div>
+
+        <div class="panels-grid" id="panelsGrid">
+            <!-- Panels will be rendered here -->
+        </div>
+    </div>
+
+    <script>
+        let userRole = 'employee';
+        let userDepartment = null;
+
+        function logout() {
+            sessionStorage.removeItem('halyk_token');
+            sessionStorage.removeItem('halyk_user_name');
+            sessionStorage.removeItem('halyk_user_role');
+            sessionStorage.removeItem('halyk_user_department');
+            window.location.href = '/';
+        }
+
+        function renderPanels() {
+            const panelsGrid = document.getElementById('panelsGrid');
+
+            const panels = [
+                {
+                    id: 'test',
+                    title: 'Тестирование',
+                    description: 'Пройдите тест на определение уровня компетенций',
+                    icon: '📝',
+                    link: '/specializations',
+                    roles: ['employee', 'hr', 'manager'],
+                    className: 'test'
+                },
+                {
+                    id: 'hr',
+                    title: 'HR Панель',
+                    description: 'Просмотр всех результатов, статистика, управление',
+                    icon: '👥',
+                    link: '/hr/menu',
+                    roles: ['hr'],
+                    className: 'hr'
+                },
+                {
+                    id: 'manager',
+                    title: 'Панель руководителя',
+                    description: 'Управление сотрудниками вашего отдела',
+                    icon: '📊',
+                    link: '/manager/menu',
+                    roles: ['manager'],
+                    className: 'manager'
+                }
+            ];
+
+            panelsGrid.innerHTML = panels.map(panel => {
+                const hasAccess = panel.roles.includes(userRole);
+                const isDisabled = !hasAccess;
+
+                return `
+                    <a href="${panel.link}" class="panel-card ${panel.className} ${isDisabled ? 'disabled' : ''}"
+                       ${isDisabled ? 'onclick="return false;"' : ''}>
+                        <span class="access-badge ${hasAccess ? '' : 'locked'}">
+                            ${hasAccess ? '✓ Доступ открыт' : '✗ Нет доступа'}
+                        </span>
+                        <div class="panel-icon">${panel.icon}</div>
+                        <div class="panel-title">${panel.title}</div>
+                        <div class="panel-description">${panel.description}</div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        async function loadUserInfo() {
+            const token = sessionStorage.getItem('halyk_token');
+            const userName = sessionStorage.getItem('halyk_user_name');
+            const storedRole = sessionStorage.getItem('halyk_user_role');
+            const storedDept = sessionStorage.getItem('halyk_user_department');
+
+            if (!token) {
+                window.location.href = '/';
+                return;
+            }
+
+            // Set user role
+            userRole = storedRole || 'employee';
+            userDepartment = storedDept ? parseInt(storedDept) : null;
+
+            // Display user info
+            document.getElementById('userName').textContent = userName || 'Пользователь';
+
+            const roleNames = {
+                'employee': 'Сотрудник',
+                'hr': 'HR специалист',
+                'manager': 'Руководитель'
+            };
+
+            let detailsText = `Роль: ${roleNames[userRole] || 'Сотрудник'}`;
+
+            // Optionally fetch department name
+            if (userDepartment) {
+                try {
+                    const response = await fetch('/api/departments');
+                    const data = await response.json();
+                    const dept = data.departments.find(d => d.id === userDepartment);
+                    if (dept) {
+                        detailsText += ` | Отдел: ${dept.name}`;
+                    }
+                } catch (e) {
+                    console.error('Error loading department:', e);
+                }
+            }
+
+            document.getElementById('userDetails').textContent = detailsText;
+
+            // Render panels based on role
+            renderPanels();
+        }
+
+        // Initialize
+        loadUserInfo();
+    </script>
+</body>
+</html>

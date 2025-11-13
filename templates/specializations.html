@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halyk HR System - Выбор специализации</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1DB584 0%, #0a7d5a 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo img {
+            max-width: 250px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #1DB584;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .user-details {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .back-link {
+            color: #1DB584;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            color: #0a7d5a;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 18px;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .profile-section {
+            margin-bottom: 40px;
+        }
+
+        .profile-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #1DB584;
+        }
+
+        .specializations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .specialization-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 3px solid #e0e0e0;
+            border-radius: 16px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            position: relative;
+        }
+
+        .specialization-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(29, 181, 132, 0.3);
+            border-color: #1DB584;
+            background: linear-gradient(135deg, #1DB584 0%, #0a7d5a 100%);
+        }
+
+        .specialization-card:hover .specialization-name {
+            color: white;
+        }
+
+        .specialization-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .specialization-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            transition: all 0.3s;
+        }
+
+        .no-specializations {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="/static/images/Halyk_LogoName.png" alt="Халык банк">
+            </div>
+            <h1>📚 Выбор специализации</h1>
+            <p class="subtitle">Выберите направление для прохождения теста</p>
+        </div>
+
+        <div class="user-info">
+            <div>
+                <div class="user-name" id="userName">Загрузка...</div>
+                <div class="user-details" id="userDetails">Загрузка...</div>
+            </div>
+            <a href="/panels" class="back-link">◀ Назад к панелям</a>
+        </div>
+
+        <div id="content">
+            <div class="loading">⏳ Загрузка специализаций...</div>
+        </div>
+    </div>
+
+    <script>
+        let userName = sessionStorage.getItem('halyk_user_name') || 'Пользователь';
+        let userRole = sessionStorage.getItem('halyk_user_role') || 'employee';
+        let userDepartment = sessionStorage.getItem('halyk_user_department') || '';
+        let token = sessionStorage.getItem('halyk_token');
+
+        // Display user info
+        document.getElementById('userName').textContent = userName;
+
+        const roleNames = {
+            'employee': 'Сотрудник',
+            'hr': 'HR',
+            'manager': 'Руководитель'
+        };
+
+        let details = roleNames[userRole] || userRole;
+        if (userDepartment) {
+            details += ` • ${userDepartment}`;
+        }
+        document.getElementById('userDetails').textContent = details;
+
+        // Check authentication
+        if (!token) {
+            window.location.href = '/';
+        }
+
+        async function loadSpecializations() {
+            try {
+                // Fetch all profiles
+                const profilesResponse = await fetch('/api/profiles');
+                if (!profilesResponse.ok) {
+                    throw new Error('Не удалось загрузить профили');
+                }
+
+                const profilesData = await profilesResponse.json();
+                const profiles = profilesData.profiles || [];
+
+                if (profiles.length === 0) {
+                    document.getElementById('content').innerHTML = `
+                        <div class="no-specializations">
+                            <strong>Специализации не найдены</strong><br>
+                            Пожалуйста, обратитесь к администратору системы.
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Fetch specializations for each profile
+                let html = '';
+                for (const profile of profiles) {
+                    if (!profile.has_specializations) {
+                        continue;
+                    }
+
+                    const specsResponse = await fetch(`/api/profiles/${profile.id}/specializations`);
+                    if (!specsResponse.ok) {
+                        continue;
+                    }
+
+                    const specsData = await specsResponse.json();
+                    const specializations = specsData.specializations || [];
+
+                    if (specializations.length === 0) {
+                        continue;
+                    }
+
+                    html += `
+                        <div class="profile-section">
+                            <div class="profile-title">${profile.name}</div>
+                            <div class="specializations-grid">
+                    `;
+
+                    for (const spec of specializations) {
+                        html += `
+                            <div class="specialization-card" onclick="selectSpecialization(${spec.id}, '${spec.name.replace(/'/g, "\\'")}')">
+                                <div class="specialization-icon">🎯</div>
+                                <div class="specialization-name">${spec.name}</div>
+                            </div>
+                        `;
+                    }
+
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (html === '') {
+                    document.getElementById('content').innerHTML = `
+                        <div class="no-specializations">
+                            <strong>Специализации не найдены</strong><br>
+                            Пожалуйста, обратитесь к администратору системы.
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('content').innerHTML = html;
+                }
+
+            } catch (error) {
+                console.error('Ошибка загрузки специализаций:', error);
+                document.getElementById('content').innerHTML = `
+                    <div class="error-message">
+                        <strong>Ошибка загрузки специализаций</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function selectSpecialization(specializationId, specializationName) {
+            try {
+                // First, select the specialization (optional - for tracking)
+                await fetch('/api/select-specialization', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        specialization_id: specializationId
+                    })
+                });
+
+                // Start the test and get user_test_id
+                const startResponse = await fetch('/api/start-test', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        specialization_id: specializationId
+                    })
+                });
+
+                if (!startResponse.ok) {
+                    const errorData = await startResponse.json();
+                    throw new Error(errorData.detail || 'Не удалось начать тест');
+                }
+
+                const data = await startResponse.json();
+
+                // Redirect to test page with user_test_id
+                window.location.href = `/test?user_test_id=${data.user_test_id}`;
+
+            } catch (error) {
+                console.error('Ошибка при начале теста:', error);
+                alert('Ошибка при начале теста: ' + error.message + '\n\nПожалуйста, попробуйте еще раз.');
+            }
+        }
+
+        // Load specializations on page load
+        loadSpecializations();
+    </script>
+</body>
+</html>
