@@ -133,7 +133,29 @@ async def generate_test_themes_v2(user_id: int, test_session_id: int, specializa
     """
 
     async with conn.cursor() as cur:
+        # DEBUG: Check database state
+        print(f"\n{'='*60}")
+        print(f"🔍 DEBUG: Question Algorithm V2")
+        print(f"{'='*60}")
+        print(f"Specialization ID: {specialization_id}")
+        print(f"User ID: {user_id}")
+        print(f"Test Session ID: {test_session_id}")
+
+        # Check total data in database
+        await cur.execute("SELECT COUNT(*) FROM competencies")
+        total_comps = (await cur.fetchone())[0]
+        await cur.execute("SELECT COUNT(*) FROM topics")
+        total_topics = (await cur.fetchone())[0]
+        await cur.execute("SELECT COUNT(*) FROM questions")
+        total_questions = (await cur.fetchone())[0]
+
+        print(f"\nDatabase totals:")
+        print(f"  - Competencies: {total_comps}")
+        print(f"  - Topics: {total_topics}")
+        print(f"  - Questions: {total_questions}")
+
         # 1. Get competencies with weights
+        print(f"\n1️⃣ Fetching competencies for specialization_id={specialization_id}...")
         await cur.execute("""
             SELECT id, name, weight
             FROM competencies
@@ -141,8 +163,11 @@ async def generate_test_themes_v2(user_id: int, test_session_id: int, specializa
             ORDER BY weight DESC
         """, (specialization_id,))
 
+        rows = await cur.fetchall()
+        print(f"   Query returned {len(rows)} rows")
+
         competencies = []
-        for row in await cur.fetchall():
+        for row in rows:
             competencies.append({
                 'id': row[0],
                 'name': row[1],
@@ -150,31 +175,48 @@ async def generate_test_themes_v2(user_id: int, test_session_id: int, specializa
             })
 
         if not competencies:
+            # Check what specializations exist
+            await cur.execute("SELECT id, name FROM specializations ORDER BY id")
+            specs = await cur.fetchall()
+            print(f"\n❌ ERROR: No competencies found for specialization_id={specialization_id}")
+            print(f"Available specializations in database:")
+            for spec_id, spec_name in specs:
+                print(f"  - ID {spec_id}: {spec_name}")
+
             raise Exception(f"No competencies found for specialization_id={specialization_id}")
 
-        print(f"📊 Found {len(competencies)} competencies")
+        print(f"\n📊 Found {len(competencies)} competencies:")
         for comp in competencies:
-            print(f"   - {comp['name']}: weight {comp['weight']}")
+            print(f"   - ID {comp['id']}: {comp['name']} (weight: {comp['weight']})")
 
         # 2. Calculate theme distribution
+        print(f"\n2️⃣ Calculating theme distribution for 20 themes...")
         theme_distribution = calculate_theme_distribution(competencies, total_themes=20)
 
         print(f"\n📈 Theme distribution:")
+        total_assigned = 0
         for comp_id, num_themes in theme_distribution.items():
             comp_name = next(c['name'] for c in competencies if c['id'] == comp_id)
             print(f"   - {comp_name}: {num_themes} themes")
+            total_assigned += num_themes
+        print(f"   TOTAL: {total_assigned} themes assigned")
 
         # 3. Select topics that have ALL 3 levels of questions (complete triplets)
+        print(f"\n3️⃣ Selecting topics with complete triplets (junior + middle + senior)...")
         selected_themes = []
 
         for comp in competencies:
             comp_id = comp['id']
             num_themes_needed = theme_distribution.get(comp_id, 0)
 
+            print(f"\n   Processing competency '{comp['name']}' (ID: {comp_id}):")
+            print(f"     Need: {num_themes_needed} themes")
+
             if num_themes_needed == 0:
+                print(f"     ⏭️  Skipping (0 themes needed)")
                 continue
 
-            # First, debug: check what levels exist for this competency
+            # First, check what levels exist for this competency
             await cur.execute("""
                 SELECT DISTINCT q.level, COUNT(*)
                 FROM questions q
@@ -183,10 +225,18 @@ async def generate_test_themes_v2(user_id: int, test_session_id: int, specializa
                 GROUP BY q.level
             """, (comp_id,))
             level_counts = await cur.fetchall()
-            print(f"   🔍 Competency '{comp['name']}' has levels: {level_counts}")
+            print(f"     Levels available: {level_counts}")
+
+            # Check how many topics exist for this competency (without level filter)
+            await cur.execute("""
+                SELECT COUNT(*) FROM topics WHERE competency_id = %s
+            """, (comp_id,))
+            total_topics_count = (await cur.fetchone())[0]
+            print(f"     Total topics for this competency: {total_topics_count}")
 
             # Get topics that have questions for ALL 3 levels (complete triplets)
             # Using LOWER() to make case-insensitive
+            print(f"     Searching for topics with all 3 levels (junior, middle, senior)...")
             await cur.execute("""
                 SELECT DISTINCT t.id, t.name
                 FROM topics t
@@ -197,17 +247,19 @@ async def generate_test_themes_v2(user_id: int, test_session_id: int, specializa
             """, (comp_id,))
 
             available_themes = await cur.fetchall()
+            print(f"     Found {len(available_themes)} topics with complete triplets")
 
             if len(available_themes) == 0:
-                print(f"⚠️  Warning: Competency {comp['name']} has NO topics with all 3 levels!")
+                print(f"     ❌ No topics with all 3 levels!")
                 continue
 
             if len(available_themes) < num_themes_needed:
-                print(f"⚠️  Warning: Competency {comp['name']} has only {len(available_themes)} complete triplets, needed {num_themes_needed}")
+                print(f"     ⚠️  Only {len(available_themes)} complete triplets, needed {num_themes_needed}")
                 num_themes_needed = len(available_themes)
 
             # Randomly select themes
             chosen_themes = random.sample(available_themes, num_themes_needed)
+            print(f"     ✅ Selected {len(chosen_themes)} themes")
 
             for theme_id, theme_name in chosen_themes:
                 selected_themes.append({
