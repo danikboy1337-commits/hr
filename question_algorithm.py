@@ -3,6 +3,17 @@ import pandas as pd
 df = pd.read_excel('questions.xlsx')
 
 def distribute_questions(df, total_questions=20):
+    """
+    Распределяет вопросы по компетенциям на основе их весов
+    
+    Args:
+        df: DataFrame с колонками 'competence' и 'weight'
+        total_questions: общее количество вопросов (по умолчанию 20)
+    
+    Returns:
+        DataFrame с добавленными колонками расчетов
+    """
+    
     # Создаем копию DataFrame
     result = df.copy()
     result.columns = [col.lower() for col in result.columns]
