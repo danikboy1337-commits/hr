@@ -471,7 +471,8 @@ async def start_test(user_data: dict = Depends(get_current_user)):
 
         return {
             "status": "success",
-            "test_session_id": test_session_id,
+            "user_test_id": test_session_id,  # Frontend expects user_test_id
+            "test_session_id": test_session_id,  # Keep for backward compatibility
             "total_questions": num_questions,
             "expected_questions": config.TOTAL_QUESTIONS,
             "specialization": specialization_name
@@ -484,6 +485,122 @@ async def start_test(user_data: dict = Depends(get_current_user)):
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Failed to start test: {str(e)}")
+
+@app.get("/api/test/{user_test_id}/top-competencies")
+async def get_top_competencies(user_test_id: int, user_data: dict = Depends(get_current_user)):
+    """
+    Get top competencies for self-assessment BEFORE test starts (V2)
+    Uses weight instead of importance field
+    """
+    user_id = user_data["user_id"]
+
+    try:
+        async with get_db_connection() as conn:
+            async with conn.cursor() as cur:
+                # Verify test belongs to user
+                await cur.execute(
+                    "SELECT user_id, specialization_id FROM user_test_time WHERE id = %s",
+                    (user_test_id,)
+                )
+                test_data = await cur.fetchone()
+
+                if not test_data:
+                    raise HTTPException(status_code=404, detail="Test not found")
+                if test_data[0] != user_id:
+                    raise HTTPException(status_code=403, detail="Access denied")
+
+                specialization_id = test_data[1]
+
+                # Check if self-assessment already submitted
+                await cur.execute("""
+                    SELECT COUNT(*) FROM competency_self_assessments
+                    WHERE test_session_id = %s
+                """, (user_test_id,))
+                already_submitted = (await cur.fetchone())[0] > 0
+
+                # Get top competencies by weight (highest weight = most important)
+                await cur.execute("""
+                    SELECT c.id, c.name, c.weight
+                    FROM competencies c
+                    WHERE c.specialization_id = %s
+                    ORDER BY c.weight DESC
+                    LIMIT 10
+                """, (specialization_id,))
+
+                competencies = []
+                for row in await cur.fetchall():
+                    competencies.append({
+                        "id": row[0],
+                        "name": row[1],
+                        "importance": int(row[2] * 100) if row[2] else 50  # Convert weight to importance scale (0-100)
+                    })
+
+                return {
+                    "status": "success",
+                    "competencies": competencies,
+                    "already_submitted": already_submitted
+                }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error in top-competencies: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/test/{user_test_id}/self-assessment")
+async def submit_self_assessment(
+    user_test_id: int,
+    data: SelfAssessmentSubmit,
+    user_data: dict = Depends(get_current_user)
+):
+    """Submit self-assessment ratings for competencies (V2)"""
+    user_id = user_data["user_id"]
+
+    try:
+        async with get_db_connection() as conn:
+            async with conn.cursor() as cur:
+                # Verify test belongs to user
+                await cur.execute(
+                    "SELECT user_id FROM user_test_time WHERE id = %s",
+                    (user_test_id,)
+                )
+                test_data = await cur.fetchone()
+
+                if not test_data:
+                    raise HTTPException(status_code=404, detail="Test not found")
+                if test_data[0] != user_id:
+                    raise HTTPException(status_code=403, detail="Access denied")
+
+                # Insert self-assessments
+                for assessment in data.assessments:
+                    competency_id = assessment.get("competency_id")
+                    self_rating = assessment.get("self_rating")
+
+                    if not competency_id or not self_rating:
+                        continue
+
+                    if self_rating < 1 or self_rating > 10:
+                        raise HTTPException(status_code=400, detail="Rating must be between 1 and 10")
+
+                    await cur.execute("""
+                        INSERT INTO competency_self_assessments
+                        (test_session_id, user_id, competency_id, self_rating)
+                        VALUES (%s, %s, %s, %s)
+                        ON CONFLICT (test_session_id, competency_id)
+                        DO UPDATE SET self_rating = EXCLUDED.self_rating
+                    """, (user_test_id, user_id, competency_id, self_rating))
+
+                return {"status": "success", "message": "Self-assessment submitted"}
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error submitting self-assessment: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/test/{test_session_id}/questions")
 async def get_test_questions(test_session_id: int, user_data: dict = Depends(get_current_user)):
