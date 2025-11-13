@@ -3,12 +3,13 @@ Load questions from encrypted JSON files into database (Schema V2)
 
 This script:
 1. Reads JSON files from specializations/output/final/
-2. Decrypts questions (if encryption key provided)
-3. Creates profiles, specializations, competencies, topics
-4. Inserts all questions into hr_test.questions table
+2. Creates profiles, specializations, competencies, topics
+3. Inserts all questions into hr_test.questions table (ENCRYPTED)
+
+Questions remain encrypted in database - decryption handled later.
 
 Usage:
-    python load_questions_v2.py [--decrypt-key YOUR_KEY]
+    python load_questions_v2.py
 """
 
 import asyncio
@@ -20,29 +21,11 @@ from pathlib import Path
 # Add parent directory to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from db.database import init_db_pool, close_db_pool, get_db_connection
+from db.database_v2 import init_db_pool, close_db_pool, get_db_connection
 
-# Encryption support (optional)
-ENCRYPTION_KEY = None
-try:
-    from cryptography.fernet import Fernet
-    ENCRYPTION_AVAILABLE = True
-except ImportError:
-    print("⚠️  cryptography not installed. Install with: pip install cryptography")
-    ENCRYPTION_AVAILABLE = False
-
-
-def decrypt_text(encrypted_text: str, key: str = None) -> str:
-    """Decrypt Fernet-encrypted text"""
-    if not ENCRYPTION_AVAILABLE:
-        raise Exception("cryptography library not available")
-
-    if not key:
-        raise Exception("Encryption key not provided")
-
-    cipher = Fernet(key.encode())
-    decrypted = cipher.decrypt(encrypted_text.encode())
-    return decrypted.decode()
+# Note: Encryption/decryption not needed
+# Questions are stored encrypted and will be decrypted later on frontend/API
+# No cryptography library required for loading
 
 
 def load_json_file(file_path: Path) -> dict:
@@ -56,7 +39,7 @@ async def get_or_create_profile(conn, profile_name: str) -> int:
     async with conn.cursor() as cur:
         # Check if exists
         await cur.execute(
-            "SELECT id FROM hr_test.profiles WHERE name = %s",
+            "SELECT id FROM profiles WHERE name = %s",
             (profile_name,)
         )
         row = await cur.fetchone()
@@ -65,7 +48,7 @@ async def get_or_create_profile(conn, profile_name: str) -> int:
 
         # Create new
         await cur.execute(
-            "INSERT INTO hr_test.profiles (name, has_specializations) VALUES (%s, TRUE) RETURNING id",
+            "INSERT INTO profiles (name, has_specializations) VALUES (%s, TRUE) RETURNING id",
             (profile_name,)
         )
         row = await cur.fetchone()
@@ -78,7 +61,7 @@ async def get_or_create_specialization(conn, profile_id: int, spec_name: str, fi
     async with conn.cursor() as cur:
         # Check if exists
         await cur.execute(
-            "SELECT id FROM hr_test.specializations WHERE profile_id = %s AND name = %s",
+            "SELECT id FROM specializations WHERE profile_id = %s AND name = %s",
             (profile_id, spec_name)
         )
         row = await cur.fetchone()
@@ -87,7 +70,7 @@ async def get_or_create_specialization(conn, profile_id: int, spec_name: str, fi
 
         # Create new
         await cur.execute(
-            """INSERT INTO hr_test.specializations (profile_id, name, json_file_name)
+            """INSERT INTO specializations (profile_id, name, json_file_name)
                VALUES (%s, %s, %s) RETURNING id""",
             (profile_id, spec_name, file_name)
         )
@@ -101,7 +84,7 @@ async def get_or_create_competency(conn, specialization_id: int, comp_name: str,
     async with conn.cursor() as cur:
         # Check if exists
         await cur.execute(
-            "SELECT id FROM hr_test.competencies WHERE specialization_id = %s AND name = %s",
+            "SELECT id FROM competencies WHERE specialization_id = %s AND name = %s",
             (specialization_id, comp_name)
         )
         row = await cur.fetchone()
@@ -110,7 +93,7 @@ async def get_or_create_competency(conn, specialization_id: int, comp_name: str,
 
         # Create new
         await cur.execute(
-            """INSERT INTO hr_test.competencies (specialization_id, name, weight)
+            """INSERT INTO competencies (specialization_id, name, weight)
                VALUES (%s, %s, %s) RETURNING id""",
             (specialization_id, comp_name, weight)
         )
@@ -123,7 +106,7 @@ async def get_or_create_topic(conn, competency_id: int, topic_name: str) -> int:
     async with conn.cursor() as cur:
         # Check if exists
         await cur.execute(
-            "SELECT id FROM hr_test.topics WHERE competency_id = %s AND name = %s",
+            "SELECT id FROM topics WHERE competency_id = %s AND name = %s",
             (competency_id, topic_name)
         )
         row = await cur.fetchone()
@@ -132,7 +115,7 @@ async def get_or_create_topic(conn, competency_id: int, topic_name: str) -> int:
 
         # Create new
         await cur.execute(
-            """INSERT INTO hr_test.topics (competency_id, name)
+            """INSERT INTO topics (competency_id, name)
                VALUES (%s, %s) RETURNING id""",
             (competency_id, topic_name)
         )
@@ -157,7 +140,7 @@ async def insert_question(conn, specialization_id: int, competency_id: int, topi
 
     async with conn.cursor() as cur:
         await cur.execute("""
-            INSERT INTO hr_test.questions
+            INSERT INTO questions
             (specialization_id, competency_id, topic_id, level, question_text, var_1, var_2, var_3, var_4, correct_answer)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """, (specialization_id, competency_id, topic_id, level, question_text, var_1, var_2, var_3, var_4, correct_answer))
