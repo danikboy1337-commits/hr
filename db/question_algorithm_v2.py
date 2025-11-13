@@ -174,14 +174,26 @@ async def generate_test_themes_v2(user_id: int, test_session_id: int, specializa
             if num_themes_needed == 0:
                 continue
 
+            # First, debug: check what levels exist for this competency
+            await cur.execute("""
+                SELECT DISTINCT q.level, COUNT(*)
+                FROM questions q
+                JOIN topics t ON t.id = q.topic_id
+                WHERE t.competency_id = %s
+                GROUP BY q.level
+            """, (comp_id,))
+            level_counts = await cur.fetchall()
+            print(f"   🔍 Competency '{comp['name']}' has levels: {level_counts}")
+
             # Get topics that have questions for ALL 3 levels (complete triplets)
+            # Using LOWER() to make case-insensitive
             await cur.execute("""
                 SELECT DISTINCT t.id, t.name
                 FROM topics t
                 WHERE t.competency_id = %s
-                AND EXISTS (SELECT 1 FROM questions WHERE topic_id = t.id AND level = 'junior')
-                AND EXISTS (SELECT 1 FROM questions WHERE topic_id = t.id AND level = 'middle')
-                AND EXISTS (SELECT 1 FROM questions WHERE topic_id = t.id AND level = 'senior')
+                AND EXISTS (SELECT 1 FROM questions WHERE topic_id = t.id AND LOWER(level) = 'junior')
+                AND EXISTS (SELECT 1 FROM questions WHERE topic_id = t.id AND LOWER(level) = 'middle')
+                AND EXISTS (SELECT 1 FROM questions WHERE topic_id = t.id AND LOWER(level) = 'senior')
             """, (comp_id,))
 
             available_themes = await cur.fetchall()
@@ -214,12 +226,12 @@ async def generate_test_themes_v2(user_id: int, test_session_id: int, specializa
             topic_id = theme['topic_id']
             comp_id = theme['competency_id']
 
-            # Get 1 question from each level
+            # Get 1 question from each level (case-insensitive)
             for level in ['junior', 'middle', 'senior']:
                 await cur.execute("""
                     SELECT id, question_text
                     FROM questions
-                    WHERE topic_id = %s AND level = %s
+                    WHERE topic_id = %s AND LOWER(level) = %s
                     ORDER BY RANDOM()
                     LIMIT 1
                 """, (topic_id, level))
