@@ -144,24 +144,13 @@ async def insert_question(conn, specialization_id: int, competency_id: int, topi
                           level: str, question_data: dict, decrypt_key: str = None):
     """Insert a single question into database"""
 
-    # Decrypt if needed
-    if decrypt_key and ENCRYPTION_AVAILABLE:
-        try:
-            question_text = decrypt_text(question_data['question'], decrypt_key)
-            var_1 = decrypt_text(question_data['var_1'], decrypt_key)
-            var_2 = decrypt_text(question_data['var_2'], decrypt_key)
-            var_3 = decrypt_text(question_data['var_3'], decrypt_key)
-            var_4 = decrypt_text(question_data['var_4'], decrypt_key)
-        except Exception as e:
-            print(f"      ❌ Decryption failed: {e}")
-            return False
-    else:
-        # Use as-is (assume already decrypted or will be handled later)
-        question_text = question_data.get('question', '')
-        var_1 = question_data.get('var_1', '')
-        var_2 = question_data.get('var_2', '')
-        var_3 = question_data.get('var_3', '')
-        var_4 = question_data.get('var_4', '')
+    # KEEP ENCRYPTED - Do NOT decrypt (per user requirement)
+    # Questions will be decrypted on-the-fly when serving to frontend
+    question_text = question_data.get('question', '')
+    var_1 = question_data.get('var_1', '')
+    var_2 = question_data.get('var_2', '')
+    var_3 = question_data.get('var_3', '')
+    var_4 = question_data.get('var_4', '')
 
     # Correct answer position
     correct_answer = question_data.get('correct_position', question_data.get('correct_answer', 1))
@@ -246,11 +235,11 @@ async def load_questions_from_json(json_file: Path, decrypt_key: str = None):
                 # Create topic (theme)
                 topic_id = await get_or_create_topic(conn, comp_id, theme_name)
 
-                # Insert questions
+                # Insert questions (keep encrypted)
                 for question_data in questions:
                     success = await insert_question(
                         conn, spec_id, comp_id, topic_id,
-                        level_name, question_data, decrypt_key
+                        level_name, question_data, None  # No decryption
                     )
                     if success:
                         total_questions += 1
@@ -261,13 +250,8 @@ async def load_questions_from_json(json_file: Path, decrypt_key: str = None):
 async def main():
     """Main function"""
 
-    # Parse arguments
-    decrypt_key = None
-    if len(sys.argv) > 2 and sys.argv[1] == '--decrypt-key':
-        decrypt_key = sys.argv[2]
-        print(f"🔑 Using decryption key: {decrypt_key[:10]}...")
-
     print("🚀 Starting question loader (Schema V2)...")
+    print("📌 Questions will be stored ENCRYPTED (decryption handled later)")
 
     # Initialize database
     await init_db_pool()
