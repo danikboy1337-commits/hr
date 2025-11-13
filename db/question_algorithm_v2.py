@@ -136,7 +136,7 @@ async def generate_test_themes_v2(user_id: int, test_session_id: int, specializa
         # 1. Get competencies with weights
         await cur.execute("""
             SELECT id, name, weight
-            FROM hr_test.competencies
+            FROM competencies
             WHERE specialization_id = %s
             ORDER BY weight DESC
         """, (specialization_id,))
@@ -164,7 +164,7 @@ async def generate_test_themes_v2(user_id: int, test_session_id: int, specializa
             comp_name = next(c['name'] for c in competencies if c['id'] == comp_id)
             print(f"   - {comp_name}: {num_themes} themes")
 
-        # 3. Select random themes from each competency
+        # 3. Select topics that have ALL 3 levels of questions (complete triplets)
         selected_themes = []
 
         for comp in competencies:
@@ -174,17 +174,24 @@ async def generate_test_themes_v2(user_id: int, test_session_id: int, specializa
             if num_themes_needed == 0:
                 continue
 
-            # Get all topics (themes) for this competency
+            # Get topics that have questions for ALL 3 levels (complete triplets)
             await cur.execute("""
-                SELECT id, name
-                FROM hr_test.topics
-                WHERE competency_id = %s
+                SELECT DISTINCT t.id, t.name
+                FROM topics t
+                WHERE t.competency_id = %s
+                AND EXISTS (SELECT 1 FROM questions WHERE topic_id = t.id AND level = 'junior')
+                AND EXISTS (SELECT 1 FROM questions WHERE topic_id = t.id AND level = 'middle')
+                AND EXISTS (SELECT 1 FROM questions WHERE topic_id = t.id AND level = 'senior')
             """, (comp_id,))
 
             available_themes = await cur.fetchall()
 
+            if len(available_themes) == 0:
+                print(f"⚠️  Warning: Competency {comp['name']} has NO topics with all 3 levels!")
+                continue
+
             if len(available_themes) < num_themes_needed:
-                print(f"⚠️  Warning: Competency {comp['name']} has only {len(available_themes)} themes, needed {num_themes_needed}")
+                print(f"⚠️  Warning: Competency {comp['name']} has only {len(available_themes)} complete triplets, needed {num_themes_needed}")
                 num_themes_needed = len(available_themes)
 
             # Randomly select themes
@@ -197,7 +204,7 @@ async def generate_test_themes_v2(user_id: int, test_session_id: int, specializa
                     'topic_name': theme_name
                 })
 
-        print(f"\n✅ Selected {len(selected_themes)} themes")
+        print(f"\n✅ Selected {len(selected_themes)} themes (all have complete triplets)")
 
         # 4. For each theme, get 3 questions (junior, middle, senior)
         question_order = 1
@@ -211,7 +218,7 @@ async def generate_test_themes_v2(user_id: int, test_session_id: int, specializa
             for level in ['junior', 'middle', 'senior']:
                 await cur.execute("""
                     SELECT id, question_text
-                    FROM hr_test.questions
+                    FROM questions
                     WHERE topic_id = %s AND level = %s
                     ORDER BY RANDOM()
                     LIMIT 1
@@ -220,7 +227,8 @@ async def generate_test_themes_v2(user_id: int, test_session_id: int, specializa
                 question = await cur.fetchone()
 
                 if not question:
-                    print(f"⚠️  Warning: No {level} question found for topic {topic_id}")
+                    # This should never happen since we pre-filtered for complete triplets
+                    print(f"⚠️  ERROR: No {level} question found for topic {topic_id} (should not happen!)")
                     continue
 
                 question_id, question_text = question
@@ -241,7 +249,7 @@ async def generate_test_themes_v2(user_id: int, test_session_id: int, specializa
         # 5. Batch insert questions
         if questions_to_insert:
             await cur.executemany("""
-                INSERT INTO hr_test.user_questions
+                INSERT INTO user_questions
                 (user_id, test_session_id, specialization_id, competency_id, topic_id,
                  question_id, question_order, question_text)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
