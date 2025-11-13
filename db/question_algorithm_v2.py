@@ -17,12 +17,23 @@ Algorithm:
 """
 
 import random
+import math
 from typing import List, Dict, Any
 
 
 def calculate_theme_distribution(competencies: List[Dict[str, Any]], total_themes: int = 20) -> Dict[int, int]:
     """
     Calculate how many themes to select from each competency based on weight
+    Uses the probabilistic weighted distribution algorithm from question_algorithm.py
+
+    Algorithm:
+    1. cnt = weight * total_themes (normalized)
+    2. int = floor(cnt)
+    3. top = total_themes - sum(int)
+    4. diff = cnt - int
+    5. prob = random(0, diff)
+    6. Sort by prob descending, give +1 to top N competencies
+    7. k = gen + int (final count)
 
     Args:
         competencies: List of dicts with 'id' and 'weight' keys
@@ -33,9 +44,9 @@ def calculate_theme_distribution(competencies: List[Dict[str, Any]], total_theme
 
     Example:
         competencies = [
-            {'id': 1, 'weight': 90.0},
-            {'id': 2, 'weight': 70.0},
-            {'id': 3, 'weight': 40.0}
+            {'id': 1, 'weight': 0.45},  # 45%
+            {'id': 2, 'weight': 0.35},  # 35%
+            {'id': 3, 'weight': 0.20}   # 20%
         ]
         Result: {1: 9, 2: 7, 3: 4}  # Total = 20
     """
@@ -43,35 +54,62 @@ def calculate_theme_distribution(competencies: List[Dict[str, Any]], total_theme
     if not competencies:
         return {}
 
-    # Sort by weight (descending)
-    sorted_comps = sorted(competencies, key=lambda x: x['weight'], reverse=True)
-
-    # Calculate total weight
-    total_weight = sum(comp['weight'] for comp in sorted_comps)
-
+    # Normalize weights to sum to 1.0 (if not already)
+    total_weight = sum(comp['weight'] for comp in competencies)
     if total_weight == 0:
-        # If no weights, distribute equally
-        themes_per_comp = total_themes // len(sorted_comps)
-        remainder = total_themes % len(sorted_comps)
+        # Equal distribution if no weights
+        themes_per_comp = total_themes // len(competencies)
+        remainder = total_themes % len(competencies)
         distribution = {}
-        for i, comp in enumerate(sorted_comps):
+        for i, comp in enumerate(competencies):
             distribution[comp['id']] = themes_per_comp + (1 if i < remainder else 0)
         return distribution
 
-    # Calculate proportional distribution
-    distribution = {}
-    allocated = 0
+    # Create working list with calculations
+    working = []
+    for comp in competencies:
+        normalized_weight = comp['weight'] / total_weight
 
-    for i, comp in enumerate(sorted_comps):
-        if i == len(sorted_comps) - 1:
-            # Last competency gets remaining themes
-            distribution[comp['id']] = total_themes - allocated
-        else:
-            # Calculate proportional share
-            proportion = comp['weight'] / total_weight
-            num_themes = int(round(total_themes * proportion))
-            distribution[comp['id']] = num_themes
-            allocated += num_themes
+        # Step 1: cnt = weight * total_themes
+        cnt = normalized_weight * total_themes
+
+        # Step 2: int = floor(cnt)
+        int_part = math.floor(cnt)
+
+        # Step 4: diff = cnt - int
+        diff = cnt - int_part
+
+        working.append({
+            'id': comp['id'],
+            'weight': comp['weight'],
+            'cnt': cnt,
+            'int': int_part,
+            'diff': diff
+        })
+
+    # Step 3: top = total_themes - sum(int)
+    sum_int = sum(item['int'] for item in working)
+    top = total_themes - sum_int
+
+    # Step 5: prob = random(0, diff)
+    for item in working:
+        item['prob'] = random.uniform(0, item['diff'])
+
+    # Step 6: Sort by prob descending
+    working.sort(key=lambda x: x['prob'], reverse=True)
+
+    # Step 7: gen = 1 for top N, 0 for rest
+    for i, item in enumerate(working):
+        item['gen'] = 1 if i < top else 0
+
+    # Step 8: k = gen + int (final count)
+    distribution = {}
+    for item in working:
+        distribution[item['id']] = item['gen'] + item['int']
+
+    # Verify total
+    total = sum(distribution.values())
+    assert total == total_themes, f"Distribution error: {total} != {total_themes}"
 
     return distribution
 
