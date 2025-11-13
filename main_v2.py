@@ -266,18 +266,17 @@ async def ldap_login(login_data: LDAPLoginRequest):
             "password": "user_password"
         }
 
-    Returns:
+    Returns (flat structure for frontend compatibility):
         {
             "status": "success",
             "token": "jwt_token_here",
-            "user": {
-                "id": 1,
-                "name": "Danial Aibassov",
-                "tab_number": "00061221",
-                "role": "employee",
-                "department_id": 3,
-                "specialization_id": 1
-            }
+            "user_id": 1,
+            "name": "Danial Aibassov",
+            "employee_id": "00061221",
+            "tab_number": "00061221",
+            "role": "employee",
+            "department_id": 3,
+            "specialization_id": 1
         }
     """
 
@@ -321,17 +320,17 @@ async def ldap_login(login_data: LDAPLoginRequest):
             department_id=department_id
         )
 
+        # Return format matching frontend expectations (flat structure, not nested)
         return {
             "status": "success",
             "token": token,
-            "user": {
-                "id": user_id,
-                "name": name,
-                "tab_number": tab_number,
-                "role": role,
-                "department_id": department_id,
-                "specialization_id": specialization_id
-            }
+            "user_id": user_id,
+            "name": name,
+            "employee_id": tab_number,  # Frontend uses employee_id
+            "tab_number": tab_number,   # Keep for compatibility
+            "role": role,
+            "department_id": department_id,
+            "specialization_id": specialization_id
         }
 
     except HTTPException:
