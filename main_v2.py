@@ -201,6 +201,18 @@ async def login_page():
     with open('templates/login.html', 'r', encoding='utf-8') as f:
         return HTMLResponse(content=f.read())
 
+@app.get("/panels", response_class=HTMLResponse)
+async def panels_page():
+    """Panel selection page after login"""
+    with open('templates/panels.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
+@app.get("/specializations", response_class=HTMLResponse)
+async def specializations_page():
+    """Specialization selection page"""
+    with open('templates/specializations.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
 @app.get("/test", response_class=HTMLResponse)
 async def test_page():
     """Test taking interface"""
@@ -763,6 +775,18 @@ async def get_results(test_session_id: int, user_data: dict = Depends(get_curren
 async def hr_login_page():
     """HR login page"""
     with open('templates/hr_login.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
+@app.get("/hr/menu", response_class=HTMLResponse)
+async def hr_menu_page():
+    """HR menu page"""
+    with open('templates/hr_menu.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
+@app.get("/manager/menu", response_class=HTMLResponse)
+async def manager_menu_page():
+    """Manager menu page"""
+    with open('templates/manager_menu.html', 'r', encoding='utf-8') as f:
         return HTMLResponse(content=f.read())
 
 @app.post("/api/hr/login")
