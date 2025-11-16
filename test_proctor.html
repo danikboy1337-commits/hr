@@ -1,0 +1,2393 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестирование - Halyk HR Forum</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- TensorFlow.js for AI Proctoring -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.11.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface@0.0.7/dist/blazeface.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection@1.0.2/dist/face-landmarks-detection.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1DB584 0%, #0a7d5a 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .camera-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            border: 2px solid #e53e3e;
+        }
+
+        .camera-feed {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 320px;
+            height: 240px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            z-index: 1001;
+            overflow: hidden;
+            border: 4px solid #e53e3e;
+            background: #000;
+            display: none;
+        }
+
+        .camera-feed.active {
+            display: block;
+        }
+
+        .camera-feed video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1); /* Mirror effect */
+        }
+
+        .camera-status {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .camera-error {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ffe0e0;
+            color: #c41e3a;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1002;
+            max-width: 320px;
+            border: 2px solid #c41e3a;
+            display: none;
+        }
+
+        .camera-error.show {
+            display: block;
+        }
+
+        .timer-display {
+            position: fixed;
+            top: 280px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            border: 2px solid #1DB584;
+        }
+
+        .timer-display.warning {
+            border-color: #ff9800;
+            animation: shake 0.5s;
+        }
+
+        .timer-display.danger {
+            border-color: #e53e3e;
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .timer-icon {
+            font-size: 24px;
+        }
+
+        .timer-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            font-family: 'Courier New', monospace;
+        }
+
+        .timer-text.warning {
+            color: #ff9800;
+        }
+
+        .timer-text.danger {
+            color: #e53e3e;
+        }
+
+        .timer-label {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .camera-icon {
+            font-size: 24px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .camera-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .recording-dot {
+            width: 10px;
+            height: 10px;
+            background: #e53e3e;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        #root {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .test-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .progress {
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #1DB584;
+            transition: width 0.3s;
+        }
+
+        .progress-text {
+            margin-top: 8px;
+            color: #666;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .competencies-stats {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .competencies-stats h3 {
+            color: #333;
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+
+        .competency-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .competency-stat:last-child {
+            border-bottom: none;
+        }
+
+        .competency-name {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .competency-progress {
+            font-weight: 600;
+            color: #1DB584;
+            font-size: 14px;
+        }
+
+        .question {
+            margin-bottom: 30px;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            color: #1DB584;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .question-level {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .question-level.Junior {
+            background: #4caf50;
+            color: white;
+        }
+
+        .question-level.Middle {
+            background: #ff9800;
+            color: white;
+        }
+
+        .question-level.Senior {
+            background: #f44336;
+            color: white;
+        }
+
+        .question-text {
+            font-size: 20px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .topic-name {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+            padding: 8px 12px;
+            background: #f0fdf7;
+            border-left: 3px solid #1DB584;
+            border-radius: 4px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 16px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .option:hover {
+            border-color: #1DB584;
+            background: #f0fdf7;
+        }
+
+        .option.selected {
+            border-color: #1DB584;
+            background: #1DB584;
+            color: white;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: #1DB584;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 24px;
+        }
+
+        .btn:hover {
+            background: #16a073;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+        }
+
+        .completion {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .completion h2 {
+            color: #1DB584;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+
+        .score-display {
+            font-size: 64px;
+            font-weight: 700;
+            color: #1DB584;
+            margin: 30px 0;
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 12px 32px;
+            background: #1DB584;
+            color: white;
+            border-radius: 30px;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Camera Feed -->
+    <div class="camera-feed" id="cameraFeed">
+        <video id="cameraVideo" autoplay playsinline muted></video>
+        <div class="camera-status">
+            <div class="recording-dot"></div>
+            <span>🔴 REC</span>
+        </div>
+    </div>
+
+    <!-- Camera Error Message -->
+    <div class="camera-error" id="cameraError">
+        <strong>⚠️ Ошибка доступа к камере</strong>
+        <p style="margin-top: 8px; font-size: 13px;">
+            Не удалось получить доступ к камере. Пожалуйста, разрешите доступ в настройках браузера.
+        </p>
+    </div>
+
+    <!-- Timer Display -->
+    <div class="timer-display" id="timerDisplay">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <span class="timer-icon">⏱️</span>
+            <span class="timer-text" id="timerText">40:00</span>
+        </div>
+        <div class="timer-label">Осталось времени</div>
+    </div>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // =====================================================
+        // CAMERA STREAMING FUNCTIONALITY
+        // =====================================================
+        let cameraStream = null;
+
+        async function startCamera() {
+            console.log('🎥 Attempting to start camera...');
+            const videoElement = document.getElementById('cameraVideo');
+            const cameraFeed = document.getElementById('cameraFeed');
+            const cameraError = document.getElementById('cameraError');
+
+            try {
+                // Request camera access with specific constraints
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        width: { ideal: 640 },
+                        height: { ideal: 480 },
+                        facingMode: 'user'
+                    },
+                    audio: false
+                });
+
+                // Store stream reference for cleanup
+                cameraStream = stream;
+
+                // Attach stream to video element
+                videoElement.srcObject = stream;
+
+                // Show camera feed
+                cameraFeed.classList.add('active');
+                cameraError.classList.remove('show');
+
+                console.log('✅ Camera started successfully');
+            } catch (error) {
+                console.error('❌ Camera access error:', error);
+
+                // Show error message
+                cameraError.classList.add('show');
+                cameraFeed.classList.remove('active');
+
+                // Update error message based on error type
+                const errorText = cameraError.querySelector('p');
+                if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+                    errorText.textContent = 'Доступ к камере запрещен. Разрешите использование камеры в настройках браузера и обновите страницу.';
+                } else if (error.name === 'NotFoundError') {
+                    errorText.textContent = 'Камера не найдена. Убедитесь, что к компьютеру подключена веб-камера.';
+                } else if (error.name === 'NotReadableError') {
+                    errorText.textContent = 'Камера занята другим приложением. Закройте другие программы, использующие камеру.';
+                } else {
+                    errorText.textContent = `Ошибка: ${error.message}`;
+                }
+
+                // Auto-hide error after 10 seconds
+                setTimeout(() => {
+                    cameraError.classList.remove('show');
+                }, 10000);
+            }
+        }
+
+        function stopCamera() {
+            console.log('🛑 Stopping camera...');
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+
+            const videoElement = document.getElementById('cameraVideo');
+            const cameraFeed = document.getElementById('cameraFeed');
+
+            if (videoElement) {
+                videoElement.srcObject = null;
+            }
+            if (cameraFeed) {
+                cameraFeed.classList.remove('active');
+            }
+
+            console.log('✅ Camera stopped');
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            stopCamera();
+        });
+
+        // =====================================================
+        // AI PROCTORING - TENSORFLOW.JS
+        // =====================================================
+        let blazefaceModel = null;
+        let faceLandmarksDetector = null;
+        let cocoSsdModel = null;  // For object detection (phone detection)
+        let proctoringInterval = null;
+        let proctoringEnabled = false;
+        let currentUserTestId = null;
+        let lastFaceDetectionTime = Date.now();
+        let noFaceWarningShown = false;
+        let multipleFacesWarningShown = false;
+        let tabSwitchCount = 0;
+        let lastEventLog = {};
+
+        // Load AI models
+        async function loadAIModels() {
+            console.log('🤖 Loading AI proctoring models...');
+            try {
+                // Load BlazeFace for face detection
+                blazefaceModel = await blazeface.load();
+                console.log('✅ BlazeFace model loaded');
+
+                // Load FaceMesh for facial landmarks (eye tracking)
+                faceLandmarksDetector = await faceLandmarksDetection.createDetector(
+                    faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh,
+                    {
+                        runtime: 'tfjs',
+                        maxFaces: 3,
+                        refineLandmarks: true
+                    }
+                );
+                console.log('✅ FaceMesh model loaded');
+
+                // Load COCO-SSD for object detection (phone detection)
+                cocoSsdModel = await cocoSsd.load();
+                console.log('✅ COCO-SSD model loaded (object detection)');
+
+                return true;
+            } catch (error) {
+                console.error('❌ Failed to load AI models:', error);
+                return false;
+            }
+        }
+
+        // Start AI proctoring
+        async function startAIProctoring(userTestId) {
+            if (proctoringEnabled) {
+                console.log('⚠️ AI proctoring already running');
+                return;
+            }
+
+            console.log('🤖 Starting AI proctoring for test:', userTestId);
+            currentUserTestId = userTestId;
+            proctoringEnabled = true;
+
+            // Load models if not loaded
+            if (!blazefaceModel || !faceLandmarksDetector) {
+                const loaded = await loadAIModels();
+                if (!loaded) {
+                    console.error('❌ Cannot start proctoring: models failed to load');
+                    return;
+                }
+            }
+
+            // Run face detection every 2 seconds
+            proctoringInterval = setInterval(async () => {
+                if (!proctoringEnabled) return;
+                await detectFaces();
+            }, 3000);
+
+            // Tab/window visibility detection
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+            window.addEventListener('blur', handleWindowBlur);
+
+            // Context menu detection (right-click)
+            document.addEventListener('contextmenu', handleContextMenu);
+
+            console.log('✅ AI proctoring active with keyboard blocking');
+        }
+
+        // Stop AI proctoring
+        function stopAIProctoring() {
+            console.log('🛑 Stopping AI proctoring');
+            proctoringEnabled = false;
+
+            if (proctoringInterval) {
+                clearInterval(proctoringInterval);
+                proctoringInterval = null;
+            }
+
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            window.removeEventListener('blur', handleWindowBlur);
+            document.removeEventListener('contextmenu', handleContextMenu);
+
+            console.log('✅ AI proctoring stopped');
+        }
+
+        // Detect faces in video stream
+        async function detectFaces() {
+            if (!blazefaceModel || !proctoringEnabled) return;
+
+            const videoElement = document.getElementById('cameraVideo');
+            if (!videoElement || videoElement.readyState !== 4) return;
+
+            try {
+                // Detect faces with BlazeFace
+                const predictions = await blazefaceModel.estimateFaces(videoElement, false);
+                const faceCount = predictions.length;
+                const now = Date.now();
+
+                if (faceCount === 0) {
+                    // No face detected
+                    if (now - lastFaceDetectionTime > 5000) { // 5 seconds without face
+                        if (!noFaceWarningShown) {
+                            console.warn('⚠️ No face detected for 5+ seconds');
+                            await logProctoringEvent('no_face_detected', 'high', {
+                                duration: (now - lastFaceDetectionTime) / 1000,
+                                message: 'Face disappeared from camera view'
+                            });
+                            noFaceWarningShown = true;
+                        }
+                    }
+                } else {
+                    // Face(s) detected
+                    lastFaceDetectionTime = now;
+                    noFaceWarningShown = false;
+
+                    if (faceCount > 1) {
+                        // Multiple faces detected
+                        if (!multipleFacesWarningShown) {
+                            console.warn(`⚠️ Multiple faces detected: ${faceCount}`);
+                            await logProctoringEvent('multiple_faces', 'critical', {
+                                face_count: faceCount,
+                                message: 'More than one person detected in camera'
+                            });
+                            multipleFacesWarningShown = true;
+
+                            // Show alert to user
+                            setTimeout(() => {
+                                alert('⚠️ Внимание! Обнаружено несколько лиц в кадре. В тесте может участвовать только один человек.');
+                            }, 100);
+                        }
+                    } else {
+                        multipleFacesWarningShown = false;
+                    }
+
+                    // Analyze eye gaze with FaceMesh (optional, more detailed)
+                    if (faceLandmarksDetector && faceCount === 1) {
+                        await analyzeEyeGaze(videoElement);
+                    }
+                }
+            } catch (error) {
+                console.error('Error detecting faces:', error);
+            }
+        }
+
+        // Analyze eye gaze direction
+        async function analyzeEyeGaze(videoElement) {
+            try {
+                const faces = await faceLandmarksDetector.estimateFaces(videoElement);
+
+                if (faces.length > 0) {
+                    const face = faces[0];
+                    // Face mesh provides detailed landmarks for eye tracking
+                    // This is a simplified version - full implementation would calculate
+                    // eye gaze vectors from pupil positions relative to eye corners
+
+                    // For now, we detect if face rotation is extreme
+                    if (face.box) {
+                        const rotation = calculateFaceRotation(face);
+                        if (Math.abs(rotation) > 45) {
+                            console.warn('⚠️ Face turned away from screen');
+                            await logProctoringEvent('looking_away', 'medium', {
+                                rotation: rotation,
+                                message: 'Face orientation away from screen'
+                            });
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error analyzing eye gaze:', error);
+            }
+        }
+
+        // Calculate face rotation (simplified)
+        function calculateFaceRotation(face) {
+            // Simplified rotation estimation from bounding box
+            // Real implementation would use facial landmarks
+            return 0; // Placeholder
+        }
+
+        // Handle tab switching / visibility change
+        function handleVisibilityChange() {
+            if (document.hidden && proctoringEnabled) {
+                tabSwitchCount++;
+                console.warn('⚠️ Tab switched or hidden', tabSwitchCount);
+                logProctoringEvent('tab_switched', 'high', {
+                    count: tabSwitchCount,
+                    message: 'User switched to another tab or window'
+                });
+            }
+        }
+
+        // Handle window blur
+        function handleWindowBlur() {
+            if (proctoringEnabled) {
+                console.warn('⚠️ Window lost focus');
+                logProctoringEvent('window_blur', 'medium', {
+                    message: 'Browser window lost focus'
+                });
+            }
+        }
+
+        // Handle context menu (right-click)
+        function handleContextMenu(e) {
+            if (proctoringEnabled) {
+                e.preventDefault();
+                console.warn('⚠️ Right-click detected');
+                logProctoringEvent('context_menu', 'low', {
+                    message: 'Right-click menu attempt'
+                });
+                alert('Правый клик отключен во время тестирования');
+                return false;
+            }
+        }
+
+        // Log proctoring event to backend
+        async function logProctoringEvent(eventType, severity, details) {
+            if (!currentUserTestId) return;
+
+            // Throttle events - don't log same event within 30 seconds
+            const now = Date.now();
+            const lastLog = lastEventLog[eventType] || 0;
+            if (now - lastLog < 30000) {
+                return; // Skip duplicate events within 30 seconds
+            }
+            lastEventLog[eventType] = now;
+
+            const token = sessionStorage.getItem('halyk_token');
+            if (!token) return;
+
+            try {
+                const response = await fetch('/api/proctoring/event', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        user_test_id: currentUserTestId,
+                        event_type: eventType,
+                        severity: severity,
+                        details: details
+                    })
+                });
+
+                if (response.ok) {
+                    console.log(`✅ Logged event: ${eventType} (${severity})`);
+                } else {
+                    console.error('Failed to log proctoring event:', response.status);
+                }
+            } catch (error) {
+                console.error('Error logging proctoring event:', error);
+            }
+        }
+
+        // =====================================================
+        // CRITICAL KEYBOARD BLOCKING (Ctrl+T, Ctrl+W)
+        // =====================================================
+
+        // Block critical keyboard shortcuts - SIMPLIFIED VERSION
+        function blockCriticalShortcuts(e) {
+            if (!proctoringEnabled) return;
+
+            const key = e.key.toLowerCase();
+            const ctrl = e.ctrlKey;
+            const meta = e.metaKey; // Command key on Mac
+
+            // Block Ctrl+T / Cmd+T (new tab) - CRITICAL
+            if ((ctrl || meta) && key === 't') {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                console.warn('🚫 Blocked: Ctrl+T (new tab)');
+                logProctoringEvent('new_tab_blocked', 'high', {
+                    message: 'Attempted to open new tab with Ctrl+T'
+                });
+                return false;
+            }
+
+            // Block Ctrl+W / Cmd+W (close tab) - CRITICAL
+            if ((ctrl || meta) && key === 'w') {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                console.warn('🚫 Blocked: Ctrl+W (close tab)');
+                logProctoringEvent('close_tab_blocked', 'high', {
+                    message: 'Attempted to close tab with Ctrl+W'
+                });
+                return false;
+            }
+        }
+
+        // Prevent page unload/navigation
+        function preventPageUnload(e) {
+            if (!proctoringEnabled) return;
+
+            e.preventDefault();
+            e.returnValue = 'Вы уверены, что хотите покинуть страницу? Прогресс теста будет потерян.';
+            return e.returnValue;
+        }
+
+        // Setup keyboard blocking
+        function setupKeyboardBlocking() {
+            // Block critical shortcuts - use capture phase for highest priority
+            document.addEventListener('keydown', blockCriticalShortcuts, true);
+            window.addEventListener('keydown', blockCriticalShortcuts, true);
+
+            // Prevent page unload
+            window.addEventListener('beforeunload', preventPageUnload);
+
+            console.log('✅ Critical keyboard shortcuts blocking active (Ctrl+T, Ctrl+W)');
+        }
+
+        // Cleanup keyboard blocking
+        function cleanupKeyboardBlocking() {
+            document.removeEventListener('keydown', blockCriticalShortcuts, true);
+            window.removeEventListener('keydown', blockCriticalShortcuts, true);
+            window.removeEventListener('beforeunload', preventPageUnload);
+
+            console.log('✅ Keyboard blocking cleaned up');
+        }
+
+        // Initialize on page load
+        setupKeyboardBlocking();
+
+        // =====================================================
+        // REACT APP
+        // =====================================================
+        function App() {
+            console.log('=== TEST APP LOADED - Self-Assessment Feature Active ===');
+
+            const [questions, setQuestions] = useState([]);
+            const [currentIndex, setCurrentIndex] = useState(0);
+            const [selectedAnswer, setSelectedAnswer] = useState(null);
+            const [loading, setLoading] = useState(true);
+            const [completed, setCompleted] = useState(false);
+            const [result, setResult] = useState(null);
+            const [progress, setProgress] = useState(null);
+            const [competencies, setCompetencies] = useState([]);
+            const [selfRatings, setSelfRatings] = useState({});
+            const [showSelfAssessment, setShowSelfAssessment] = useState(false);
+            const [selfAssessmentSubmitted, setSelfAssessmentSubmitted] = useState(false);
+            const [showCameraSetup, setShowCameraSetup] = useState(false);
+            const [cameraReady, setCameraReady] = useState(false);
+            const [faceDetected, setFaceDetected] = useState(false);
+            const [cameraVerificationMessage, setCameraVerificationMessage] = useState('Инициализация камеры...');
+            const [isPaused, setIsPaused] = useState(false);
+            const [pauseReason, setPauseReason] = useState('');
+            const [faceCount, setFaceCount] = useState(0);
+            const [isFullscreen, setIsFullscreen] = useState(false);
+            const [timeRemaining, setTimeRemaining] = useState(40 * 60); // Will be updated from API
+            const [timerExpired, setTimerExpired] = useState(false);
+            const [timeLimitMinutes, setTimeLimitMinutes] = useState(40); // Default 40 minutes
+
+            console.log('Initial state - showSelfAssessment:', false, 'competencies:', []);
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const userTestId = urlParams.get('user_test_id');
+
+            // Fullscreen helper functions
+            const enterFullscreen = async () => {
+                try {
+                    const elem = document.documentElement;
+                    if (elem.requestFullscreen) {
+                        await elem.requestFullscreen();
+                    } else if (elem.webkitRequestFullscreen) {
+                        await elem.webkitRequestFullscreen();
+                    } else if (elem.msRequestFullscreen) {
+                        await elem.msRequestFullscreen();
+                    }
+                    console.log('✅ Entered fullscreen mode');
+                } catch (error) {
+                    console.error('❌ Failed to enter fullscreen:', error);
+                    alert('Не удалось перейти в полноэкранный режим. Пожалуйста, нажмите F11 или разрешите полноэкранный режим.');
+                }
+            };
+
+            // Monitor fullscreen changes and enforce fullscreen requirement
+            useEffect(() => {
+                const handleFullscreenChange = () => {
+                    const isCurrentlyFullscreen = !!(
+                        document.fullscreenElement ||
+                        document.webkitFullscreenElement ||
+                        document.msFullscreenElement
+                    );
+
+                    setIsFullscreen(isCurrentlyFullscreen);
+
+                    // If test has started and user exits fullscreen, pause the test
+                    if (selfAssessmentSubmitted && !showCameraSetup && !completed && !isCurrentlyFullscreen) {
+                        console.log('⚠️ Exited fullscreen - pausing test');
+                        setIsPaused(true);
+                        setPauseReason('fullscreen');
+                    } else if (isCurrentlyFullscreen && isPaused && pauseReason === 'fullscreen') {
+                        // Resume if they return to fullscreen
+                        console.log('✅ Returned to fullscreen - resuming test');
+                        setIsPaused(false);
+                        setPauseReason('');
+                    }
+                };
+
+                document.addEventListener('fullscreenchange', handleFullscreenChange);
+                document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+                document.addEventListener('msfullscreenchange', handleFullscreenChange);
+
+                return () => {
+                    document.removeEventListener('fullscreenchange', handleFullscreenChange);
+                    document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+                    document.removeEventListener('msfullscreenchange', handleFullscreenChange);
+                };
+            }, [selfAssessmentSubmitted, showCameraSetup, completed, isPaused, pauseReason]);
+
+            // Continuous fullscreen enforcement - check every second
+            useEffect(() => {
+                if (!selfAssessmentSubmitted || showCameraSetup || completed) return;
+
+                const fullscreenEnforcementInterval = setInterval(() => {
+                    const isCurrentlyFullscreen = !!(
+                        document.fullscreenElement ||
+                        document.webkitFullscreenElement ||
+                        document.msFullscreenElement
+                    );
+
+                    // Force pause if not in fullscreen
+                    if (!isCurrentlyFullscreen && !isPaused) {
+                        console.log('🚫 Fullscreen enforcement: forcing pause');
+                        setIsPaused(true);
+                        setPauseReason('fullscreen');
+                    } else if (!isCurrentlyFullscreen && isPaused && pauseReason !== 'fullscreen') {
+                        // Override other pause reasons if not in fullscreen
+                        console.log('🚫 Fullscreen enforcement: overriding pause reason');
+                        setPauseReason('fullscreen');
+                    }
+                }, 1000);
+
+                return () => clearInterval(fullscreenEnforcementInterval);
+            }, [selfAssessmentSubmitted, showCameraSetup, completed, isPaused, pauseReason]);
+
+            useEffect(() => {
+                // Load competencies FIRST for self-assessment
+                loadCompetencies();
+            }, []);
+
+            useEffect(() => {
+                // Находим первый неотвеченный вопрос
+                if (questions.length > 0) {
+                    const firstUnanswered = questions.findIndex(q => !q.is_answered);
+                    if (firstUnanswered !== -1) {
+                        setCurrentIndex(firstUnanswered);
+                    }
+                }
+            }, [questions]);
+
+            // Timer countdown effect - only starts AFTER self-assessment and pauses when test is paused
+            useEffect(() => {
+                if (!selfAssessmentSubmitted || completed || timerExpired || isPaused) return;
+
+                const timer = setInterval(() => {
+                    setTimeRemaining(prev => {
+                        if (prev <= 1) {
+                            clearInterval(timer);
+                            setTimerExpired(true);
+                            autoSubmitTest();
+                            return 0;
+                        }
+                        return prev - 1;
+                    });
+                }, 1000);
+
+                return () => clearInterval(timer);
+            }, [selfAssessmentSubmitted, completed, timerExpired, isPaused]);
+
+            // Update timer display
+            useEffect(() => {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                const timeText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                const timerTextEl = document.getElementById('timerText');
+                const timerDisplayEl = document.getElementById('timerDisplay');
+
+                if (timerTextEl) {
+                    timerTextEl.textContent = timeText;
+
+                    // Add warning/danger classes
+                    timerTextEl.classList.remove('warning', 'danger');
+                    timerDisplayEl.classList.remove('warning', 'danger');
+
+                    if (timeRemaining <= 60) {
+                        timerTextEl.classList.add('danger');
+                        timerDisplayEl.classList.add('danger');
+                    } else if (timeRemaining <= 300) {
+                        timerTextEl.classList.add('warning');
+                        timerDisplayEl.classList.add('warning');
+                    }
+                }
+
+                // Hide/show timer based on self-assessment status
+                if (timerDisplayEl) {
+                    timerDisplayEl.style.display = selfAssessmentSubmitted ? 'block' : 'none';
+                }
+            }, [timeRemaining, selfAssessmentSubmitted]);
+
+            // Copy-paste prevention - only active AFTER self-assessment
+            useEffect(() => {
+                if (!selfAssessmentSubmitted) return;
+
+                const preventCopy = (e) => {
+                    e.preventDefault();
+                    alert('Копирование запрещено во время теста');
+                    return false;
+                };
+
+                const preventPaste = (e) => {
+                    e.preventDefault();
+                    alert('Вставка запрещена во время теста');
+                    return false;
+                };
+
+                const preventCut = (e) => {
+                    e.preventDefault();
+                    alert('Вырезание запрещено во время теста');
+                    return false;
+                };
+
+                document.addEventListener('copy', preventCopy);
+                document.addEventListener('paste', preventPaste);
+                document.addEventListener('cut', preventCut);
+
+                return () => {
+                    document.removeEventListener('copy', preventCopy);
+                    document.removeEventListener('paste', preventPaste);
+                    document.removeEventListener('cut', preventCut);
+                };
+            }, [selfAssessmentSubmitted]);
+
+            // 🎥 Stop camera and AI proctoring when test is completed
+            useEffect(() => {
+                if (completed) {
+                    console.log('🛑 Test completed - stopping camera monitoring and AI proctoring');
+                    stopCamera();
+                    stopAIProctoring();
+                    cleanupKeyboardBlocking();
+                }
+            }, [completed]);
+
+            const loadQuestions = async () => {
+                const token = sessionStorage.getItem('halyk_token');
+                if (!token) {
+                    window.location.href = '/';
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/test/${userTestId}/questions`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    const data = await response.json();
+
+                    // Don't redirect - let test complete naturally to show self-assessment
+                    console.log('📥 Questions loaded, progress:', data.progress);
+
+                    setQuestions(data.questions);
+                    setProgress(data.progress);
+
+                    // Set time limit from API (convert minutes to seconds)
+                    if (data.time_limit_minutes) {
+                        const timeLimitSeconds = data.time_limit_minutes * 60;
+                        setTimeLimitMinutes(data.time_limit_minutes);
+                        setTimeRemaining(timeLimitSeconds);
+                        console.log(`⏱️ Test time limit: ${data.time_limit_minutes} minutes`);
+                    }
+                } catch (error) {
+                    alert('Ошибка загрузки вопросов');
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            const autoSubmitTest = async () => {
+                const token = sessionStorage.getItem('halyk_token');
+                try {
+                    alert('⏰ Время вышло! Тест будет автоматически завершен.');
+                    const completeResponse = await fetch(`/api/complete-test/${userTestId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    const resultData = await completeResponse.json();
+                    setResult(resultData);
+                    setCompleted(true);
+                } catch (error) {
+                    console.error('Error auto-submitting test:', error);
+                }
+            };
+
+            const handleAnswer = async () => {
+                if (selectedAnswer === null || loading) return;
+
+                setLoading(true);
+                const token = sessionStorage.getItem('halyk_token');
+
+                try {
+                    // Отправляем ответ
+                    await fetch('/api/submit-answer', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            user_test_id: parseInt(userTestId),
+                            question_id: questions[currentIndex].question_id,
+                            user_answer: selectedAnswer
+                        })
+                    });
+
+                    // Обновляем вопросы и прогресс
+                    await loadQuestions();
+
+                    // Переход к следующему вопросу или завершение
+                    if (currentIndex < questions.length - 1) {
+                        setCurrentIndex(currentIndex + 1);
+                        setSelectedAnswer(null);
+                        setLoading(false);
+                    } else {
+                        // Завершение теста
+                        const completeResponse = await fetch(`/api/complete-test/${userTestId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        });
+                        const resultData = await completeResponse.json();
+                        console.log('🎉 TEST COMPLETED! Setting completed=true, result:', resultData);
+                        setResult(resultData);
+                        setCompleted(true);
+                        console.log('✅ State updated - completed is now TRUE - useEffect should trigger!');
+                        setLoading(false);
+                    }
+                } catch (error) {
+                    alert('Ошибка отправки ответа');
+                    setLoading(false);
+                }
+            };
+
+            const loadCompetencies = async () => {
+                const token = sessionStorage.getItem('halyk_token');
+                console.log('Loading competencies for test:', userTestId);
+                try {
+                    const response = await fetch(`/api/test/${userTestId}/top-competencies`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    console.log('Competencies response status:', response.status);
+                    const data = await response.json();
+                    console.log('Competencies data:', data);
+
+                    if (data.status === 'success') {
+                        console.log('Found', data.competencies.length, 'competencies');
+                        setCompetencies(data.competencies);
+
+                        // Check if self-assessment already submitted
+                        if (data.already_submitted) {
+                            console.log('Self-assessment already submitted, showing camera setup');
+                            setSelfAssessmentSubmitted(true);
+                            setShowSelfAssessment(false);
+                            setLoading(false);
+
+                            // Show camera setup for returning user
+                            setShowCameraSetup(true);
+                            await initializeCameraVerification();
+                        } else {
+                            console.log('Showing self-assessment form');
+                            setShowSelfAssessment(true);
+                            setLoading(false);
+                        }
+                    } else {
+                        console.log('No competencies found or error in response');
+                        setLoading(false);
+                    }
+                } catch (error) {
+                    console.error('Error loading competencies:', error);
+                    setLoading(false);
+                }
+            };
+
+            const submitSelfAssessment = async () => {
+                const token = sessionStorage.getItem('halyk_token');
+                const assessments = Object.keys(selfRatings).map(compId => ({
+                    competency_id: parseInt(compId),
+                    self_rating: selfRatings[compId]
+                }));
+
+                if (assessments.length === 0) {
+                    alert('Пожалуйста, оцените хотя бы одну компетенцию');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/test/${userTestId}/self-assessment`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ assessments })
+                    });
+                    const data = await response.json();
+                    if (data.status === 'success') {
+                        setSelfAssessmentSubmitted(true);
+                        setShowSelfAssessment(false);
+
+                        // Show camera setup/verification screen
+                        console.log('📸 Showing camera setup screen');
+                        setShowCameraSetup(true);
+
+                        // Initialize camera verification
+                        await initializeCameraVerification();
+                    }
+                } catch (error) {
+                    alert('Ошибка отправки самооценки');
+                }
+            };
+
+            // Initialize camera verification
+            const initializeCameraVerification = async () => {
+                console.log('🎥 Initializing camera for verification...');
+                setCameraVerificationMessage('Запуск камеры...');
+
+                try {
+                    // Request camera access
+                    const stream = await navigator.mediaDevices.getUserMedia({
+                        video: {
+                            width: { ideal: 640 },
+                            height: { ideal: 480 },
+                            facingMode: 'user'
+                        },
+                        audio: false
+                    });
+
+                    // Store stream reference
+                    cameraStream = stream;
+
+                    // Attach stream to both setup video and main camera video
+                    const setupVideoElement = document.getElementById('setupCameraVideo');
+                    const mainVideoElement = document.getElementById('cameraVideo');
+
+                    if (setupVideoElement) {
+                        setupVideoElement.srcObject = stream;
+                        console.log('📹 Stream attached to setup video');
+                    }
+                    if (mainVideoElement) {
+                        mainVideoElement.srcObject = stream;
+                        console.log('📹 Stream attached to main video');
+                    }
+
+                    setCameraReady(true);
+                    setCameraVerificationMessage('Камера активна. Загрузка моделей...');
+
+                    // Wait for video to actually start playing
+                    if (setupVideoElement) {
+                        await new Promise((resolve) => {
+                            if (setupVideoElement.readyState >= 2) {
+                                console.log('✅ Video already ready');
+                                resolve();
+                            } else {
+                                setupVideoElement.onloadeddata = () => {
+                                    console.log('✅ Video loaded and ready');
+                                    resolve();
+                                };
+                            }
+                        });
+                    }
+
+                    // Load AI models if not already loaded
+                    if (!blazefaceModel || !faceLandmarksDetector || !cocoSsdModel) {
+                        setCameraVerificationMessage('Загрузка моделей распознавания...');
+                        console.log('🤖 Loading AI models...');
+                        const loaded = await loadAIModels();
+                        if (!loaded) {
+                            console.error('❌ Models failed to load');
+                            setCameraVerificationMessage('⚠️ Ошибка загрузки моделей. Камера работает, но проверка недоступна.');
+                            setCameraReady(true); // Still allow proceeding if models fail
+                            setFaceDetected(true); // Allow proceeding even without face detection
+                            return;
+                        }
+                        console.log('✅ AI models loaded successfully');
+                    }
+
+                    setCameraVerificationMessage('Проверка позиционирования...');
+
+                    // Give a small delay to ensure video is actually streaming frames
+                    await new Promise(resolve => setTimeout(resolve, 500));
+
+                    // Start face detection verification
+                    console.log('🎯 Starting face verification');
+                    startFaceVerification();
+                } catch (error) {
+                    console.error('❌ Camera initialization error:', error);
+                    setCameraReady(false);
+                    setCameraVerificationMessage('❌ Ошибка доступа к камере. Пожалуйста, разрешите доступ к камере в настройках браузера.');
+                }
+            };
+
+            // Verify face positioning
+            let verificationInterval = null;
+            const startFaceVerification = () => {
+                console.log('👤 Starting face verification...');
+
+                let detectionCount = 0;
+                let phoneDetectionFrames = 0; // Track frames with phone detected (not necessarily consecutive)
+                const PHONE_DETECTION_THRESHOLD = 1; // Require detection in just 1 frame for immediate response
+
+                verificationInterval = setInterval(async () => {
+                    const videoElement = document.getElementById('setupCameraVideo') || document.getElementById('cameraVideo');
+                    if (!videoElement || !cameraStream) {
+                        console.log('⚠️ Video element or stream not available');
+                        return;
+                    }
+
+                    // Check if video is actually playing
+                    if (videoElement.readyState < 2) {
+                        console.log('⏳ Video not ready yet, readyState:', videoElement.readyState);
+                        return;
+                    }
+
+                    try {
+                        detectionCount++;
+                        console.log(`🔍 Face detection attempt #${detectionCount}`);
+
+                        // Detect faces using Blazeface
+                        const predictions = await blazefaceModel.estimateFaces(videoElement, false);
+                        const numFaces = predictions ? predictions.length : 0;
+
+                        console.log(`👥 Detected ${numFaces} face(s)`);
+                        setFaceCount(numFaces);
+
+                        // Check if we're in camera setup mode by looking for the setup video element
+                        const isInSetupMode = document.getElementById('setupCameraVideo') !== null;
+
+                        // Check boundaries (silhouette frame in 640x480 viewBox)
+                        // Boundaries: x: 180-460, y: 95-440 (with 20px margin)
+                        let isWithinBounds = true;
+                        if (numFaces > 0 && predictions[0]) {
+                            const face = predictions[0];
+                            const videoWidth = videoElement.videoWidth || 640;
+                            const videoHeight = videoElement.videoHeight || 480;
+
+                            // Get face bounding box [x1, y1, x2, y2]
+                            const [x1, y1, x2, y2] = face.topLeft.concat(face.bottomRight);
+
+                            // Calculate face center and dimensions
+                            const faceCenterX = (x1 + x2) / 2;
+                            const faceCenterY = (y1 + y2) / 2;
+                            const faceWidth = Math.abs(x2 - x1);
+                            const faceHeight = Math.abs(y2 - y1);
+
+                            // Convert to 640x480 coordinate system
+                            const normalizedX = (faceCenterX / videoWidth) * 640;
+                            const normalizedY = (faceCenterY / videoHeight) * 480;
+
+                            // Define silhouette boundaries (with margin for tolerance)
+                            const bounds = {
+                                left: 200,    // 180 + 20px margin
+                                right: 440,   // 460 - 20px margin
+                                top: 115,     // 95 + 20px margin
+                                bottom: 420   // 440 - 20px margin
+                            };
+
+                            // Check if face is within boundaries
+                            isWithinBounds = (
+                                normalizedX >= bounds.left &&
+                                normalizedX <= bounds.right &&
+                                normalizedY >= bounds.top &&
+                                normalizedY <= bounds.bottom
+                            );
+
+                            if (!isInSetupMode) {
+                                console.log(`📍 Face position: (${normalizedX.toFixed(0)}, ${normalizedY.toFixed(0)}) - Within bounds: ${isWithinBounds}`);
+                            }
+                        }
+
+                        // Detect objects (phone detection with improved sensitivity)
+                        let phoneDetected = false;
+                        if (cocoSsdModel && !isInSetupMode) {
+                            try {
+                                const objectPredictions = await cocoSsdModel.detect(videoElement);
+
+                                // Check for cell phone with lower threshold for better detection
+                                phoneDetected = objectPredictions.some(pred => {
+                                    // Lower threshold: 0.25 for better detection of phone backs
+                                    if (pred.class === 'cell phone' && pred.score > 0.25) {
+                                        console.log(`📱 Phone detected! Class: ${pred.class}, Confidence: ${(pred.score * 100).toFixed(1)}%`);
+                                        return true;
+                                    }
+                                    return false;
+                                });
+
+                            } catch (error) {
+                                console.error('❌ Phone detection error:', error);
+                            }
+                        }
+
+                        // During camera setup (before test starts)
+                        if (isInSetupMode) {
+                            console.log('📸 In setup mode');
+                            if (numFaces > 0) {
+                                console.log('✅ Face detected in setup mode!');
+                                setFaceDetected(true);
+                                setCameraVerificationMessage('✅ Лицо обнаружено! Вы можете продолжить.');
+                            } else {
+                                console.log('⚠️ No face in setup mode');
+                                setFaceDetected(false);
+                                setCameraVerificationMessage('⚠️ Лицо не обнаружено. Пожалуйста, расположитесь перед камерой.');
+                            }
+                        }
+                        // During test - auto-pause/resume based on face count, boundaries, and phone detection
+                        else {
+                            console.log('🧪 In test mode');
+                            if (numFaces === 0) {
+                                // No face detected - pause test
+                                console.log('⚠️ No face detected - pausing test');
+                                setIsPaused(true);
+                                setPauseReason('no_face');
+                            } else if (numFaces > 1) {
+                                // Multiple faces detected - pause test
+                                console.log(`⚠️ ${numFaces} faces detected - pausing test`);
+                                setIsPaused(true);
+                                setPauseReason('multiple_faces');
+                            } else if (!isWithinBounds) {
+                                // Face outside silhouette boundaries - pause test
+                                console.log('⚠️ Face outside boundaries - pausing test');
+                                setIsPaused(true);
+                                setPauseReason('out_of_bounds');
+                            } else if (phoneDetected) {
+                                // Phone detected - pause test
+                                console.log('⚠️ Phone detected - pausing test');
+                                setIsPaused(true);
+                                setPauseReason('phone_detected');
+                            } else {
+                                // Exactly 1 face within bounds, no phone - resume if paused due to detection issues
+                                console.log('✅ Single face detected within bounds, no violations - OK');
+                                setIsPaused(false);
+                                setPauseReason('');
+                            }
+                        }
+                    } catch (error) {
+                        console.error('❌ Face detection error:', error);
+                        console.error('Error details:', error.message, error.stack);
+                    }
+                }, 1000); // Check every second
+            };
+
+            // Proceed to test after camera verification
+            const proceedToTest = async () => {
+                console.log('▶️ Proceeding to test...');
+
+                // Enter fullscreen mode FIRST
+                console.log('🖥️ Entering fullscreen mode...');
+                await enterFullscreen();
+
+                // Show the main camera feed in the corner
+                const cameraFeed = document.getElementById('cameraFeed');
+                if (cameraFeed) {
+                    cameraFeed.classList.add('active');
+                }
+
+                setShowCameraSetup(false);
+                setLoading(true);
+
+                // Load test questions
+                await loadQuestions();
+
+                // Continue face verification during test (don't stop the interval)
+                // The face verification will now auto-pause/resume the test
+
+                // 🤖 START AI PROCTORING
+                console.log('🤖 Starting AI proctoring');
+                await startAIProctoring(parseInt(userTestId));
+            };
+
+            if (loading) {
+                return (
+                    <div className="test-container">
+                        <div className="loading">Загрузка...</div>
+                    </div>
+                );
+            }
+
+            // Show self-assessment FIRST, before test starts
+            if (showSelfAssessment && !selfAssessmentSubmitted && competencies.length > 0) {
+                return (
+                    <div className="test-container">
+                        <div style={{
+                            marginTop: '20px',
+                            padding: '25px',
+                            background: '#fff',
+                            borderRadius: '12px',
+                            border: '2px solid #f5576c',
+                            boxShadow: '0 4px 12px rgba(245, 87, 108, 0.1)'
+                        }}>
+                            <h3 style={{color: '#f5576c', marginBottom: '15px', fontSize: '24px', textAlign: 'center'}}>
+                                ⭐ Самооценка ключевых компетенций
+                            </h3>
+                            <p style={{color: '#666', marginBottom: '25px', fontSize: '16px', textAlign: 'center'}}>
+                                Перед началом теста оцените свой уровень владения основными компетенциями по шкале от 1 до 10
+                            </p>
+                            <p style={{color: '#999', marginBottom: '25px', fontSize: '14px', textAlign: 'center', fontStyle: 'italic'}}>
+                                1 = начальный уровень, 10 = экспертный уровень
+                            </p>
+
+                            {competencies.map(comp => (
+                                <div key={comp.id} style={{
+                                    marginBottom: '25px',
+                                    padding: '20px',
+                                    background: '#f8f9fa',
+                                    borderRadius: '10px'
+                                }}>
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        marginBottom: '15px',
+                                        flexWrap: 'wrap'
+                                    }}>
+                                        <div style={{flex: 1, minWidth: '200px'}}>
+                                            <strong style={{fontSize: '16px', color: '#333'}}>
+                                                {comp.name}
+                                            </strong>
+                                            <span style={{
+                                                marginLeft: '10px',
+                                                padding: '4px 10px',
+                                                background: '#f5576c',
+                                                color: 'white',
+                                                borderRadius: '12px',
+                                                fontSize: '12px',
+                                                fontWeight: 'bold'
+                                            }}>
+                                                CORE {comp.importance}%
+                                            </span>
+                                        </div>
+                                        {selfRatings[comp.id] && (
+                                            <div style={{
+                                                marginTop: '8px',
+                                                padding: '6px 12px',
+                                                background: '#1DB584',
+                                                color: 'white',
+                                                borderRadius: '8px',
+                                                fontSize: '14px',
+                                                fontWeight: 'bold'
+                                            }}>
+                                                Оценка: {selfRatings[comp.id]}/10
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div style={{
+                                        display: 'flex',
+                                        gap: '8px',
+                                        flexWrap: 'wrap',
+                                        justifyContent: 'center'
+                                    }}>
+                                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(rating => (
+                                            <button
+                                                key={rating}
+                                                onClick={() => {
+                                                    setSelfRatings({...selfRatings, [comp.id]: rating});
+                                                }}
+                                                style={{
+                                                    width: '45px',
+                                                    height: '45px',
+                                                    borderRadius: '8px',
+                                                    border: selfRatings[comp.id] === rating
+                                                        ? '3px solid #f5576c'
+                                                        : '2px solid #ddd',
+                                                    background: selfRatings[comp.id] === rating
+                                                        ? '#f5576c'
+                                                        : 'white',
+                                                    color: selfRatings[comp.id] === rating ? 'white' : '#333',
+                                                    fontSize: '16px',
+                                                    fontWeight: 'bold',
+                                                    cursor: 'pointer',
+                                                    transition: 'all 0.2s'
+                                                }}
+                                            >
+                                                {rating}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+
+                            <button
+                                className="btn"
+                                onClick={submitSelfAssessment}
+                                style={{
+                                    width: '100%',
+                                    marginTop: '20px',
+                                    padding: '15px',
+                                    fontSize: '18px',
+                                    fontWeight: 'bold',
+                                    background: Object.keys(selfRatings).length === competencies.length
+                                        ? 'linear-gradient(135deg, #f5576c 0%, #f093fb 100%)'
+                                        : '#ccc',
+                                    cursor: Object.keys(selfRatings).length === competencies.length
+                                        ? 'pointer'
+                                        : 'not-allowed'
+                                }}
+                                disabled={Object.keys(selfRatings).length !== competencies.length}
+                            >
+                                Начать тест ({Object.keys(selfRatings).length}/{competencies.length} компетенций оценено)
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            // Show camera setup/verification screen
+            if (showCameraSetup) {
+                return (
+                    <div className="test-container" style={{maxWidth: '900px', margin: '0 auto'}}>
+                        <div style={{
+                            marginTop: '20px',
+                            padding: '30px',
+                            background: '#fff',
+                            borderRadius: '16px',
+                            border: `3px solid ${faceDetected ? '#1DB584' : '#ff9800'}`,
+                            boxShadow: '0 6px 20px rgba(0, 0, 0, 0.1)',
+                            transition: 'border-color 0.3s ease'
+                        }}>
+                            <h2 style={{
+                                color: '#333',
+                                marginBottom: '10px',
+                                fontSize: '28px',
+                                textAlign: 'center',
+                                fontWeight: 'bold'
+                            }}>
+                                📸 Настройка камеры
+                            </h2>
+
+                            <p style={{
+                                color: '#666',
+                                marginBottom: '25px',
+                                fontSize: '16px',
+                                textAlign: 'center',
+                                lineHeight: '1.6'
+                            }}>
+                                Перед началом теста необходимо настроить камеру для мониторинга
+                            </p>
+
+                            {/* Camera Preview */}
+                            <div style={{
+                                position: 'relative',
+                                width: '100%',
+                                maxWidth: '640px',
+                                margin: '0 auto 25px',
+                                borderRadius: '12px',
+                                overflow: 'hidden',
+                                border: `4px solid ${faceDetected ? '#1DB584' : cameraReady ? '#ff9800' : '#ddd'}`,
+                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                                background: '#000',
+                                transition: 'border-color 0.3s ease'
+                            }}>
+                                {/* Setup video preview - will show the camera stream */}
+                                <video
+                                    id="setupCameraVideo"
+                                    autoPlay
+                                    playsInline
+                                    muted
+                                    style={{
+                                        width: '100%',
+                                        height: 'auto',
+                                        display: 'block',
+                                        transform: 'scaleX(-1)' // Mirror the video
+                                    }}
+                                />
+
+                                {/* Person Silhouette Overlay for Alignment */}
+                                <svg
+                                    style={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        width: '100%',
+                                        height: '100%',
+                                        pointerEvents: 'none',
+                                        zIndex: 1
+                                    }}
+                                    viewBox="0 0 640 480"
+                                    preserveAspectRatio="xMidYMid meet"
+                                >
+                                    {/* Semi-transparent background overlay */}
+                                    <rect
+                                        x="0"
+                                        y="0"
+                                        width="640"
+                                        height="480"
+                                        fill="rgba(0, 0, 0, 0.4)"
+                                    />
+
+                                    {/* Human Silhouette - Clear outline - Positioned below center */}
+                                    <g>
+                                        {/* Head */}
+                                        <ellipse
+                                            cx="320"
+                                            cy="190"
+                                            rx="70"
+                                            ry="85"
+                                            fill="none"
+                                            stroke={faceDetected ? '#1DB584' : '#ff9800'}
+                                            strokeWidth="4"
+                                            strokeDasharray="none"
+                                        />
+
+                                        {/* Neck */}
+                                        <path
+                                            d="M 280 265 L 280 295 M 360 265 L 360 295"
+                                            fill="none"
+                                            stroke={faceDetected ? '#1DB584' : '#ff9800'}
+                                            strokeWidth="4"
+                                        />
+
+                                        {/* Shoulders and Upper Torso - Complete outline */}
+                                        <path
+                                            d="
+                                                M 280 295
+                                                L 220 315
+                                                Q 200 325 190 340
+                                                L 190 430
+                                                L 450 430
+                                                L 450 340
+                                                Q 440 325 420 315
+                                                L 360 295
+                                            "
+                                            fill="none"
+                                            stroke={faceDetected ? '#1DB584' : '#ff9800'}
+                                            strokeWidth="4"
+                                        />
+
+                                        {/* Inner torso details for depth */}
+                                        <path
+                                            d="M 280 295 Q 320 310 360 295"
+                                            fill="none"
+                                            stroke={faceDetected ? '#1DB584' : '#ff9800'}
+                                            strokeWidth="2"
+                                            opacity="0.5"
+                                        />
+
+                                        {/* Shoulder definition lines */}
+                                        <line
+                                            x1="280"
+                                            y1="295"
+                                            x2="220"
+                                            y2="315"
+                                            stroke={faceDetected ? '#1DB584' : '#ff9800'}
+                                            strokeWidth="3"
+                                        />
+                                        <line
+                                            x1="360"
+                                            y1="295"
+                                            x2="420"
+                                            y2="315"
+                                            stroke={faceDetected ? '#1DB584' : '#ff9800'}
+                                            strokeWidth="3"
+                                        />
+                                    </g>
+
+                                    {/* Center alignment line */}
+                                    <line
+                                        x1="320"
+                                        y1="100"
+                                        x2="320"
+                                        y2="440"
+                                        stroke={faceDetected ? '#1DB584' : '#ff9800'}
+                                        strokeWidth="2"
+                                        strokeDasharray="10,5"
+                                        opacity="0.6"
+                                    />
+
+                                    {/* Horizontal alignment guides */}
+                                    <line
+                                        x1="240"
+                                        y1="190"
+                                        x2="400"
+                                        y2="190"
+                                        stroke={faceDetected ? '#1DB584' : '#ff9800'}
+                                        strokeWidth="1"
+                                        strokeDasharray="5,5"
+                                        opacity="0.4"
+                                    />
+
+                                    {/* Alignment text */}
+                                    <text
+                                        x="320"
+                                        y="460"
+                                        fontSize="20"
+                                        fontWeight="bold"
+                                        fill="white"
+                                        textAnchor="middle"
+                                        style={{
+                                            textShadow: '2px 2px 6px rgba(0,0,0,0.9)'
+                                        }}
+                                    >
+                                        {faceDetected ? '✓ Позиция правильная' : 'Расположитесь по контуру'}
+                                    </text>
+
+                                    {/* Corner frame guides */}
+                                    <g opacity="0.7">
+                                        {/* Top-left corner */}
+                                        <line x1="180" y1="95" x2="230" y2="95" stroke={faceDetected ? '#1DB584' : '#ff9800'} strokeWidth="4"/>
+                                        <line x1="180" y1="95" x2="180" y2="145" stroke={faceDetected ? '#1DB584' : '#ff9800'} strokeWidth="4"/>
+
+                                        {/* Top-right corner */}
+                                        <line x1="460" y1="95" x2="410" y2="95" stroke={faceDetected ? '#1DB584' : '#ff9800'} strokeWidth="4"/>
+                                        <line x1="460" y1="95" x2="460" y2="145" stroke={faceDetected ? '#1DB584' : '#ff9800'} strokeWidth="4"/>
+
+                                        {/* Bottom-left corner */}
+                                        <line x1="180" y1="440" x2="230" y2="440" stroke={faceDetected ? '#1DB584' : '#ff9800'} strokeWidth="4"/>
+                                        <line x1="180" y1="440" x2="180" y2="390" stroke={faceDetected ? '#1DB584' : '#ff9800'} strokeWidth="4"/>
+
+                                        {/* Bottom-right corner */}
+                                        <line x1="460" y1="440" x2="410" y2="440" stroke={faceDetected ? '#1DB584' : '#ff9800'} strokeWidth="4"/>
+                                        <line x1="460" y1="440" x2="460" y2="390" stroke={faceDetected ? '#1DB584' : '#ff9800'} strokeWidth="4"/>
+                                    </g>
+                                </svg>
+
+                                {/* Overlay with face detection indicator */}
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '15px',
+                                    left: '15px',
+                                    right: '15px',
+                                    padding: '12px 20px',
+                                    background: faceDetected
+                                        ? 'rgba(29, 181, 132, 0.95)'
+                                        : cameraReady
+                                            ? 'rgba(255, 152, 0, 0.95)'
+                                            : 'rgba(158, 158, 158, 0.95)',
+                                    borderRadius: '8px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '10px',
+                                    transition: 'background 0.3s ease',
+                                    zIndex: 2
+                                }}>
+                                    <span style={{fontSize: '24px'}}>
+                                        {faceDetected ? '✅' : cameraReady ? '⚠️' : '⏳'}
+                                    </span>
+                                    <span style={{
+                                        color: 'white',
+                                        fontWeight: 'bold',
+                                        fontSize: '16px'
+                                    }}>
+                                        {cameraVerificationMessage}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Instructions */}
+                            <div style={{
+                                background: '#f8f9fa',
+                                padding: '20px',
+                                borderRadius: '10px',
+                                marginBottom: '25px'
+                            }}>
+                                <h4 style={{
+                                    color: '#333',
+                                    marginBottom: '12px',
+                                    fontSize: '18px',
+                                    fontWeight: 'bold'
+                                }}>
+                                    📋 Инструкции по настройке:
+                                </h4>
+                                <ul style={{
+                                    color: '#666',
+                                    fontSize: '15px',
+                                    lineHeight: '1.8',
+                                    marginLeft: '20px',
+                                    listStyle: 'disc'
+                                }}>
+                                    <li><strong>Выровняйте голову по овальному контуру</strong> - ваше лицо должно находиться внутри овала</li>
+                                    <li><strong>Совместите плечи с направляющими линиями</strong> - используйте линии шеи и плеч для точного позиционирования</li>
+                                    <li>Используйте центральную вертикальную линию для выравнивания по центру</li>
+                                    <li>Убедитесь, что торс находится внутри прямоугольного контура</li>
+                                    <li>Сохраняйте расстояние от камеры ~50 см для правильного масштаба</li>
+                                    <li>Дождитесь, пока контур станет <strong style={{color: '#1DB584'}}>зеленым</strong> (✅ Позиция правильная)</li>
+                                </ul>
+                            </div>
+
+                            {/* Warning about proctoring */}
+                            <div style={{
+                                background: '#fff3cd',
+                                padding: '15px',
+                                borderRadius: '8px',
+                                marginBottom: '25px',
+                                border: '2px solid #ffc107'
+                            }}>
+                                <p style={{
+                                    color: '#856404',
+                                    fontSize: '14px',
+                                    margin: 0,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px'
+                                }}>
+                                    <span style={{fontSize: '20px'}}>⚠️</span>
+                                    <span>
+                                        <strong>Внимание:</strong> Во время теста будет вестись видеонаблюдение с использованием AI
+                                        для обеспечения честности прохождения теста. Периодические фотографии будут отправляться
+                                        на анализ.
+                                    </span>
+                                </p>
+                            </div>
+
+                            {/* Continue button */}
+                            <button
+                                onClick={proceedToTest}
+                                disabled={!faceDetected}
+                                style={{
+                                    width: '100%',
+                                    padding: '18px',
+                                    fontSize: '18px',
+                                    fontWeight: 'bold',
+                                    background: faceDetected
+                                        ? 'linear-gradient(135deg, #1DB584 0%, #10b981 100%)'
+                                        : '#ccc',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '10px',
+                                    cursor: faceDetected ? 'pointer' : 'not-allowed',
+                                    transition: 'all 0.3s ease',
+                                    boxShadow: faceDetected ? '0 4px 12px rgba(29, 181, 132, 0.3)' : 'none',
+                                    opacity: faceDetected ? 1 : 0.6
+                                }}
+                            >
+                                {faceDetected ? '✅ Продолжить к тесту' : '⏳ Ожидание обнаружения лица...'}
+                            </button>
+
+                            {!cameraReady && (
+                                <p style={{
+                                    marginTop: '15px',
+                                    textAlign: 'center',
+                                    color: '#d32f2f',
+                                    fontSize: '14px'
+                                }}>
+                                    Если камера не работает, проверьте разрешения браузера и обновите страницу
+                                </p>
+                            )}
+                        </div>
+                    </div>
+                );
+            }
+
+            if (completed) {
+                console.log('📊 RENDERING COMPLETION PAGE');
+                console.log('  - showSelfAssessment:', showSelfAssessment);
+                console.log('  - competencies.length:', competencies.length);
+                console.log('  - selfAssessmentSubmitted:', selfAssessmentSubmitted);
+                console.log('  - Will show self-assessment?', showSelfAssessment && !selfAssessmentSubmitted && competencies.length > 0);
+
+                return (
+                    <div className="test-container">
+                        <div className="completion">
+                            <h2>Тест завершен! 🎉</h2>
+                            <div className="score-display">
+                                {result.score}/{result.max_score}
+                            </div>
+                            <div className="level-badge">{result.level}</div>
+
+                            {!result.recommendation && (
+                                <div style={{
+                                    marginTop: '30px',
+                                    padding: '20px',
+                                    background: '#f0fdf7',
+                                    borderRadius: '12px',
+                                    border: '2px solid #1DB584'
+                                }}>
+                                    <h3 style={{color: '#1DB584', marginBottom: '12px'}}>
+                                        ⏳ Генерация AI рекомендации...
+                                    </h3>
+                                    <p style={{color: '#666', fontSize: '16px'}}>
+                                        Пожалуйста подождите, Claude анализирует ваши результаты
+                                    </p>
+                                </div>
+                            )}
+
+                            {result.recommendation && (
+                                <div style={{
+                                    marginTop: '30px',
+                                    padding: '20px',
+                                    background: '#f0fdf7',
+                                    borderRadius: '12px',
+                                    border: '2px solid #1DB584'
+                                }}>
+                                    <h3 style={{color: '#1DB584', marginBottom: '12px'}}>
+                                        💡 Рекомендация AI
+                                    </h3>
+                                    <p style={{color: '#333', fontSize: '16px', lineHeight: '1.6', whiteSpace: 'pre-wrap'}}>
+                                        {result.recommendation}
+                                    </p>
+                                </div>
+                            )}
+
+                            {/* Self-Assessment moved to BEFORE test - this section no longer needed */}
+                            {false && showSelfAssessment && !selfAssessmentSubmitted && competencies.length > 0 && (
+                                <div style={{
+                                    marginTop: '30px',
+                                    padding: '25px',
+                                    background: '#fff',
+                                    borderRadius: '12px',
+                                    border: '2px solid #f5576c',
+                                    boxShadow: '0 4px 12px rgba(245, 87, 108, 0.1)'
+                                }}>
+                                    <h3 style={{color: '#f5576c', marginBottom: '15px', fontSize: '20px'}}>
+                                        ⭐ Самооценка ключевых компетенций
+                                    </h3>
+                                    <p style={{color: '#666', marginBottom: '25px', fontSize: '15px'}}>
+                                        Оцените свой уровень владения основными компетенциями по шкале от 1 до 10
+                                    </p>
+
+                                    {competencies.map(comp => (
+                                        <div key={comp.id} style={{
+                                            marginBottom: '25px',
+                                            padding: '20px',
+                                            background: '#f8f9fa',
+                                            borderRadius: '10px'
+                                        }}>
+                                            <div style={{
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                                alignItems: 'center',
+                                                marginBottom: '15px',
+                                                flexWrap: 'wrap'
+                                            }}>
+                                                <div style={{flex: 1, minWidth: '200px'}}>
+                                                    <strong style={{fontSize: '15px', color: '#333'}}>
+                                                        {comp.name}
+                                                    </strong>
+                                                    <span style={{
+                                                        marginLeft: '10px',
+                                                        padding: '4px 10px',
+                                                        background: '#f5576c',
+                                                        color: 'white',
+                                                        borderRadius: '12px',
+                                                        fontSize: '12px',
+                                                        fontWeight: 'bold'
+                                                    }}>
+                                                        CORE {comp.importance}%
+                                                    </span>
+                                                </div>
+                                                {selfRatings[comp.id] && (
+                                                    <div style={{
+                                                        marginTop: '8px',
+                                                        padding: '6px 14px',
+                                                        background: '#1DB584',
+                                                        color: 'white',
+                                                        borderRadius: '20px',
+                                                        fontSize: '14px',
+                                                        fontWeight: 'bold'
+                                                    }}>
+                                                        Выбрано: {selfRatings[comp.id]}/10
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div style={{
+                                                display: 'flex',
+                                                gap: '8px',
+                                                flexWrap: 'wrap',
+                                                justifyContent: 'center'
+                                            }}>
+                                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(rating => (
+                                                    <button
+                                                        key={rating}
+                                                        onClick={() => setSelfRatings({...selfRatings, [comp.id]: rating})}
+                                                        style={{
+                                                            minWidth: '45px',
+                                                            height: '45px',
+                                                            borderRadius: '8px',
+                                                            border: '2px solid',
+                                                            borderColor: selfRatings[comp.id] === rating ? '#f5576c' : '#ddd',
+                                                            background: selfRatings[comp.id] === rating
+                                                                ? 'linear-gradient(135deg, #f5576c 0%, #f093fb 100%)'
+                                                                : 'white',
+                                                            color: selfRatings[comp.id] === rating ? 'white' : '#333',
+                                                            fontSize: '16px',
+                                                            fontWeight: 'bold',
+                                                            cursor: 'pointer',
+                                                            transition: 'all 0.2s',
+                                                            transform: selfRatings[comp.id] === rating ? 'scale(1.1)' : 'scale(1)'
+                                                        }}
+                                                        onMouseEnter={(e) => {
+                                                            if (selfRatings[comp.id] !== rating) {
+                                                                e.target.style.borderColor = '#f5576c';
+                                                                e.target.style.background = '#fff5f7';
+                                                            }
+                                                        }}
+                                                        onMouseLeave={(e) => {
+                                                            if (selfRatings[comp.id] !== rating) {
+                                                                e.target.style.borderColor = '#ddd';
+                                                                e.target.style.background = 'white';
+                                                            }
+                                                        }}
+                                                    >
+                                                        {rating}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
+
+                                    <button
+                                        className="btn"
+                                        onClick={submitSelfAssessment}
+                                        style={{
+                                            width: '100%',
+                                            marginTop: '20px',
+                                            padding: '15px',
+                                            fontSize: '16px',
+                                            fontWeight: 'bold',
+                                            background: Object.keys(selfRatings).length === competencies.length
+                                                ? 'linear-gradient(135deg, #f5576c 0%, #f093fb 100%)'
+                                                : '#ccc',
+                                            cursor: Object.keys(selfRatings).length === competencies.length
+                                                ? 'pointer'
+                                                : 'not-allowed'
+                                        }}
+                                        disabled={Object.keys(selfRatings).length !== competencies.length}
+                                    >
+                                        Отправить самооценку ({Object.keys(selfRatings).length}/{competencies.length})
+                                    </button>
+                                </div>
+                            )}
+
+                            <button
+                                className="btn"
+                                onClick={() => window.location.href = '/'}
+                                style={{marginTop: '30px'}}
+                            >
+                                На главную
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            // Don't render test if questions aren't loaded yet
+            if (!questions || questions.length === 0) {
+                return (
+                    <div className="test-container">
+                        <div className="loading">Загрузка вопросов...</div>
+                    </div>
+                );
+            }
+
+            const currentQuestion = questions[currentIndex];
+            const overallProgress = progress ?
+                ((progress.total.answered / progress.total.total) * 100) : 0;
+
+            return (
+                <div className="test-container">
+                    {/* Pause Overlay */}
+                    {isPaused && (
+                        <div style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'rgba(0, 0, 0, 0.95)',
+                            zIndex: 10000,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backdropFilter: 'blur(10px)'
+                        }}>
+                            <div style={{
+                                background: 'white',
+                                padding: '50px',
+                                borderRadius: '20px',
+                                maxWidth: '600px',
+                                textAlign: 'center',
+                                boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+                                border: '3px solid #ff9800'
+                            }}>
+                                <div style={{fontSize: '80px', marginBottom: '20px'}}>
+                                    {pauseReason === 'no_face' ? '👤' :
+                                     pauseReason === 'multiple_faces' ? '👥' :
+                                     pauseReason === 'out_of_bounds' ? '📍' :
+                                     pauseReason === 'phone_detected' ? '📱' : '🖥️'}
+                                </div>
+                                <h2 style={{
+                                    color: '#ff9800',
+                                    fontSize: '32px',
+                                    marginBottom: '20px',
+                                    fontWeight: 'bold'
+                                }}>
+                                    ⏸️ Тест приостановлен
+                                </h2>
+                                <p style={{
+                                    color: '#333',
+                                    fontSize: '20px',
+                                    lineHeight: '1.6',
+                                    marginBottom: '30px'
+                                }}>
+                                    {pauseReason === 'no_face' && (
+                                        <>
+                                            <strong>Лицо не обнаружено</strong><br />
+                                            Пожалуйста, вернитесь перед камерой.<br />
+                                            Тест автоматически возобновится, когда вы окажетесь в кадре.
+                                        </>
+                                    )}
+                                    {pauseReason === 'multiple_faces' && (
+                                        <>
+                                            <strong>Обнаружено несколько человек</strong><br />
+                                            В кадре должен находиться только один участник.<br />
+                                            Тест возобновится, когда останется один человек.
+                                        </>
+                                    )}
+                                    {pauseReason === 'out_of_bounds' && (
+                                        <>
+                                            <strong>Вы вышли за границы контура</strong><br />
+                                            Вернитесь в обозначенную область силуэта.<br />
+                                            Тест возобновится, когда вы окажетесь внутри рамки.
+                                        </>
+                                    )}
+                                    {pauseReason === 'phone_detected' && (
+                                        <>
+                                            <strong>Обнаружен телефон</strong><br />
+                                            Уберите телефон из кадра.<br />
+                                            Тест автоматически возобновится, когда телефон не будет виден.
+                                        </>
+                                    )}
+                                    {pauseReason === 'fullscreen' && (
+                                        <>
+                                            <strong>Требуется полноэкранный режим</strong><br />
+                                            Тест должен проходить в полноэкранном режиме.<br />
+                                            <button
+                                                onClick={enterFullscreen}
+                                                style={{
+                                                    marginTop: '20px',
+                                                    padding: '15px 40px',
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                    background: 'linear-gradient(135deg, #1DB584 0%, #10b981 100%)',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '10px',
+                                                    cursor: 'pointer',
+                                                    boxShadow: '0 4px 12px rgba(29, 181, 132, 0.3)'
+                                                }}
+                                            >
+                                                Вернуться в полноэкранный режим
+                                            </button>
+                                        </>
+                                    )}
+                                </p>
+                                <div style={{
+                                    background: '#f8f9fa',
+                                    padding: '15px',
+                                    borderRadius: '10px',
+                                    marginTop: '20px'
+                                }}>
+                                    <p style={{
+                                        color: '#666',
+                                        fontSize: '14px',
+                                        margin: 0
+                                    }}>
+                                        ⏱️ Таймер приостановлен • Обнаружено лиц: {faceCount}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="progress">
+                        <div className="progress-bar">
+                            <div className="progress-fill" style={{width: `${overallProgress}%`}}></div>
+                        </div>
+                        <div className="progress-text">
+                            <span>Вопрос {currentIndex + 1} из {questions.length}</span>
+                            <span>
+                                Отвечено: {progress?.total.answered || 0}/{progress?.total.total || 24}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="question">
+                        <div className="question-header">
+                            <span className="question-number">
+                                Вопрос {currentIndex + 1}
+                            </span>
+                            <span className={`question-level ${currentQuestion.level}`}>
+                                {currentQuestion.level}
+                            </span>
+                        </div>
+
+                        <div className="topic-name">
+                            📚 {currentQuestion.topic_name}
+                        </div>
+
+                        <div className="question-text">
+                            {currentQuestion.question_text}
+                        </div>
+
+                        <div className="options">
+                            {currentQuestion.options.map((option, index) => (
+                                <div
+                                    key={index}
+                                    className={`option ${selectedAnswer === index + 1 ? 'selected' : ''}`}
+                                    onClick={() => !currentQuestion.is_answered && !isPaused && setSelectedAnswer(index + 1)}
+                                    style={{opacity: isPaused ? 0.5 : 1, cursor: isPaused ? 'not-allowed' : 'pointer'}}
+                                >
+                                    {option}
+                                </div>
+                            ))}
+                        </div>
+
+                        <button
+                            className="btn"
+                            onClick={handleAnswer}
+                            disabled={selectedAnswer === null || loading || currentQuestion.is_answered || isPaused}
+                        >
+                            {loading ? '⏳ Отправка...' :
+                             currentQuestion.is_answered ? 'Уже отвечен' :
+                             isPaused ? '⏸️ Тест приостановлен' :
+                             (currentIndex < questions.length - 1 ? 'Следующий вопрос' : 'Завершить тест')}
+                        </button>
+                    </div>
+
+                    {progress && progress.competencies && (
+                        <div className="competencies-stats">
+                            <h3>📊 Прогресс по компетенциям</h3>
+                            {progress.competencies.map(comp => (
+                                <div key={comp.id} className="competency-stat">
+                                    <span className="competency-name">{comp.name}</span>
+                                    <span className="competency-progress">
+                                        {comp.answered}/{comp.correct}/{comp.total}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
