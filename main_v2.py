@@ -702,16 +702,39 @@ async def get_test_questions(test_session_id: int, user_data: dict = Depends(get
                 answered = sum(1 for q in questions if q["is_answered"])
                 correct = sum(1 for q in questions if q["is_correct"])
 
+                # Calculate progress by competency
+                competency_stats = {}
+                for q in questions:
+                    comp_name = q["competency_name"]
+                    if comp_name not in competency_stats:
+                        competency_stats[comp_name] = {
+                            "name": comp_name,
+                            "total": 0,
+                            "answered": 0,
+                            "correct": 0
+                        }
+                    competency_stats[comp_name]["total"] += 1
+                    if q["is_answered"]:
+                        competency_stats[comp_name]["answered"] += 1
+                    if q["is_correct"]:
+                        competency_stats[comp_name]["correct"] += 1
+
+                competencies_list = list(competency_stats.values())
+
                 return {
                     "status": "success",
                     "test_session_id": test_session_id,
                     "questions": questions,
                     "total": len(questions),
+                    "time_limit_minutes": 40,  # Default 40 minutes
                     "progress": {
-                        "answered": answered,
-                        "total": len(questions),
-                        "correct": correct,
-                        "percentage": int((answered / len(questions)) * 100) if questions else 0
+                        "total": {
+                            "answered": answered,
+                            "total": len(questions),
+                            "correct": correct,
+                            "percentage": int((answered / len(questions)) * 100) if questions else 0
+                        },
+                        "competencies": competencies_list
                     }
                 }
 

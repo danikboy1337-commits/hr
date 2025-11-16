@@ -2373,8 +2373,8 @@
                     {progress && progress.competencies && (
                         <div className="competencies-stats">
                             <h3>📊 Прогресс по компетенциям</h3>
-                            {progress.competencies.map(comp => (
-                                <div key={comp.id} className="competency-stat">
+                            {progress.competencies.map((comp, index) => (
+                                <div key={comp.name || index} className="competency-stat">
                                     <span className="competency-name">{comp.name}</span>
                                     <span className="competency-progress">
                                         {comp.answered}/{comp.correct}/{comp.total}
