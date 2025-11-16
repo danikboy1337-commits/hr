@@ -106,6 +106,59 @@
             color: #333;
         }
 
+        .webcam-preview {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 160px;
+            height: 120px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 3px solid #e53e3e;
+            z-index: 1000;
+            background: #000;
+        }
+
+        .webcam-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1);
+        }
+
+        .webcam-status {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+        }
+
+        .proctoring-warning {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(229, 62, 62, 0.95);
+            color: white;
+            padding: 30px 40px;
+            border-radius: 16px;
+            z-index: 10000;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
         .recording-dot {
             width: 10px;
             height: 10px;
@@ -338,11 +391,26 @@
     </style>
 </head>
 <body>
-    <!-- Camera Indicator (Placebo) -->
-    <div class="camera-indicator">
+    <!-- Camera Indicator -->
+    <div class="camera-indicator" id="cameraIndicator">
         <div class="recording-dot"></div>
         <span class="camera-icon">📹</span>
-        <span class="camera-text">Запись ведется</span>
+        <span class="camera-text" id="cameraStatusText">Запись ведется</span>
+    </div>
+
+    <!-- Webcam Preview -->
+    <div class="webcam-preview" id="webcamPreview" style="display: none;">
+        <video id="webcamVideo" autoplay muted playsinline></video>
+        <div class="webcam-status" id="webcamStatus">Инициализация...</div>
+    </div>
+
+    <!-- Proctoring Warning Overlay -->
+    <div class="proctoring-warning" id="proctoringWarning" style="display: none;">
+        <h3 style="margin-bottom: 15px; font-size: 24px;">⚠️ ВНИМАНИЕ!</h3>
+        <p id="warningMessage" style="font-size: 18px; margin-bottom: 20px;"></p>
+        <button onclick="dismissWarning()" style="padding: 10px 30px; font-size: 16px; background: white; color: #e53e3e; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+            Понятно
+        </button>
     </div>
 
     <!-- Timer Display -->
@@ -355,6 +423,214 @@
     </div>
 
     <div id="root"></div>
+
+    <!-- Proctoring System -->
+    <script>
+        // Global proctoring state
+        let webcamStream = null;
+        let proctoringActive = false;
+        let tabSwitchCount = 0;
+        let blurCount = 0;
+        let lastEventTime = 0;
+
+        // Get user_test_id from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const userTestId = urlParams.get('user_test_id');
+
+        // Dismiss warning overlay
+        function dismissWarning() {
+            document.getElementById('proctoringWarning').style.display = 'none';
+        }
+
+        // Show warning overlay
+        function showWarning(message) {
+            document.getElementById('warningMessage').textContent = message;
+            document.getElementById('proctoringWarning').style.display = 'block';
+        }
+
+        // Log proctoring event to backend
+        async function logProctoringEvent(eventType, severity = 'medium', details = {}) {
+            if (!proctoringActive || !userTestId) return;
+
+            // Throttle events (max 1 per second for same type)
+            const now = Date.now();
+            if (now - lastEventTime < 1000) return;
+            lastEventTime = now;
+
+            const token = sessionStorage.getItem('halyk_token');
+            if (!token) return;
+
+            try {
+                await fetch('/api/proctoring/event', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        user_test_id: parseInt(userTestId),
+                        event_type: eventType,
+                        severity: severity,
+                        details: details
+                    })
+                });
+                console.log(`🔴 Proctoring event logged: ${eventType} (${severity})`);
+            } catch (error) {
+                console.error('Failed to log proctoring event:', error);
+            }
+        }
+
+        // Initialize webcam
+        async function initializeWebcam() {
+            try {
+                webcamStream = await navigator.mediaDevices.getUserMedia({
+                    video: { width: 320, height: 240 },
+                    audio: false
+                });
+
+                const videoElement = document.getElementById('webcamVideo');
+                videoElement.srcObject = webcamStream;
+
+                document.getElementById('webcamPreview').style.display = 'block';
+                document.getElementById('webcamStatus').textContent = 'Камера активна';
+                document.getElementById('cameraStatusText').textContent = 'Камера активна';
+
+                console.log('✅ Webcam initialized successfully');
+                return true;
+            } catch (error) {
+                console.error('❌ Webcam initialization failed:', error);
+                document.getElementById('webcamStatus').textContent = 'Ошибка камеры';
+                document.getElementById('cameraStatusText').textContent = 'Камера недоступна';
+
+                logProctoringEvent('camera_denied', 'high', { error: error.message });
+                showWarning('Доступ к камере отклонен. Тестирование будет записано как подозрительное.');
+                return false;
+            }
+        }
+
+        // Start proctoring monitoring
+        function startProctoringMonitoring() {
+            if (proctoringActive) return;
+            proctoringActive = true;
+            console.log('🔒 Proctoring monitoring started');
+
+            // 1. Tab visibility change detection
+            document.addEventListener('visibilitychange', () => {
+                if (!proctoringActive) return;
+                if (document.hidden) {
+                    tabSwitchCount++;
+                    const severity = tabSwitchCount > 3 ? 'high' : 'medium';
+                    logProctoringEvent('tab_switch', severity, { count: tabSwitchCount });
+                    showWarning(`Обнаружено переключение вкладки (${tabSwitchCount} раз). Это поведение фиксируется.`);
+                }
+            });
+
+            // 2. Window blur (focus loss) detection
+            window.addEventListener('blur', () => {
+                if (!proctoringActive) return;
+                blurCount++;
+                const severity = blurCount > 5 ? 'high' : 'medium';
+                logProctoringEvent('window_blur', severity, { count: blurCount });
+            });
+
+            // 3. Right-click prevention
+            document.addEventListener('contextmenu', (e) => {
+                if (!proctoringActive) return;
+                e.preventDefault();
+                logProctoringEvent('right_click_attempt', 'low', {});
+                return false;
+            });
+
+            // 4. Keyboard shortcut monitoring
+            document.addEventListener('keydown', (e) => {
+                if (!proctoringActive) return;
+
+                // Block common cheating shortcuts
+                if (e.ctrlKey || e.metaKey) {
+                    if (['c', 'v', 'u', 'f', 'p', 'a'].includes(e.key.toLowerCase())) {
+                        e.preventDefault();
+                        logProctoringEvent('suspicious_keyboard', 'medium', {
+                            key: e.key,
+                            ctrl: e.ctrlKey,
+                            meta: e.metaKey
+                        });
+                        return false;
+                    }
+                }
+
+                // F12, Ctrl+Shift+I (DevTools)
+                if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                    e.preventDefault();
+                    logProctoringEvent('devtools_attempt', 'high', { key: e.key });
+                    showWarning('Попытка открыть инструменты разработчика зафиксирована!');
+                    return false;
+                }
+            });
+
+            // 5. Print screen detection (limited)
+            document.addEventListener('keyup', (e) => {
+                if (!proctoringActive) return;
+                if (e.key === 'PrintScreen') {
+                    logProctoringEvent('screenshot_attempt', 'high', {});
+                    showWarning('Попытка сделать скриншот зафиксирована!');
+                }
+            });
+
+            // 6. Window resize detection (potential screen sharing)
+            let lastWidth = window.innerWidth;
+            let lastHeight = window.innerHeight;
+            window.addEventListener('resize', () => {
+                if (!proctoringActive) return;
+                const widthChange = Math.abs(window.innerWidth - lastWidth);
+                const heightChange = Math.abs(window.innerHeight - lastHeight);
+
+                if (widthChange > 100 || heightChange > 100) {
+                    logProctoringEvent('window_resize', 'low', {
+                        oldSize: { width: lastWidth, height: lastHeight },
+                        newSize: { width: window.innerWidth, height: window.innerHeight }
+                    });
+                }
+                lastWidth = window.innerWidth;
+                lastHeight = window.innerHeight;
+            });
+
+            // 7. Multiple displays detection (if supported)
+            if (window.screen && window.screen.isExtended !== undefined) {
+                if (window.screen.isExtended) {
+                    logProctoringEvent('multiple_displays', 'medium', {});
+                }
+            }
+        }
+
+        // Stop proctoring and cleanup
+        function stopProctoring() {
+            proctoringActive = false;
+            if (webcamStream) {
+                webcamStream.getTracks().forEach(track => track.stop());
+                webcamStream = null;
+            }
+            document.getElementById('webcamPreview').style.display = 'none';
+            console.log('🔓 Proctoring stopped');
+        }
+
+        // Global function to activate proctoring (called from React app)
+        window.activateProctoring = async function() {
+            console.log('🚀 Activating proctoring system...');
+            await initializeWebcam();
+            startProctoringMonitoring();
+        };
+
+        // Global function to stop proctoring (called from React app)
+        window.stopProctoring = stopProctoring;
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (proctoringActive) {
+                logProctoringEvent('test_page_unload', 'medium', {});
+            }
+            stopProctoring();
+        });
+    </script>
 
     <script type="text/babel">
         const { useState, useEffect } = React;
@@ -510,6 +786,12 @@
                 const token = sessionStorage.getItem('halyk_token');
                 try {
                     alert('⏰ Время вышло! Тест будет автоматически завершен.');
+
+                    // Stop proctoring on timer expiration
+                    if (window.stopProctoring) {
+                        window.stopProctoring();
+                    }
+
                     const completeResponse = await fetch(`/api/complete-test/${userTestId}`, {
                         method: 'POST',
                         headers: {
@@ -563,6 +845,12 @@
                         });
                         const resultData = await completeResponse.json();
                         console.log('🎉 TEST COMPLETED! Setting completed=true, result:', resultData);
+
+                        // Stop proctoring when test is completed
+                        if (window.stopProctoring) {
+                            window.stopProctoring();
+                        }
+
                         setResult(resultData);
                         setCompleted(true);
                         console.log('✅ State updated - completed is now TRUE - useEffect should trigger!');
@@ -596,6 +884,13 @@
                             console.log('Self-assessment already submitted, loading questions');
                             setSelfAssessmentSubmitted(true);
                             setShowSelfAssessment(false);
+
+                            // Activate proctoring for resumed test
+                            console.log('🔒 Activating proctoring for resumed test...');
+                            if (window.activateProctoring) {
+                                await window.activateProctoring();
+                            }
+
                             // Don't set loading false yet, let loadQuestions handle it
                             await loadQuestions();
                         } else {
@@ -638,6 +933,13 @@
                     if (data.status === 'success') {
                         setSelfAssessmentSubmitted(true);
                         setShowSelfAssessment(false);
+
+                        // Activate proctoring system BEFORE loading questions
+                        console.log('🔒 Activating proctoring after self-assessment...');
+                        if (window.activateProctoring) {
+                            await window.activateProctoring();
+                        }
+
                         // Now load the actual test questions
                         setLoading(true);
                         await loadQuestions();
