@@ -108,7 +108,7 @@ class SelfAssessmentSubmit(BaseModel):
 class ProctoringEventSubmit(BaseModel):
     user_test_id: int
     event_type: str  # e.g., 'face_not_detected', 'multiple_faces', 'tab_switch'
-    severity: str = "medium"  # 'low', 'medium', 'high'
+    severity: str = "medium"  # 'low', 'medium', 'high', 'critical'
     details: Optional[dict] = None
 
 class SQLQuery(BaseModel):
@@ -1006,22 +1006,48 @@ async def log_proctoring_event(
 
                 event_id = (await cur.fetchone())[0]
 
-                # Update suspicious event count and risk level
+                # Update suspicious event count and calculate risk level based on severity
+                # Get current count of high/critical severity events
+                await cur.execute("""
+                    SELECT
+                        COUNT(*) as total_events,
+                        COUNT(*) FILTER (WHERE severity IN ('high', 'critical')) as high_severity_count
+                    FROM proctoring_events
+                    WHERE user_test_id = %s
+                """, (event.user_test_id,))
+
+                counts = await cur.fetchone()
+                total_events = counts[0] if counts else 0
+                high_severity_count = counts[1] if counts else 0
+
+                # Calculate risk level based on thresholds:
+                # high/critical events >= 10 → 'high' (CRITICAL)
+                # high/critical events >= 5 → 'high'
+                # total events >= 15 → 'medium'
+                # else → 'low'
+                if high_severity_count >= 10:
+                    risk_level = 'high'  # CRITICAL
+                elif high_severity_count >= 5:
+                    risk_level = 'high'
+                elif total_events >= 15:
+                    risk_level = 'medium'
+                else:
+                    risk_level = 'low'
+
                 await cur.execute("""
                     UPDATE user_test_time
-                    SET suspicious_events_count = suspicious_events_count + 1,
-                        proctoring_risk_level = CASE
-                            WHEN suspicious_events_count + 1 >= 10 THEN 'high'
-                            WHEN suspicious_events_count + 1 >= 5 THEN 'medium'
-                            ELSE 'low'
-                        END
+                    SET suspicious_events_count = %s,
+                        proctoring_risk_level = %s
                     WHERE id = %s
-                """, (event.user_test_id,))
+                """, (total_events, risk_level, event.user_test_id))
 
                 return {
                     "status": "success",
                     "event_id": event_id,
-                    "message": "Proctoring event logged"
+                    "message": "Proctoring event logged",
+                    "risk_level": risk_level,
+                    "total_events": total_events,
+                    "high_severity_events": high_severity_count
                 }
     except HTTPException:
         raise

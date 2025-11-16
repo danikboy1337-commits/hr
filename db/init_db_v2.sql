@@ -209,7 +209,7 @@ CREATE TABLE IF NOT EXISTS proctoring_events (
     user_test_id INTEGER NOT NULL REFERENCES user_test_time(id) ON DELETE CASCADE,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     event_type VARCHAR(100) NOT NULL, -- e.g., 'face_not_detected', 'multiple_faces', 'tab_switch', etc.
-    severity VARCHAR(20) DEFAULT 'medium' CHECK (severity IN ('low', 'medium', 'high')),
+    severity VARCHAR(20) DEFAULT 'medium' CHECK (severity IN ('low', 'medium', 'high', 'critical')),
     details JSONB, -- Additional event details
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
