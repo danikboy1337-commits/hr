@@ -799,10 +799,10 @@ async def submit_answer(answer: AnswerSubmit, user_data: dict = Depends(get_curr
                 await cur.execute("""
                     INSERT INTO user_results
                     (user_id, test_session_id, specialization_id, competency_id, topic_id,
-                     question_id, question_text, user_answer, correct, date_created)
+                     question_id, question_text, user_answer, is_correct, date_created)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     ON CONFLICT (user_id, test_session_id, question_id) DO UPDATE
-                    SET user_answer = %s, correct = %s
+                    SET user_answer = %s, is_correct = %s
                 """, (user_id, answer.user_test_id, spec_id, comp_id, topic_id,
                       answer.question_id, question_text, answer.user_answer, is_correct, datetime.now(),
                       answer.user_answer, is_correct))
@@ -855,7 +855,7 @@ async def complete_test(test_session_id: int, user_data: dict = Depends(get_curr
 
                 # Calculate score
                 await cur.execute("""
-                    SELECT COUNT(*) as total, SUM(correct) as correct_count
+                    SELECT COUNT(*) as total, SUM(is_correct) as correct_count
                     FROM user_results
                     WHERE test_session_id = %s
                 """, (test_session_id,))
@@ -894,7 +894,7 @@ async def complete_test(test_session_id: int, user_data: dict = Depends(get_curr
                     SELECT
                         c.name as competency_name,
                         COUNT(*) as total,
-                        SUM(CASE WHEN ur.correct = 1 THEN 1 ELSE 0 END) as correct
+                        SUM(CASE WHEN ur.is_correct = 1 THEN 1 ELSE 0 END) as correct
                     FROM user_results ur
                     JOIN questions q ON ur.question_id = q.id
                     JOIN competencies c ON q.competency_id = c.id
@@ -969,7 +969,7 @@ async def get_results(test_session_id: int, user_data: dict = Depends(get_curren
                     SELECT
                         c.name as competency_name,
                         COUNT(*) as total,
-                        SUM(ur.correct) as correct
+                        SUM(ur.is_correct) as correct
                     FROM user_results ur
                     JOIN competencies c ON c.id = ur.competency_id
                     WHERE ur.test_session_id = %s
@@ -1311,19 +1311,14 @@ async def hr_get_all_results(hr_user: dict = Depends(verify_hr_cookie)):
                         utt.id,
                         u.name,
                         u.tab_number,
-                        u.company,
-                        u.role,
-                        d.name as department,
                         s.name as specialization,
                         utt.score,
                         utt.max_score,
                         utt.level,
-                        utt.start_time,
                         utt.end_time
                     FROM user_test_time utt
                     JOIN users u ON u.id = utt.user_id
                     JOIN specializations s ON s.id = utt.specialization_id
-                    LEFT JOIN departments d ON d.id = u.department_id
                     WHERE utt.completed = TRUE
                     ORDER BY utt.end_time DESC
                     LIMIT 100
@@ -1333,316 +1328,21 @@ async def hr_get_all_results(hr_user: dict = Depends(verify_hr_cookie)):
 
                 results = []
                 for row in rows:
-                    score = row[7] or 0
-                    max_score = row[8] or 1
-                    percentage = round((score / max_score) * 100, 1) if max_score > 0 else 0
-
-                    # Calculate duration in minutes
-                    duration = 0
-                    if row[10] and row[11]:
-                        delta = row[11] - row[10]
-                        duration = round(delta.total_seconds() / 60, 1)
-
                     results.append({
-                        "test_id": row[0],
-                        "name": row[1],
+                        "test_session_id": row[0],
+                        "user_name": row[1],
                         "tab_number": row[2],
-                        "company": row[3] or "-",
-                        "role": row[4] or "-",
-                        "department": row[5] or "-",
-                        "specialization": row[6],
-                        "score": score,
-                        "max_score": max_score,
-                        "percentage": percentage,
-                        "level": row[9].capitalize() if row[9] else "Junior",
-                        "completed_at": row[11].isoformat() if row[11] else None,
-                        "duration_minutes": duration
+                        "specialization": row[3],
+                        "score": row[4],
+                        "max_score": row[5],
+                        "level": row[6],
+                        "completed_at": row[7].isoformat() if row[7] else None
                     })
 
                 return {"status": "success", "results": results}
 
     except Exception as e:
         print(f"HR results error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.get("/api/hr/results/stats")
-async def hr_get_results_stats(hr_user: dict = Depends(verify_hr_cookie)):
-    """HR: Get statistical analysis of all results"""
-    if not hr_user:
-        raise HTTPException(status_code=401, detail="Not authenticated")
-
-    try:
-        async with get_db_connection() as conn:
-            async with conn.cursor() as cur:
-                # Overall stats
-                await cur.execute("""
-                    SELECT
-                        COUNT(*) as total_tests,
-                        AVG(CASE WHEN max_score > 0 THEN (score::numeric / max_score::numeric * 100) ELSE 0 END) as avg_percentage,
-                        AVG(EXTRACT(EPOCH FROM (end_time - start_time)) / 60) as avg_duration_minutes
-                    FROM user_test_time
-                    WHERE completed = TRUE
-                """)
-                overall = await cur.fetchone()
-
-                # By specialization
-                await cur.execute("""
-                    SELECT
-                        s.name,
-                        COUNT(*) as count,
-                        AVG(CASE WHEN utt.max_score > 0 THEN (utt.score::numeric / utt.max_score::numeric * 100) ELSE 0 END) as avg_percentage
-                    FROM user_test_time utt
-                    JOIN specializations s ON utt.specialization_id = s.id
-                    WHERE utt.completed = TRUE
-                    GROUP BY s.name
-                    ORDER BY count DESC
-                """)
-                by_spec = await cur.fetchall()
-
-                # By level
-                await cur.execute("""
-                    SELECT
-                        UPPER(level) as level_name,
-                        COUNT(*) as count
-                    FROM user_test_time
-                    WHERE completed = TRUE AND level IS NOT NULL
-                    GROUP BY level
-                """)
-                by_level_rows = await cur.fetchall()
-
-                by_level = {"Senior": 0, "Middle": 0, "Junior": 0}
-                for row in by_level_rows:
-                    level_key = row[0].capitalize()
-                    if level_key in by_level:
-                        by_level[level_key] = row[1]
-
-                return {
-                    "status": "success",
-                    "overall": {
-                        "total_tests": overall[0] or 0,
-                        "avg_percentage": round(overall[1], 1) if overall[1] else 0,
-                        "avg_duration_minutes": round(overall[2], 1) if overall[2] else 0
-                    },
-                    "by_specialization": [
-                        {"name": row[0], "count": row[1], "avg_percentage": round(row[2], 1) if row[2] else 0}
-                        for row in by_spec
-                    ],
-                    "by_level": by_level
-                }
-    except Exception as e:
-        print(f"HR stats error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.get("/api/hr/results/{test_id}")
-async def hr_get_result_detail(test_id: int, hr_user: dict = Depends(verify_hr_cookie)):
-    """HR: Get detailed information about a specific test"""
-    if not hr_user:
-        raise HTTPException(status_code=401, detail="Not authenticated")
-
-    try:
-        async with get_db_connection() as conn:
-            async with conn.cursor() as cur:
-                # Get test info
-                await cur.execute("""
-                    SELECT
-                        utt.id,
-                        u.name,
-                        u.tab_number,
-                        u.company,
-                        u.role,
-                        d.name as department,
-                        s.name as specialization,
-                        utt.score,
-                        utt.max_score,
-                        utt.level,
-                        utt.start_time,
-                        utt.end_time
-                    FROM user_test_time utt
-                    JOIN users u ON u.id = utt.user_id
-                    JOIN specializations s ON s.id = utt.specialization_id
-                    LEFT JOIN departments d ON d.id = u.department_id
-                    WHERE utt.id = %s
-                """, (test_id,))
-                test_info = await cur.fetchone()
-
-                if not test_info:
-                    raise HTTPException(status_code=404, detail="Test not found")
-
-                # Get answers by competency
-                await cur.execute("""
-                    SELECT
-                        c.name as competency,
-                        q.question_text,
-                        q.difficulty,
-                        q.option_a, q.option_b, q.option_c, q.option_d,
-                        q.correct_answer,
-                        ur.selected_answer,
-                        ur.correct
-                    FROM user_results ur
-                    JOIN questions q ON ur.question_id = q.id
-                    JOIN competencies c ON q.competency_id = c.id
-                    WHERE ur.test_session_id = %s
-                    ORDER BY c.name, q.difficulty
-                """, (test_id,))
-                answers = await cur.fetchall()
-
-                return {
-                    "status": "success",
-                    "test_info": {
-                        "id": test_info[0],
-                        "name": test_info[1],
-                        "tab_number": test_info[2],
-                        "company": test_info[3] or "-",
-                        "role": test_info[4] or "-",
-                        "department": test_info[5] or "-",
-                        "specialization": test_info[6],
-                        "score": test_info[7],
-                        "max_score": test_info[8],
-                        "level": test_info[9],
-                        "started_at": test_info[10].isoformat() if test_info[10] else None,
-                        "completed_at": test_info[11].isoformat() if test_info[11] else None
-                    },
-                    "answers": [
-                        {
-                            "competency": ans[0],
-                            "question": ans[1],
-                            "level": ans[2],
-                            "options": [ans[3], ans[4], ans[5], ans[6]],
-                            "correct_answer": ans[7],
-                            "user_answer": ans[8],
-                            "is_correct": bool(ans[9])
-                        } for ans in answers
-                    ]
-                }
-    except HTTPException:
-        raise
-    except Exception as e:
-        print(f"HR result detail error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-# =====================================================
-# MANAGER PANEL APIs
-# =====================================================
-async def get_current_manager(authorization: Optional[str] = Header(None)):
-    """Extract manager info from token"""
-    if not authorization or not authorization.startswith('Bearer '):
-        raise HTTPException(status_code=401, detail="Требуется авторизация")
-    token = authorization.split(' ')[1]
-    user_data = verify_token(token)
-    if not user_data or user_data.get("role") != "manager":
-        raise HTTPException(status_code=403, detail="Доступ только для руководителей")
-    if not user_data.get("department_id"):
-        raise HTTPException(status_code=400, detail="У руководителя не указан отдел")
-    return user_data
-
-@app.get("/api/manager/results")
-async def get_manager_results(manager: dict = Depends(get_current_manager)):
-    """Get test results for manager's department only"""
-    department_id = manager.get("department_id")
-
-    try:
-        async with get_db_connection() as conn:
-            async with conn.cursor() as cur:
-                await cur.execute("""
-                    SELECT
-                        utt.id,
-                        u.name,
-                        u.tab_number,
-                        s.name as specialization,
-                        utt.score,
-                        utt.max_score,
-                        utt.level,
-                        utt.start_time,
-                        utt.end_time
-                    FROM user_test_time utt
-                    JOIN users u ON u.id = utt.user_id
-                    JOIN specializations s ON s.id = utt.specialization_id
-                    WHERE utt.completed = TRUE AND u.department_id = %s
-                    ORDER BY utt.end_time DESC
-                    LIMIT 100
-                """, (department_id,))
-
-                rows = await cur.fetchall()
-
-                results = []
-                for row in rows:
-                    score = row[4] or 0
-                    max_score = row[5] or 1
-                    percentage = round((score / max_score) * 100, 1) if max_score > 0 else 0
-
-                    duration = 0
-                    if row[7] and row[8]:
-                        delta = row[8] - row[7]
-                        duration = round(delta.total_seconds() / 60, 1)
-
-                    results.append({
-                        "test_id": row[0],
-                        "name": row[1],
-                        "tab_number": row[2],
-                        "specialization": row[3],
-                        "score": score,
-                        "max_score": max_score,
-                        "percentage": percentage,
-                        "level": row[6].capitalize() if row[6] else "Junior",
-                        "completed_at": row[8].isoformat() if row[8] else None,
-                        "duration_minutes": duration
-                    })
-
-                return {"status": "success", "results": results}
-
-    except Exception as e:
-        print(f"Manager results error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.get("/api/manager/results/stats")
-async def get_manager_results_stats(manager: dict = Depends(get_current_manager)):
-    """Get statistical analysis for manager's department"""
-    department_id = manager.get("department_id")
-
-    try:
-        async with get_db_connection() as conn:
-            async with conn.cursor() as cur:
-                # Overall stats for department
-                await cur.execute("""
-                    SELECT
-                        COUNT(*) as total_tests,
-                        AVG(CASE WHEN utt.max_score > 0 THEN (utt.score::numeric / utt.max_score::numeric * 100) ELSE 0 END) as avg_percentage,
-                        AVG(EXTRACT(EPOCH FROM (utt.end_time - utt.start_time)) / 60) as avg_duration_minutes
-                    FROM user_test_time utt
-                    JOIN users u ON utt.user_id = u.id
-                    WHERE utt.completed = TRUE AND u.department_id = %s
-                """, (department_id,))
-                overall = await cur.fetchone()
-
-                # By level
-                await cur.execute("""
-                    SELECT
-                        UPPER(utt.level) as level_name,
-                        COUNT(*) as count
-                    FROM user_test_time utt
-                    JOIN users u ON utt.user_id = u.id
-                    WHERE utt.completed = TRUE AND u.department_id = %s AND utt.level IS NOT NULL
-                    GROUP BY utt.level
-                """, (department_id,))
-                by_level_rows = await cur.fetchall()
-
-                by_level = {"Senior": 0, "Middle": 0, "Junior": 0}
-                for row in by_level_rows:
-                    level_key = row[0].capitalize()
-                    if level_key in by_level:
-                        by_level[level_key] = row[1]
-
-                return {
-                    "status": "success",
-                    "overall": {
-                        "total_tests": overall[0] or 0,
-                        "avg_percentage": round(overall[1], 1) if overall[1] else 0,
-                        "avg_duration_minutes": round(overall[2], 1) if overall[2] else 0
-                    },
-                    "by_level": by_level
-                }
-    except Exception as e:
-        print(f"Manager stats error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 # =====================================================
