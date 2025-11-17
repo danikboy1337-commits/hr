@@ -889,13 +889,37 @@ async def complete_test(test_session_id: int, user_data: dict = Depends(get_curr
                 # Generate recommendation
                 recommendation = f"Вы показали {level} уровень ({correct_count}/{config.TOTAL_QUESTIONS} правильных ответов, {percentage:.1f}%)."
 
+                # Get competency statistics
+                await cur.execute("""
+                    SELECT
+                        c.name as competency_name,
+                        COUNT(*) as total,
+                        SUM(CASE WHEN ur.correct = 1 THEN 1 ELSE 0 END) as correct
+                    FROM user_results ur
+                    JOIN questions q ON ur.question_id = q.id
+                    JOIN competencies c ON q.competency_id = c.id
+                    WHERE ur.test_session_id = %s
+                    GROUP BY c.id, c.name
+                    ORDER BY c.name
+                """, (test_session_id,))
+
+                competency_rows = await cur.fetchall()
+                competency_stats = []
+                for row in competency_rows:
+                    competency_stats.append({
+                        "name": row[0],
+                        "total": row[1],
+                        "correct": row[2]
+                    })
+
                 return {
                     "status": "success",
                     "score": correct_count,
                     "max_score": config.TOTAL_QUESTIONS,
                     "percentage": percentage,
                     "level": level,
-                    "recommendation": recommendation
+                    "recommendation": recommendation,
+                    "competencies": competency_stats
                 }
 
     except HTTPException:
@@ -1210,10 +1234,46 @@ async def hr_menu_page():
     with open('templates/hr_menu.html', 'r', encoding='utf-8') as f:
         return HTMLResponse(content=f.read())
 
+@app.get("/hr/results", response_class=HTMLResponse)
+async def hr_results_page():
+    """HR results page"""
+    with open('templates/hr_results.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
+@app.get("/hr/ratings", response_class=HTMLResponse)
+async def hr_ratings_page():
+    """HR ratings page"""
+    with open('templates/hr_ratings.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
+@app.get("/hr/monitoring", response_class=HTMLResponse)
+async def hr_monitoring_page():
+    """HR monitoring page"""
+    with open('templates/hr_monitoring.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
+@app.get("/hr/diagnostic", response_class=HTMLResponse)
+async def hr_diagnostic_page():
+    """HR diagnostic page"""
+    with open('templates/hr_diagnostic.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
 @app.get("/manager/menu", response_class=HTMLResponse)
 async def manager_menu_page():
     """Manager menu page"""
     with open('templates/manager_menu.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
+@app.get("/manager/results", response_class=HTMLResponse)
+async def manager_results_page():
+    """Manager results page"""
+    with open('templates/manager_results.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
+@app.get("/manager/ratings", response_class=HTMLResponse)
+async def manager_ratings_page():
+    """Manager ratings page"""
+    with open('templates/manager_ratings.html', 'r', encoding='utf-8') as f:
         return HTMLResponse(content=f.read())
 
 @app.post("/api/hr/login")
