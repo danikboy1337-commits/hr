@@ -27,6 +27,7 @@ from typing import Optional, List, Dict, Any
 # Monitoring
 import psutil
 import time
+import json
 from datetime import datetime, timedelta
 from collections import deque
 
@@ -96,13 +97,19 @@ class SpecializationSelect(BaseModel):
     specialization_id: int
 
 class AnswerSubmit(BaseModel):
-    test_session_id: int
+    user_test_id: int  # Frontend uses user_test_id
     question_id: int
     user_answer: int  # 1-4
 
 class SelfAssessmentSubmit(BaseModel):
     assessments: List[Dict[str, Any]]  # [{"competency_id": 1, "self_rating": 8}, ...]
     # Note: test_session_id comes from URL path, not request body
+
+class ProctoringEventSubmit(BaseModel):
+    user_test_id: int
+    event_type: str  # e.g., 'face_not_detected', 'multiple_faces', 'tab_switch'
+    severity: str = "medium"  # 'low', 'medium', 'high', 'critical'
+    details: Optional[dict] = None
 
 class SQLQuery(BaseModel):
     query: str
@@ -695,16 +702,39 @@ async def get_test_questions(test_session_id: int, user_data: dict = Depends(get
                 answered = sum(1 for q in questions if q["is_answered"])
                 correct = sum(1 for q in questions if q["is_correct"])
 
+                # Calculate progress by competency
+                competency_stats = {}
+                for q in questions:
+                    comp_name = q["competency_name"]
+                    if comp_name not in competency_stats:
+                        competency_stats[comp_name] = {
+                            "name": comp_name,
+                            "total": 0,
+                            "answered": 0,
+                            "correct": 0
+                        }
+                    competency_stats[comp_name]["total"] += 1
+                    if q["is_answered"]:
+                        competency_stats[comp_name]["answered"] += 1
+                    if q["is_correct"]:
+                        competency_stats[comp_name]["correct"] += 1
+
+                competencies_list = list(competency_stats.values())
+
                 return {
                     "status": "success",
                     "test_session_id": test_session_id,
                     "questions": questions,
                     "total": len(questions),
+                    "time_limit_minutes": 40,  # Default 40 minutes
                     "progress": {
-                        "answered": answered,
-                        "total": len(questions),
-                        "correct": correct,
-                        "percentage": int((answered / len(questions)) * 100) if questions else 0
+                        "total": {
+                            "answered": answered,
+                            "total": len(questions),
+                            "correct": correct,
+                            "percentage": int((answered / len(questions)) * 100) if questions else 0
+                        },
+                        "competencies": competencies_list
                     }
                 }
 
@@ -721,7 +751,7 @@ async def submit_answer(answer: AnswerSubmit, user_data: dict = Depends(get_curr
 
     Request:
         {
-            "test_session_id": 1,
+            "user_test_id": 1,
             "question_id": 123,
             "user_answer": 2
         }
@@ -742,7 +772,7 @@ async def submit_answer(answer: AnswerSubmit, user_data: dict = Depends(get_curr
                 # Verify test belongs to user
                 await cur.execute(
                     "SELECT user_id FROM user_test_time WHERE id = %s",
-                    (answer.test_session_id,)
+                    (answer.user_test_id,)
                 )
                 row = await cur.fetchone()
 
@@ -755,7 +785,7 @@ async def submit_answer(answer: AnswerSubmit, user_data: dict = Depends(get_curr
                     FROM user_questions uq
                     JOIN questions q ON q.id = uq.question_id
                     WHERE uq.test_session_id = %s AND uq.question_id = %s
-                """, (answer.test_session_id, answer.question_id))
+                """, (answer.user_test_id, answer.question_id))
 
                 question_row = await cur.fetchone()
 
@@ -773,7 +803,7 @@ async def submit_answer(answer: AnswerSubmit, user_data: dict = Depends(get_curr
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     ON CONFLICT (user_id, test_session_id, question_id) DO UPDATE
                     SET user_answer = %s, correct = %s
-                """, (user_id, answer.test_session_id, spec_id, comp_id, topic_id,
+                """, (user_id, answer.user_test_id, spec_id, comp_id, topic_id,
                       answer.question_id, question_text, answer.user_answer, is_correct, datetime.now(),
                       answer.user_answer, is_correct))
 
@@ -859,13 +889,37 @@ async def complete_test(test_session_id: int, user_data: dict = Depends(get_curr
                 # Generate recommendation
                 recommendation = f"Вы показали {level} уровень ({correct_count}/{config.TOTAL_QUESTIONS} правильных ответов, {percentage:.1f}%)."
 
+                # Get competency statistics
+                await cur.execute("""
+                    SELECT
+                        c.name as competency_name,
+                        COUNT(*) as total,
+                        SUM(CASE WHEN ur.correct = 1 THEN 1 ELSE 0 END) as correct
+                    FROM user_results ur
+                    JOIN questions q ON ur.question_id = q.id
+                    JOIN competencies c ON q.competency_id = c.id
+                    WHERE ur.test_session_id = %s
+                    GROUP BY c.id, c.name
+                    ORDER BY c.name
+                """, (test_session_id,))
+
+                competency_rows = await cur.fetchall()
+                competency_stats = []
+                for row in competency_rows:
+                    competency_stats.append({
+                        "name": row[0],
+                        "total": row[1],
+                        "correct": row[2]
+                    })
+
                 return {
                     "status": "success",
                     "score": correct_count,
                     "max_score": config.TOTAL_QUESTIONS,
                     "percentage": percentage,
                     "level": level,
-                    "recommendation": recommendation
+                    "recommendation": recommendation,
+                    "competencies": competency_stats
                 }
 
     except HTTPException:
@@ -954,6 +1008,218 @@ async def get_results(test_session_id: int, user_data: dict = Depends(get_curren
         raise HTTPException(status_code=500, detail=str(e))
 
 # =====================================================
+# API - AI PROCTORING
+# =====================================================
+@app.post("/api/proctoring/event")
+async def log_proctoring_event(
+    event: ProctoringEventSubmit,
+    current_user: dict = Depends(get_current_user)
+):
+    """Log a proctoring event detected by AI"""
+    user_id = current_user["user_id"]
+
+    try:
+        async with get_db_connection() as conn:
+            async with conn.cursor() as cur:
+                # Verify test belongs to user
+                await cur.execute(
+                    "SELECT user_id FROM user_test_time WHERE id = %s",
+                    (event.user_test_id,)
+                )
+                test_data = await cur.fetchone()
+
+                if not test_data:
+                    raise HTTPException(status_code=404, detail="Test not found")
+                if test_data[0] != user_id:
+                    raise HTTPException(status_code=403, detail="Access denied")
+
+                # Insert proctoring event
+                details_json = None
+                if event.details is not None:
+                    details_json = json.dumps(event.details)
+
+                await cur.execute("""
+                    INSERT INTO proctoring_events
+                    (user_test_id, user_id, event_type, severity, details)
+                    VALUES (%s, %s, %s, %s, %s::jsonb)
+                    RETURNING id
+                """, (
+                    event.user_test_id,
+                    user_id,
+                    event.event_type,
+                    event.severity,
+                    details_json
+                ))
+
+                event_id = (await cur.fetchone())[0]
+
+                # Update suspicious event count and calculate risk level based on severity
+                # Get current count of high/critical severity events
+                await cur.execute("""
+                    SELECT
+                        COUNT(*) as total_events,
+                        COUNT(*) FILTER (WHERE severity IN ('high', 'critical')) as high_severity_count
+                    FROM proctoring_events
+                    WHERE user_test_id = %s
+                """, (event.user_test_id,))
+
+                counts = await cur.fetchone()
+                total_events = counts[0] if counts else 0
+                high_severity_count = counts[1] if counts else 0
+
+                # Calculate risk level based on thresholds:
+                # high/critical events >= 10 → 'high' (CRITICAL)
+                # high/critical events >= 5 → 'high'
+                # total events >= 15 → 'medium'
+                # else → 'low'
+                if high_severity_count >= 10:
+                    risk_level = 'high'  # CRITICAL
+                elif high_severity_count >= 5:
+                    risk_level = 'high'
+                elif total_events >= 15:
+                    risk_level = 'medium'
+                else:
+                    risk_level = 'low'
+
+                await cur.execute("""
+                    UPDATE user_test_time
+                    SET suspicious_events_count = %s,
+                        proctoring_risk_level = %s
+                    WHERE id = %s
+                """, (total_events, risk_level, event.user_test_id))
+
+                return {
+                    "status": "success",
+                    "event_id": event_id,
+                    "message": "Proctoring event logged",
+                    "risk_level": risk_level,
+                    "total_events": total_events,
+                    "high_severity_events": high_severity_count
+                }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Proctoring event error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/proctoring/events/{user_test_id}")
+async def get_proctoring_events(
+    user_test_id: int,
+    current_user: dict = Depends(get_current_user)
+):
+    """Get all proctoring events for a test"""
+    user_id = current_user["user_id"]
+
+    try:
+        async with get_db_connection() as conn:
+            async with conn.cursor() as cur:
+                # Verify test belongs to user or user is HR/manager
+                await cur.execute(
+                    "SELECT user_id FROM user_test_time WHERE id = %s",
+                    (user_test_id,)
+                )
+                test_data = await cur.fetchone()
+
+                if not test_data:
+                    raise HTTPException(status_code=404, detail="Test not found")
+
+                # Allow test owner or HR/managers to view
+                role = current_user.get("role", "employee")
+                if test_data[0] != user_id and role not in ["hr", "manager"]:
+                    raise HTTPException(status_code=403, detail="Access denied")
+
+                # Get events
+                await cur.execute("""
+                    SELECT id, event_type, severity, details, created_at
+                    FROM proctoring_events
+                    WHERE user_test_id = %s
+                    ORDER BY created_at DESC
+                """, (user_test_id,))
+
+                rows = await cur.fetchall()
+                events = [
+                    {
+                        "id": row[0],
+                        "event_type": row[1],
+                        "severity": row[2],
+                        "details": row[3],
+                        "created_at": row[4].isoformat() if row[4] else None
+                    }
+                    for row in rows
+                ]
+
+                return {
+                    "status": "success",
+                    "events": events,
+                    "count": len(events)
+                }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Get proctoring events error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/proctoring/summary/{user_test_id}")
+async def get_proctoring_summary(
+    user_test_id: int,
+    current_user: dict = Depends(get_current_user)
+):
+    """Get proctoring summary statistics for a test"""
+    user_id = current_user["user_id"]
+
+    try:
+        async with get_db_connection() as conn:
+            async with conn.cursor() as cur:
+                # Verify test belongs to user or user is HR/manager
+                await cur.execute(
+                    "SELECT user_id, suspicious_events_count, proctoring_risk_level FROM user_test_time WHERE id = %s",
+                    (user_test_id,)
+                )
+                test_data = await cur.fetchone()
+
+                if not test_data:
+                    raise HTTPException(status_code=404, detail="Test not found")
+
+                # Allow test owner or HR/managers to view
+                role = current_user.get("role", "employee")
+                if test_data[0] != user_id and role not in ["hr", "manager"]:
+                    raise HTTPException(status_code=403, detail="Access denied")
+
+                # Get event breakdown
+                await cur.execute("""
+                    SELECT
+                        event_type,
+                        COUNT(*) as count,
+                        severity
+                    FROM proctoring_events
+                    WHERE user_test_id = %s
+                    GROUP BY event_type, severity
+                    ORDER BY count DESC
+                """, (user_test_id,))
+
+                breakdown_rows = await cur.fetchall()
+                breakdown = [
+                    {
+                        "event_type": row[0],
+                        "count": row[1],
+                        "severity": row[2]
+                    }
+                    for row in breakdown_rows
+                ]
+
+                return {
+                    "status": "success",
+                    "total_events": test_data[1] if test_data[1] else 0,
+                    "risk_level": test_data[2] if test_data[2] else "low",
+                    "breakdown": breakdown
+                }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Get proctoring summary error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# =====================================================
 # HR PANEL (Simplified for V2)
 # =====================================================
 @app.get("/hr", response_class=HTMLResponse)
@@ -968,10 +1234,46 @@ async def hr_menu_page():
     with open('templates/hr_menu.html', 'r', encoding='utf-8') as f:
         return HTMLResponse(content=f.read())
 
+@app.get("/hr/results", response_class=HTMLResponse)
+async def hr_results_page():
+    """HR results page"""
+    with open('templates/hr_results.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
+@app.get("/hr/ratings", response_class=HTMLResponse)
+async def hr_ratings_page():
+    """HR ratings page"""
+    with open('templates/hr_ratings.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
+@app.get("/hr/monitoring", response_class=HTMLResponse)
+async def hr_monitoring_page():
+    """HR monitoring page"""
+    with open('templates/hr_monitoring.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
+@app.get("/hr/diagnostic", response_class=HTMLResponse)
+async def hr_diagnostic_page():
+    """HR diagnostic page"""
+    with open('templates/hr_diagnostic.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
 @app.get("/manager/menu", response_class=HTMLResponse)
 async def manager_menu_page():
     """Manager menu page"""
     with open('templates/manager_menu.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
+@app.get("/manager/results", response_class=HTMLResponse)
+async def manager_results_page():
+    """Manager results page"""
+    with open('templates/manager_results.html', 'r', encoding='utf-8') as f:
+        return HTMLResponse(content=f.read())
+
+@app.get("/manager/ratings", response_class=HTMLResponse)
+async def manager_ratings_page():
+    """Manager ratings page"""
+    with open('templates/manager_ratings.html', 'r', encoding='utf-8') as f:
         return HTMLResponse(content=f.read())
 
 @app.post("/api/hr/login")
@@ -1009,14 +1311,19 @@ async def hr_get_all_results(hr_user: dict = Depends(verify_hr_cookie)):
                         utt.id,
                         u.name,
                         u.tab_number,
+                        u.company,
+                        u.role,
+                        d.name as department,
                         s.name as specialization,
                         utt.score,
                         utt.max_score,
                         utt.level,
+                        utt.start_time,
                         utt.end_time
                     FROM user_test_time utt
                     JOIN users u ON u.id = utt.user_id
                     JOIN specializations s ON s.id = utt.specialization_id
+                    LEFT JOIN departments d ON d.id = u.department_id
                     WHERE utt.completed = TRUE
                     ORDER BY utt.end_time DESC
                     LIMIT 100
@@ -1026,21 +1333,316 @@ async def hr_get_all_results(hr_user: dict = Depends(verify_hr_cookie)):
 
                 results = []
                 for row in rows:
+                    score = row[7] or 0
+                    max_score = row[8] or 1
+                    percentage = round((score / max_score) * 100, 1) if max_score > 0 else 0
+
+                    # Calculate duration in minutes
+                    duration = 0
+                    if row[10] and row[11]:
+                        delta = row[11] - row[10]
+                        duration = round(delta.total_seconds() / 60, 1)
+
                     results.append({
-                        "test_session_id": row[0],
-                        "user_name": row[1],
+                        "test_id": row[0],
+                        "name": row[1],
                         "tab_number": row[2],
-                        "specialization": row[3],
-                        "score": row[4],
-                        "max_score": row[5],
-                        "level": row[6],
-                        "completed_at": row[7].isoformat() if row[7] else None
+                        "company": row[3] or "-",
+                        "role": row[4] or "-",
+                        "department": row[5] or "-",
+                        "specialization": row[6],
+                        "score": score,
+                        "max_score": max_score,
+                        "percentage": percentage,
+                        "level": row[9].capitalize() if row[9] else "Junior",
+                        "completed_at": row[11].isoformat() if row[11] else None,
+                        "duration_minutes": duration
                     })
 
                 return {"status": "success", "results": results}
 
     except Exception as e:
         print(f"HR results error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/hr/results/stats")
+async def hr_get_results_stats(hr_user: dict = Depends(verify_hr_cookie)):
+    """HR: Get statistical analysis of all results"""
+    if not hr_user:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    try:
+        async with get_db_connection() as conn:
+            async with conn.cursor() as cur:
+                # Overall stats
+                await cur.execute("""
+                    SELECT
+                        COUNT(*) as total_tests,
+                        AVG(CASE WHEN max_score > 0 THEN (score::numeric / max_score::numeric * 100) ELSE 0 END) as avg_percentage,
+                        AVG(EXTRACT(EPOCH FROM (end_time - start_time)) / 60) as avg_duration_minutes
+                    FROM user_test_time
+                    WHERE completed = TRUE
+                """)
+                overall = await cur.fetchone()
+
+                # By specialization
+                await cur.execute("""
+                    SELECT
+                        s.name,
+                        COUNT(*) as count,
+                        AVG(CASE WHEN utt.max_score > 0 THEN (utt.score::numeric / utt.max_score::numeric * 100) ELSE 0 END) as avg_percentage
+                    FROM user_test_time utt
+                    JOIN specializations s ON utt.specialization_id = s.id
+                    WHERE utt.completed = TRUE
+                    GROUP BY s.name
+                    ORDER BY count DESC
+                """)
+                by_spec = await cur.fetchall()
+
+                # By level
+                await cur.execute("""
+                    SELECT
+                        UPPER(level) as level_name,
+                        COUNT(*) as count
+                    FROM user_test_time
+                    WHERE completed = TRUE AND level IS NOT NULL
+                    GROUP BY level
+                """)
+                by_level_rows = await cur.fetchall()
+
+                by_level = {"Senior": 0, "Middle": 0, "Junior": 0}
+                for row in by_level_rows:
+                    level_key = row[0].capitalize()
+                    if level_key in by_level:
+                        by_level[level_key] = row[1]
+
+                return {
+                    "status": "success",
+                    "overall": {
+                        "total_tests": overall[0] or 0,
+                        "avg_percentage": round(overall[1], 1) if overall[1] else 0,
+                        "avg_duration_minutes": round(overall[2], 1) if overall[2] else 0
+                    },
+                    "by_specialization": [
+                        {"name": row[0], "count": row[1], "avg_percentage": round(row[2], 1) if row[2] else 0}
+                        for row in by_spec
+                    ],
+                    "by_level": by_level
+                }
+    except Exception as e:
+        print(f"HR stats error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/hr/results/{test_id}")
+async def hr_get_result_detail(test_id: int, hr_user: dict = Depends(verify_hr_cookie)):
+    """HR: Get detailed information about a specific test"""
+    if not hr_user:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    try:
+        async with get_db_connection() as conn:
+            async with conn.cursor() as cur:
+                # Get test info
+                await cur.execute("""
+                    SELECT
+                        utt.id,
+                        u.name,
+                        u.tab_number,
+                        u.company,
+                        u.role,
+                        d.name as department,
+                        s.name as specialization,
+                        utt.score,
+                        utt.max_score,
+                        utt.level,
+                        utt.start_time,
+                        utt.end_time
+                    FROM user_test_time utt
+                    JOIN users u ON u.id = utt.user_id
+                    JOIN specializations s ON s.id = utt.specialization_id
+                    LEFT JOIN departments d ON d.id = u.department_id
+                    WHERE utt.id = %s
+                """, (test_id,))
+                test_info = await cur.fetchone()
+
+                if not test_info:
+                    raise HTTPException(status_code=404, detail="Test not found")
+
+                # Get answers by competency
+                await cur.execute("""
+                    SELECT
+                        c.name as competency,
+                        q.question_text,
+                        q.difficulty,
+                        q.option_a, q.option_b, q.option_c, q.option_d,
+                        q.correct_answer,
+                        ur.selected_answer,
+                        ur.correct
+                    FROM user_results ur
+                    JOIN questions q ON ur.question_id = q.id
+                    JOIN competencies c ON q.competency_id = c.id
+                    WHERE ur.test_session_id = %s
+                    ORDER BY c.name, q.difficulty
+                """, (test_id,))
+                answers = await cur.fetchall()
+
+                return {
+                    "status": "success",
+                    "test_info": {
+                        "id": test_info[0],
+                        "name": test_info[1],
+                        "tab_number": test_info[2],
+                        "company": test_info[3] or "-",
+                        "role": test_info[4] or "-",
+                        "department": test_info[5] or "-",
+                        "specialization": test_info[6],
+                        "score": test_info[7],
+                        "max_score": test_info[8],
+                        "level": test_info[9],
+                        "started_at": test_info[10].isoformat() if test_info[10] else None,
+                        "completed_at": test_info[11].isoformat() if test_info[11] else None
+                    },
+                    "answers": [
+                        {
+                            "competency": ans[0],
+                            "question": ans[1],
+                            "level": ans[2],
+                            "options": [ans[3], ans[4], ans[5], ans[6]],
+                            "correct_answer": ans[7],
+                            "user_answer": ans[8],
+                            "is_correct": bool(ans[9])
+                        } for ans in answers
+                    ]
+                }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"HR result detail error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# =====================================================
+# MANAGER PANEL APIs
+# =====================================================
+async def get_current_manager(authorization: Optional[str] = Header(None)):
+    """Extract manager info from token"""
+    if not authorization or not authorization.startswith('Bearer '):
+        raise HTTPException(status_code=401, detail="Требуется авторизация")
+    token = authorization.split(' ')[1]
+    user_data = verify_token(token)
+    if not user_data or user_data.get("role") != "manager":
+        raise HTTPException(status_code=403, detail="Доступ только для руководителей")
+    if not user_data.get("department_id"):
+        raise HTTPException(status_code=400, detail="У руководителя не указан отдел")
+    return user_data
+
+@app.get("/api/manager/results")
+async def get_manager_results(manager: dict = Depends(get_current_manager)):
+    """Get test results for manager's department only"""
+    department_id = manager.get("department_id")
+
+    try:
+        async with get_db_connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute("""
+                    SELECT
+                        utt.id,
+                        u.name,
+                        u.tab_number,
+                        s.name as specialization,
+                        utt.score,
+                        utt.max_score,
+                        utt.level,
+                        utt.start_time,
+                        utt.end_time
+                    FROM user_test_time utt
+                    JOIN users u ON u.id = utt.user_id
+                    JOIN specializations s ON s.id = utt.specialization_id
+                    WHERE utt.completed = TRUE AND u.department_id = %s
+                    ORDER BY utt.end_time DESC
+                    LIMIT 100
+                """, (department_id,))
+
+                rows = await cur.fetchall()
+
+                results = []
+                for row in rows:
+                    score = row[4] or 0
+                    max_score = row[5] or 1
+                    percentage = round((score / max_score) * 100, 1) if max_score > 0 else 0
+
+                    duration = 0
+                    if row[7] and row[8]:
+                        delta = row[8] - row[7]
+                        duration = round(delta.total_seconds() / 60, 1)
+
+                    results.append({
+                        "test_id": row[0],
+                        "name": row[1],
+                        "tab_number": row[2],
+                        "specialization": row[3],
+                        "score": score,
+                        "max_score": max_score,
+                        "percentage": percentage,
+                        "level": row[6].capitalize() if row[6] else "Junior",
+                        "completed_at": row[8].isoformat() if row[8] else None,
+                        "duration_minutes": duration
+                    })
+
+                return {"status": "success", "results": results}
+
+    except Exception as e:
+        print(f"Manager results error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/manager/results/stats")
+async def get_manager_results_stats(manager: dict = Depends(get_current_manager)):
+    """Get statistical analysis for manager's department"""
+    department_id = manager.get("department_id")
+
+    try:
+        async with get_db_connection() as conn:
+            async with conn.cursor() as cur:
+                # Overall stats for department
+                await cur.execute("""
+                    SELECT
+                        COUNT(*) as total_tests,
+                        AVG(CASE WHEN utt.max_score > 0 THEN (utt.score::numeric / utt.max_score::numeric * 100) ELSE 0 END) as avg_percentage,
+                        AVG(EXTRACT(EPOCH FROM (utt.end_time - utt.start_time)) / 60) as avg_duration_minutes
+                    FROM user_test_time utt
+                    JOIN users u ON utt.user_id = u.id
+                    WHERE utt.completed = TRUE AND u.department_id = %s
+                """, (department_id,))
+                overall = await cur.fetchone()
+
+                # By level
+                await cur.execute("""
+                    SELECT
+                        UPPER(utt.level) as level_name,
+                        COUNT(*) as count
+                    FROM user_test_time utt
+                    JOIN users u ON utt.user_id = u.id
+                    WHERE utt.completed = TRUE AND u.department_id = %s AND utt.level IS NOT NULL
+                    GROUP BY utt.level
+                """, (department_id,))
+                by_level_rows = await cur.fetchall()
+
+                by_level = {"Senior": 0, "Middle": 0, "Junior": 0}
+                for row in by_level_rows:
+                    level_key = row[0].capitalize()
+                    if level_key in by_level:
+                        by_level[level_key] = row[1]
+
+                return {
+                    "status": "success",
+                    "overall": {
+                        "total_tests": overall[0] or 0,
+                        "avg_percentage": round(overall[1], 1) if overall[1] else 0,
+                        "avg_duration_minutes": round(overall[2], 1) if overall[2] else 0
+                    },
+                    "by_level": by_level
+                }
+    except Exception as e:
+        print(f"Manager stats error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 # =====================================================

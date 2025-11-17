@@ -130,7 +130,11 @@ CREATE TABLE IF NOT EXISTS user_test_time (
     score INTEGER, -- Total correct answers
     max_score INTEGER DEFAULT 60, -- Total questions (changed from 24 to 60)
     level VARCHAR(20) CHECK (level IN ('junior', 'middle', 'senior')), -- Final assessed level
-    completed BOOLEAN DEFAULT FALSE
+    completed BOOLEAN DEFAULT FALSE,
+    -- Proctoring columns
+    proctoring_enabled BOOLEAN DEFAULT TRUE,
+    suspicious_events_count INTEGER DEFAULT 0,
+    proctoring_risk_level VARCHAR(20) DEFAULT 'low' CHECK (proctoring_risk_level IN ('low', 'medium', 'high'))
 );
 
 -- =====================================================
@@ -197,6 +201,20 @@ CREATE TABLE IF NOT EXISTS manager_competency_ratings (
 );
 
 -- =====================================================
+-- TABLE: proctoring_events
+-- AI proctoring event log
+-- =====================================================
+CREATE TABLE IF NOT EXISTS proctoring_events (
+    id SERIAL PRIMARY KEY,
+    user_test_id INTEGER NOT NULL REFERENCES user_test_time(id) ON DELETE CASCADE,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    event_type VARCHAR(100) NOT NULL, -- e.g., 'face_not_detected', 'multiple_faces', 'tab_switch', etc.
+    severity VARCHAR(20) DEFAULT 'medium' CHECK (severity IN ('low', 'medium', 'high', 'critical')),
+    details JSONB, -- Additional event details
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- =====================================================
 -- INDEXES (Created separately, not inline)
 -- =====================================================
 
@@ -226,6 +244,12 @@ CREATE INDEX IF NOT EXISTS idx_user_test_time_user ON user_test_time(user_id);
 CREATE INDEX IF NOT EXISTS idx_user_test_time_completed ON user_test_time(completed);
 CREATE INDEX IF NOT EXISTS idx_user_test_time_dates ON user_test_time(created_date, start_time, end_time);
 
+-- proctoring_events table indexes
+CREATE INDEX IF NOT EXISTS idx_proctoring_events_test ON proctoring_events(user_test_id);
+CREATE INDEX IF NOT EXISTS idx_proctoring_events_user ON proctoring_events(user_id);
+CREATE INDEX IF NOT EXISTS idx_proctoring_events_type ON proctoring_events(event_type);
+CREATE INDEX IF NOT EXISTS idx_proctoring_events_severity ON proctoring_events(severity);
+
 -- =====================================================
 -- SUMMARY
 -- =====================================================
@@ -237,11 +261,12 @@ CREATE INDEX IF NOT EXISTS idx_user_test_time_dates ON user_test_time(created_da
 -- 5. topics
 -- 6. questions
 -- 7. users (with tab_number)
--- 8. user_test_time
+-- 8. user_test_time (with proctoring columns)
 -- 9. user_questions
 -- 10. user_results
 -- 11. competency_self_assessments (optional)
 -- 12. manager_competency_ratings (optional)
+-- 13. proctoring_events (AI proctoring log)
 --
 -- All indexes created separately for compatibility
 -- =====================================================
